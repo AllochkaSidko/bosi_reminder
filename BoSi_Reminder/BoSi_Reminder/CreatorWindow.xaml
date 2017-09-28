@@ -1,0 +1,38 @@
+﻿<Window x:Class="BoSi_Reminder.CreatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BoSi_Reminder"
+        mc:Ignorable="d"
+        Title="CreatorWindow" Height="500" Width="500">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <TextBlock HorizontalAlignment="Left" Margin="20,15,0,0" TextWrapping="NoWrap" Text="Setting a reminder..." FontSize="27" VerticalAlignment="Top"/>
+       </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="65,20,0,0" Height="30" Width="120"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBox HorizontalAlignment="Left" MinHeight="100" Margin="10,20,0,0" Width="220" Text="Write here" VerticalAlignment="Top"/>
+        </StackPanel>
+           
+        <Button Grid.Row="2" Grid.Column="0" Content="Create" Name="CreateButton" HorizontalAlignment="Left" Margin="80,30,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Grid.Row="2" Grid.Column="1" Content="Cancel" Name="CancelButton" HorizontalAlignment="Left" Margin="80,30,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>
