@@ -6,6 +6,52 @@
         xmlns:local="clr-namespace:BoSi_Reminder"
         mc:Ignorable="d"
         Title="CreatorWindow" Height="500" Width="500">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="34"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="SlateBlue"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="DodgerBlue"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Foreground" Value="DodgerBlue"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="DodgerBlue"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="SlateBlue"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="Button"
+               x:Key="Create">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="DeepPink"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="DeepPink"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+
+        <Style TargetType="Button"
+               x:Key="Cancel">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="DodgerBlue"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="DodgerBlue"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+
+    </Window.Resources>
+    
+    
     <Grid>
 
         <Grid.RowDefinitions>
@@ -23,16 +69,19 @@
             <TextBlock HorizontalAlignment="Left" Margin="20,15,0,0" TextWrapping="NoWrap" Text="Setting a reminder..." FontSize="27" VerticalAlignment="Top"/>
        </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="1" Grid.Column="0">
             <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="65,20,0,0" Height="30" Width="120"/>
-        </StackPanel>
+            <Label Content="Select time for your new reminder" Margin="4,60,0,0" FontSize="15"/>
+            <ComboBox Name="HourPicker" Width="40" Height="25" HorizontalAlignment="Left" Margin="70,-90,0,0"/>
+            <ComboBox Name="MinutePicker" Width="40" Height="25" HorizontalAlignment="Left" Margin="150,-90,0,0"/>
+        </Grid>
 
         <StackPanel Grid.Row="1" Grid.Column="1">
             <TextBox HorizontalAlignment="Left" MinHeight="100" Margin="10,20,0,0" Width="220" Text="Write here" VerticalAlignment="Top"/>
         </StackPanel>
-           
-        <Button Grid.Row="2" Grid.Column="0" Content="Create" Name="CreateButton" HorizontalAlignment="Left" Margin="80,30,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Grid.Row="2" Grid.Column="1" Content="Cancel" Name="CancelButton" HorizontalAlignment="Left" Margin="80,30,0,0" VerticalAlignment="Top" Width="75"/>
+
+        <Button Grid.Row="2" Grid.Column="0" Content="Create" Name="CreateButton" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource Create}" />
+        <Button Grid.Row="2" Grid.Column="1" Content="Cancel" Name="CancelButton" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource Cancel}" />
 
     </Grid>
 </Window>
