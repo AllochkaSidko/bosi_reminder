@@ -53,21 +53,6 @@ namespace BoSi_Reminder
 
         }
 
-        /*
-
-        private void Signup_Click(object sender, RoutedEventArgs e)
-        {
-            SignupWindow signupWindow = new SignupWindow();
-            signupWindow.ShowDialog();
-            InitializeComponent();
-           AppDomain.CurrentDomain.ProcessExit += (s, args) => OnExit(s, args);
-        }
-
-        private void OnExit(object obj, EventArgs a)
-        {
-            MessageBox.Show("Salut!");
-            Environment.Exit(0);
-        }
-        */
+        
     }
 }

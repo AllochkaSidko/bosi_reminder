@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CabinetViewModel.cs" />
     <Compile Include="DBAdapter.cs" />
     <Compile Include="LoginViewModel.cs" />
     <Compile Include="RelayCommand.cs" />

@@ -92,9 +92,9 @@
             </ListBox>
             
         </StackPanel>
-  
-        <Button Grid.Row="0" Grid.Column="1" Name="LogOutButton" Style="{StaticResource LogOutStyle}" Content="Log out" VerticalAlignment="Center" Height="30" Width="150"></Button>
-        <Button Grid.Row="1" Grid.Column="1" Name="CreateReminder" Style="{StaticResource CreateStyle}" Content="+" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,8,25,0" Height="40" Width="40"></Button>
-        
+
+        <Button Grid.Row="0" Grid.Column="1" Name="LogOutButton" Style="{StaticResource LogOutStyle}" Content="Log out" VerticalAlignment="Center" Height="30" Width="150" Command="{Binding LogOutCommand}"/>
+        <Button Grid.Row="1" Grid.Column="1" Name="CreateReminder" Style="{StaticResource CreateStyle}" Content="+" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,8,25,0" Height="40" Width="40" Command="{Binding CreateCommand}"/>
+
     </Grid>
 </Window>

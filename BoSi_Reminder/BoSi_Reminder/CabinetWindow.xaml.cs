@@ -22,11 +22,24 @@ namespace BoSi_Reminder
         public CabinetWindow()
         {
             InitializeComponent();
+            CabinetViewModel = new CabinetViewModel();
+            CabinetViewModel.RequestClose += Close;
+            DataContext = CabinetViewModel;
         }
 
-        private void DeleteReminder_Click(object sender, RoutedEventArgs e)
+        private CabinetViewModel CabinetViewModel { get; set; }
+
+       
+
+        private void Close(bool isQuitApp)
         {
-
+            if (!isQuitApp)
+                this.Close();
+            else
+            {
+                Environment.Exit(0);
+            }
         }
+
     }
 }
