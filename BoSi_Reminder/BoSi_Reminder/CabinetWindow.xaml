@@ -73,7 +73,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0">
-            <DatePicker Name="DatePicker" SelectedDateFormat="Short" IsDropDownOpen="True" HorizontalAlignment="Left" Width="497" />
+            <DatePicker Name="DatePicker" SelectedDateFormat="Short" IsDropDownOpen="True" HorizontalAlignment="Left" Width="383" />
             <Popup Name="PopUp" StaysOpen="True"></Popup>
         </StackPanel>
 

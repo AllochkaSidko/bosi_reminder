@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoSi_Reminder"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="460.483" Width="663.285">
+        Title="LoginWindow" Height="460" Width="660">
 
     <Window.Resources>
         <Style TargetType="TextBlock"
@@ -67,16 +67,16 @@
         
 
         <StackPanel Grid.Row="1">
-            <TextBox Name="EmailBox" Text="Email" HorizontalAlignment="Center" Height="27" VerticalAlignment="Center" Margin="0,7,0,0" Width="260"/>
-            <Label Content="E-mail" HorizontalAlignment="Left" VerticalAlignment="Top"  FontSize="16" Margin="50,-30,0,0"/>
+            <TextBox Name="Login" HorizontalAlignment="Center" Height="27" VerticalAlignment="Center" Margin="0,7,0,0" Width="260" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Login" HorizontalAlignment="Left" VerticalAlignment="Top"  FontSize="16" Margin="50,-30,0,0"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2">
-            <PasswordBox Name="Password" HorizontalAlignment="Center" Height="27" Width="260" VerticalAlignment="Top" Margin="0,7,0,0"/>
+            <PasswordBox Name="Password" HorizontalAlignment="Center" PasswordChanged="Password_OnPasswordChanged" Height="27" Width="260" VerticalAlignment="Top" Margin="0,7,0,0"/>
             <Label Content="Password" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="50,-30,0,0"/>
         </StackPanel>
 
-        <Button Name="Login" Content="Log in" Style="{StaticResource Login}" HorizontalAlignment="Center"  Grid.Row="3" VerticalAlignment="Top" Margin="30" Height="34" Width="190"/>
-        <Button Name="Signup" Content="Sign up" Style="{StaticResource Signup}" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" Margin="80" Height="34" Width="190"/>
+        <Button Name="LoginButton" Content="Log in" Style="{StaticResource Login}" HorizontalAlignment="Center"  Grid.Row="3" VerticalAlignment="Top" Margin="30" Height="34" Width="190" Command="{Binding SignInCommand}"/>
+        <Button Name="Signup" Content="Sign up" Style="{StaticResource Signup}" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" Margin="80" Height="34" Width="190" Command="{Binding SignUpCommand}"/>
     </Grid>
 </Window>
