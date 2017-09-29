@@ -39,15 +39,6 @@ namespace BoSi_Reminder
             }
         }
 
-        private void Hours_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // ... Get the ComboBox.
-            var comboBox = sender as ComboBox;
-
-            // ... Set SelectedItem as Window Title.
-            string value = comboBox.SelectedItem as string;
-            this.Title = "Selected: " + value;
-        }
 
         private void Minutes_Loaded(object sender, RoutedEventArgs e)
         {
@@ -66,16 +57,6 @@ namespace BoSi_Reminder
 
             // ... Make the first item selected.
             comboBox.SelectedIndex = 0;
-        }
-
-        private void Minutes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // ... Get the ComboBox.
-            var comboBox = sender as ComboBox;
-
-            // ... Set SelectedItem as Window Title.
-            string value = comboBox.SelectedItem as string;
-            this.Title = "Selected: " + value;
         }
 
         private void Hours_Loaded(object sender, RoutedEventArgs e)

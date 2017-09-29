@@ -35,5 +35,7 @@ namespace BoSi_Reminder
         {
 
         }
+
+        public List<Reminder> SortRemindList() => StationManager.CurrentUser.UsersReminders.OrderBy(o => o.ReactDate).ToList();
     }
 }

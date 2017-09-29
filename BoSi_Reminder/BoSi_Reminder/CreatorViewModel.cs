@@ -43,21 +43,21 @@ namespace BoSi_Reminder
         }
         
 
-        public int Hours
+        public String Hours
         {
-            get => _newReminder.ReactDate.Hour;
+            get => _newReminder.ReactDate.Hour.ToString();
             set
             {
-                _newReminder.ReactDate.AddHours(value);
+                _newReminder.ReactDate.AddHours(Convert.ToInt32(value));
             }
         }
 
-        public int Minutes
+        public String Minutes
         {
-            get => _newReminder.ReactDate.Minute;
+            get => _newReminder.ReactDate.Minute.ToString();
             set
             {
-                _newReminder.ReactDate.AddMinutes(value);
+                _newReminder.ReactDate.AddMinutes(Convert.ToInt32(value));
             }
         }
 
@@ -75,8 +75,8 @@ namespace BoSi_Reminder
         private void Create(Object obj)
         {
             
-            Date.AddHours(Hours);
-            Date.AddMinutes(Minutes);
+            Date.AddHours(Convert.ToInt32(Hours));
+            Date.AddMinutes(Convert.ToInt32(Minutes));
             if (DateTime.Now.CompareTo(Date)>0)
             {
                 MessageBox.Show("You cannot set reminder or earlier date or time");
@@ -85,7 +85,7 @@ namespace BoSi_Reminder
 
 
             StationManager.CurrentUser.UsersReminders.Add(new Reminder(Date, Text));
-            MessageBox.Show(Date + Text);
+            MessageBox.Show(Hours + Minutes );
 
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();

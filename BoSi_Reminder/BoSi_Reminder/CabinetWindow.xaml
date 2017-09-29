@@ -75,6 +75,7 @@
             <Calendar x:Name="Calendar"  HorizontalAlignment="Left" SelectionMode="SingleRange" Margin="10,68,0,0" Width="370" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
 
             <Popup x:Name="PopUp" StaysOpen="True"/>
+            <Button Content="Remind!" Margin="0,0,-0.2,0" Command="{Binding Command}" />
         </StackPanel>
 
 

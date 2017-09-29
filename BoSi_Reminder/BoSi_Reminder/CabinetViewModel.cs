@@ -15,9 +15,13 @@ namespace BoSi_Reminder
         private RelayCommand _logOutCommand;
         private RelayCommand _createCommand;
         //private RelayCommand _deleteCommand;
+        private RelayCommand _remindCommand;
 
+        public RelayCommand RemindCommand
+        {
+            get { return _remindCommand ?? (_remindCommand = new RelayCommand(obj => Remind(obj))); }
+        }
 
-       
 
         public RelayCommand LogoutCommand
         {
@@ -47,6 +51,14 @@ namespace BoSi_Reminder
             }
         }
 
+        private void Remind(Object obj)
+        {
+
+            Reminder first = StationManager.CurrentUser.SortRemindList().First<Reminder>();
+           
+            MessageBox.Show(first.ReactDate + first.Text);
+           
+        }
         protected virtual void OnRequestClose(bool isquitapp)
         {
 
