@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoSi_Reminder"
         mc:Ignorable="d"
-        Title="CabinetWindow" Height="700" Width="1000">
+        Title="CabinetWindow" Height="700" Width="1000" Loaded="Window_Loaded">
 
 
     <Window.Resources>
@@ -40,24 +40,15 @@
             <Setter Property="FontSize" Value="16pt"/>
         </Style>
 
-        <Style TargetType="ListBox">
-            <Setter Property="BorderBrush" Value="Transparent"/>
-        </Style>
 
-        <Style TargetType="Calendar">
-            <Setter Property="BorderBrush" Value="DodgerBlue"/>
-        </Style>
-        <Style TargetType="CalendarButton">
-            <Setter Property="Foreground" Value="OrangeRed"/>
-        </Style>
 
         <Style TargetType="ListBox">
             <Setter Property="BorderBrush" Value="BlueViolet"/>
         </Style>
-        
+
     </Window.Resources>
 
-    
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -67,26 +58,31 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="600"></ColumnDefinition>
-           
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="87*"/>
+            <ColumnDefinition Width="188.833"></ColumnDefinition>
+            <ColumnDefinition Width="411.167"/>
+
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock Name="UsernameBlock" Text="Oleksandra Bosa" Foreground="BlueViolet" FontWeight="Medium" FontSize="22pt" Margin="20"></TextBlock>
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0.333,0" Grid.ColumnSpan="3">
+            <TextBlock Name="UsernameBlock" Text="Oleksandra Bosa" Foreground="SlateBlue" FontWeight="Medium" FontSize="22pt" Margin="20"></TextBlock>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="0">
-            <DatePicker Name="DatePicker" SelectedDateFormat="Short" IsDropDownOpen="True" HorizontalAlignment="Left" Margin="10,68,0,0" Width="370" />
-            <Popup Name="PopUp" StaysOpen="True"></Popup>
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0.333,49.667" Grid.RowSpan="2" Grid.ColumnSpan="3">
+
+            <Calendar x:Name="Calendar"  HorizontalAlignment="Left" SelectionMode="SingleRange" Margin="10,68,0,0" Width="370" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
+
+            <Popup x:Name="PopUp" StaysOpen="True"/>
         </StackPanel>
 
 
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <TextBlock Name="DateBlock" Text="Wd, 09/27/2017" FontSize="24" Margin="10,10,0,0" Foreground="Orange"></TextBlock>
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="261,0,0.333,49.667" Grid.RowSpan="2" Grid.Column="2">
 
+            <Label Name="DateBlock" Content="" FontSize="24" Margin="10,10,0,0" Foreground="Orange"></Label>
 
-            <ListBox Height="500" Margin="10,0,20,0">
+            <ListBox Name="ListBox" Height="500" Margin="10,0,20,0">
 
                 <Grid Name="MessageBlock">
                     <TextBox Name="ReminderText" Height="60" TextWrapping="Wrap" Text="Do some stuff" Width="400" HorizontalAlignment="Right" Margin="100,20,0,0"/>
@@ -100,8 +96,8 @@
 
         </StackPanel>
 
-        <Button Grid.Row="0" Grid.Column="1" Name="LogOutButton" Style="{StaticResource LogOutStyle}" Content="Log out" HorizontalAlignment="Right"  Margin="0,10,30,0" Height="30" Width="150" Command="{Binding LogOutCommand}"/>
-        <Button Grid.Row="1" Grid.Column="0" Name="CreateReminder" Style="{StaticResource CreateStyle}" VerticalContentAlignment="Center" Content="Set new reminder" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,350,0,0" Height="60" Width="240" Command="{Binding CreateCommand}"/>
+        <Button Grid.Row="0" Grid.Column="4" Name="LogOutButton" Style="{StaticResource LogOutStyle}" Content="Log out" HorizontalAlignment="Right"  Margin="0,25,30.333,15" Height="30" Width="150" Command="{Binding LogOutCommand}"/>
+        <Button Grid.Row="1" Grid.Column="1" Name="CreateReminder" Style="{StaticResource CreateStyle}" VerticalContentAlignment="Center" Content="Set new reminder" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="64.833,350,76.333,0" Height="60" Width="240" Command="{Binding CreateCommand}" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

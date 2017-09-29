@@ -22,5 +22,8 @@ namespace BoSi_Reminder
             this.IsDone = false;
         }
 
+        public Reminder()
+        { }
+
     }
 }

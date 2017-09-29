@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoSi_Reminder"
         mc:Ignorable="d"
-        Title="CreatorWindow" Height="500" Width="500">
+        Title="CreatorWindow" Height="500" Width="500" Loaded="Window_Loaded">
 
     <Window.Resources>
         <Style TargetType="TextBlock">
@@ -50,8 +50,8 @@
         </Style>
 
     </Window.Resources>
-    
-    
+
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -67,20 +67,23 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0">
             <TextBlock HorizontalAlignment="Left" Margin="20,15,0,0" TextWrapping="NoWrap" Text="Setting a reminder..." FontSize="27" VerticalAlignment="Top"/>
-       </StackPanel>
+        </StackPanel>
 
         <Grid Grid.Row="1" Grid.Column="0">
-            <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="65,20,0,0" Height="30" Width="120"/>
-            <Label Content="Select time for your new reminder" Margin="4,60,0,0" FontSize="15"/>
-            <ComboBox Name="HourPicker" Width="40" Height="25" HorizontalAlignment="Left" Margin="70,-90,0,0"/>
-            <ComboBox Name="MinutePicker" Width="40" Height="25" HorizontalAlignment="Left" Margin="150,-90,0,0"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="37*"/>
+                <RowDefinition Height="293*"/>
+            </Grid.RowDefinitions>
+            <DatePicker  Name="DatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="65,20,0,0" Height="30" Width="120" SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2"/>
+            <ComboBox Name="Hours" Height="30" Width="40" Margin="65,89.667,141.667,173.666" SelectionChanged="Hours_SelectionChanged" Loaded="Hours_Loaded" SelectedItem="{Binding Hours, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+            <ComboBox Name="Minutes" Width="40" Height="30" Margin="145,89.667,61.667,173.666" Loaded="Minutes_Loaded" SelectionChanged="Minutes_SelectionChanged" SelectedItem="{Binding Minutes, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
         </Grid>
 
         <StackPanel Grid.Row="1" Grid.Column="1">
-            <TextBox HorizontalAlignment="Left" MinHeight="100" Margin="10,20,0,0" Width="220" Text="Write here" VerticalAlignment="Top"/>
+            <TextBox Name="ReminderText" HorizontalAlignment="Left" MinHeight="100" Margin="10,20,0,0" Width="220" VerticalAlignment="Top" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
-        <Button Grid.Row="2" Grid.Column="0" Content="Create" Name="CreateButton" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource Create}" />
+        <Button Grid.Row="2" Grid.Column="0" Content="Create" Name="CreateButton" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource Create}" Command="{Binding CreateCommand}" />
         <Button Grid.Row="2" Grid.Column="1" Content="Cancel" Name="CancelButton" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource Cancel}" />
 
     </Grid>

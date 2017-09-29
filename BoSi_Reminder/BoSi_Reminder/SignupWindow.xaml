@@ -40,16 +40,26 @@
             <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="Foreground" Value="SlateBlue"/>
         </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="DodgerBlue"/>
+        </Style>
     </Window.Resources>
     
     
     <Grid>
         <TextBlock Text="Sign up" HorizontalAlignment="Center" Margin="0,35,0,0"/>
         <StackPanel Margin="0,100,0,0">
+            <Label Content="Name"/>
             <TextBox Name="Name" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Surname"/>
             <TextBox Name="Surname" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Email"/>
             <TextBox Name="Email" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Login"/>
             <TextBox Name="Login" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Password"/>
             <PasswordBox Name="Password" Width="140pt" Margin="0,15,0,0" PasswordChanged="Password_OnPasswordChanged"/>
             <Button Name="SignUpButton" Content="Sign Up" Width="80" Height="30" Margin="0,40,0,0" Command="{Binding SignUpCommand}"/>
         </StackPanel>

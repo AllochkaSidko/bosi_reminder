@@ -41,5 +41,18 @@ namespace BoSi_Reminder
             }
         }
 
+        
+
+        
+private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.DateBlock.Content = DateTime.Now.ToString("dd/MM/yyyy");
+            this.UsernameBlock.Text = StationManager.CurrentUser.Name + " " + StationManager.CurrentUser.Surname;
+        }
+
+        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.DateBlock.Content = this.Calendar.SelectedDate.Value.ToString("dd/MM/yyyy");
+        }
     }
 }

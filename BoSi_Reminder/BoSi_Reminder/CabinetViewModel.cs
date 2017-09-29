@@ -11,10 +11,10 @@ namespace BoSi_Reminder
 {
     class CabinetViewModel : INotifyPropertyChanged
     {
-
+        private Reminder _selectedReminder;
         private RelayCommand _logOutCommand;
         private RelayCommand _createCommand;
-        private RelayCommand _deleteCommand;
+        //private RelayCommand _deleteCommand;
 
 
        
@@ -26,7 +26,7 @@ namespace BoSi_Reminder
 
         public RelayCommand CreateCommand
         {
-            get { return _logOutCommand ?? (_logOutCommand = new RelayCommand(obj => Create(obj))); }
+            get { return _createCommand ?? (_createCommand = new RelayCommand(obj => Create(obj))); }
         }
 
 
@@ -36,6 +36,15 @@ namespace BoSi_Reminder
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
             
+        }
+
+        public bool IsDone
+        {
+            get => _selectedReminder.IsDone;
+            set
+            {
+                _selectedReminder.IsDone = value;
+            }
         }
 
         protected virtual void OnRequestClose(bool isquitapp)
@@ -54,6 +63,9 @@ namespace BoSi_Reminder
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
+
 
     }
 }
