@@ -37,8 +37,29 @@
             <Setter Property="BorderThickness" Value="3"/>
             <Setter Property="BorderBrush" Value="Crimson"/>
             <Setter Property="FontWeight" Value="Heavy"/>
-            <Setter Property="FontSize" Value="16pt"/>
+            <Setter Property="FontSize" Value="12pt"/>
         </Style>
+
+        <Style TargetType="Button"
+               x:Key="DoneStyle">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="LimeGreen"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="BorderBrush" Value="LimeGreen"/>
+            <Setter Property="FontWeight" Value="Heavy"/>
+            <Setter Property="FontSize" Value="12pt"/>
+        </Style>
+
+        <Style TargetType="Button"
+               x:Key="RemindStyle">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="DodgerBlue"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="BorderBrush" Value="DodgerBlue"/>
+            <Setter Property="FontWeight" Value="Heavy"/>
+            <Setter Property="FontSize" Value="12pt"/>
+        </Style>
+
 
 
 
@@ -58,38 +79,36 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"></ColumnDefinition>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="87*"/>
-            <ColumnDefinition Width="188.833"></ColumnDefinition>
+            <ColumnDefinition Width="0*"></ColumnDefinition>
+            <ColumnDefinition Width="437*"/>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="136"></ColumnDefinition>
             <ColumnDefinition Width="411.167"/>
 
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0.333,0" Grid.ColumnSpan="3">
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0.333,0">
             <TextBlock Name="UsernameBlock" Text="Oleksandra Bosa" Foreground="SlateBlue" FontWeight="Medium" FontSize="22pt" Margin="20"></TextBlock>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0.333,49.667" Grid.RowSpan="2" Grid.ColumnSpan="3">
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0.333,49.667" Grid.RowSpan="2" Grid.ColumnSpan="2">
 
-            <Calendar x:Name="Calendar"  HorizontalAlignment="Left" SelectionMode="SingleRange" Margin="10,68,0,0" Width="370" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
+            <Calendar x:Name="Calendar"  HorizontalAlignment="Left" SelectionMode="SingleRange" Margin="40,68,0,0" Width="370" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
 
             <Popup x:Name="PopUp" StaysOpen="True"/>
-            <Button Content="Remind!" Margin="0,0,-0.2,0" Command="{Binding Command}" />
+
         </StackPanel>
 
 
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="261,0,0.333,49.667" Grid.RowSpan="2" Grid.Column="2">
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="6,0,0.333,49.667" Grid.RowSpan="2" Grid.Column="3">
 
             <Label Name="DateBlock" Content="" FontSize="24" Margin="10,10,0,0" Foreground="Orange"></Label>
 
-            <ListBox Name="ListBox" Height="500" Margin="10,0,20,0">
+            <ListBox Name="ListBox" Height="480" Margin="10,0,20,0">
 
                 <Grid Name="MessageBlock">
                     <TextBox Name="ReminderText" Height="60" TextWrapping="Wrap" Text="Do some stuff" Width="400" HorizontalAlignment="Right" Margin="100,20,0,0"/>
                     <TextBlock  Name="TimeBlock" Text="10.00 a.m." TextWrapping="Wrap" Margin="10,18,0,0" FontSize="17" Foreground="Orange"/>
-                    <CheckBox Content="" HorizontalAlignment="Left" Margin="40,55,0,0"/>
-                    <Button Name="DeleteReminder" Style="{StaticResource DeleteStyle}" VerticalContentAlignment="Center"  Content="-" Width="40" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,-55,0" />
                 </Grid>
 
 
@@ -97,8 +116,12 @@
 
         </StackPanel>
 
-        <Button Grid.Row="0" Grid.Column="4" Name="LogOutButton" Style="{StaticResource LogOutStyle}" Content="Log out" HorizontalAlignment="Right"  Margin="0,25,30.333,15" Height="30" Width="150" Command="{Binding LogOutCommand}"/>
-        <Button Grid.Row="1" Grid.Column="1" Name="CreateReminder" Style="{StaticResource CreateStyle}" VerticalContentAlignment="Center" Content="Set new reminder" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="64.833,350,76.333,0" Height="60" Width="240" Command="{Binding CreateCommand}" Grid.ColumnSpan="2"/>
+
+        <Button Grid.Row="0" Grid.Column="4" Name="LogOutButton" Style="{StaticResource LogOutStyle}" Content="Log out" HorizontalAlignment="Right"  Margin="0,25,30.333,15" Width="150" Command="{Binding LogOutCommand}"/>
+        <Button Grid.Row="1" Grid.Column="1" Name="RemindMeButton" Style="{StaticResource RemindStyle}" Content="Remind!" Width="100" HorizontalAlignment="Center" Command="{Binding Command}" Margin="174,270,163.333,240.667" />
+        <Button Grid.Row="1" Name="CreateReminder" Style="{StaticResource CreateStyle}" VerticalContentAlignment="Center" Content="Set new reminder" HorizontalAlignment="Center" Margin="108,345,89.333,144.667" Width="240" Command="{Binding CreateCommand}" Grid.Column="1"/>
+        <Button Grid.Row="1" Grid.Column="1" Name="DeleteReminder" Style="{StaticResource DeleteStyle}" VerticalContentAlignment="Center"  Content="Delete" Width="140" HorizontalAlignment="Center" Margin="58,455,239.333,55.667" />
+        <Button Grid.Row="1" Grid.Column="1" Name="IsDoneButton" Style="{StaticResource DoneStyle}" VerticalContentAlignment="Center"  Content="Done!" Width="140" HorizontalAlignment="Center" Margin="232,455,65.333,55.667" />
 
     </Grid>
 </Window>
