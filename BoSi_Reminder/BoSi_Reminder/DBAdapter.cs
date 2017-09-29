@@ -17,6 +17,11 @@ namespace BoSi_Reminder
                 new User("sasha", "password", "Sasha", "Bosa", "shuraka665@gmail.com"),
                 new User("alla", "password2", "Alla", "Sidko", "allochka.sidko@gmail.com")
             };
+
+
+
         }
+
+        
     }
 }
