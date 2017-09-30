@@ -107,5 +107,10 @@ namespace BoSi_Reminder
             }
 
         }
+
+        private void DisplayAll_Click(object sender, RoutedEventArgs e)
+        {
+            ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
+        }
     }
 }

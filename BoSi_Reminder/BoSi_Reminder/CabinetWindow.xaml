@@ -178,7 +178,7 @@
 
 
         <Button Grid.Row="0" Grid.Column="1" Name="LogOutButton" Style="{StaticResource LogOutStyle}" Content="Log out" HorizontalAlignment="Right"  Margin="0,0,20,0" Width="150" Height="40" Command="{Binding LogOutCommand}"/>
-        <Button Grid.Row="1" Grid.Column="1" Name="DisplayAll" Style="{StaticResource DisplayStyle}" Content="Display all" HorizontalAlignment="Right"  Margin="0,-510,20,0" Width="150" Height="40"/>
+        <Button Grid.Row="1" Grid.Column="1" Name="DisplayAll" Style="{StaticResource DisplayStyle}" Content="Display all" HorizontalAlignment="Right"  Margin="0,-510,20,0" Width="150" Height="40" Click="DisplayAll_Click"/>
         <Button Grid.Row="1" Grid.Column="0" Name="RemindMeButton" Style="{StaticResource RemindStyle}" Content="Remind!" Width="100" HorizontalAlignment="Center" Height="40" Command="{Binding RemindCommand}" Margin="0,140,0,0" />
         <Button Grid.Row="1" Grid.Column="0" Name="CreateReminder" Style="{StaticResource CreateStyle}" VerticalContentAlignment="Center" Content="Set new reminder" HorizontalAlignment="Center"  Height="60" Margin="0,280,0,0" Width="240" Command="{Binding CreateCommand}"/>
         <Button Grid.Row="1" Grid.Column="0" Name="DeleteReminder" Style="{StaticResource DeleteStyle}" VerticalContentAlignment="Center"  Content="Delete" Width="140" Height="40" HorizontalAlignment="Center" Margin="0,420,180,0" Click="DeleteReminder_Click"/>

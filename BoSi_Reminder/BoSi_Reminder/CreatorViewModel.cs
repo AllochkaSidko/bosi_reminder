@@ -33,6 +33,10 @@ namespace BoSi_Reminder
             }
         }
 
+        public RelayCommand CloseCommand
+        {
+            get { return _closeCommand ?? (_closeCommand = new RelayCommand(Close)); }
+        }
         public String Text
         {
             get => _newReminder.Text;
@@ -88,6 +92,13 @@ namespace BoSi_Reminder
             cabinetWindow.ShowDialog();
         }
 
+        private void Close(Object obj)
+        {
+            OnRequestClose(false);
+            CabinetWindow cabinetWindow = new CabinetWindow();
+            cabinetWindow.ShowDialog();
+
+        }
 
 
         protected virtual void OnRequestClose(bool isquitapp)
