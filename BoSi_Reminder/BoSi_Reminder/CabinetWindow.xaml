@@ -91,7 +91,9 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,500,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
 
             <Viewbox Width="500"  Margin="0,50,0,0">
-                <Calendar x:Name="Calendar" SelectionMode="SingleRange" Width="370" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
+                <Calendar x:Name="Calendar"  SelectionMode="MultipleRange"  Width="370" SelectedDatesChanged="Calendar_SelectedDatesChanged">
+                    
+                </Calendar>
             </Viewbox>
             <Popup x:Name="PopUp" StaysOpen="True"/>
 
@@ -105,9 +107,10 @@
             <ListBox  ItemsSource="{Binding UsersReminders}"  Name="ListBox" Height="480" Margin="10,0,20,0">
                 <ListBox.Resources>
                     <DataTemplate DataType="{x:Type local:Reminder}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label MaxWidth="49" Width="49" Content="{Binding ReactDate}" />
+                        <StackPanel Name ="StackPanel1" Orientation="Horizontal">
+                            <Label Name="ReminderDone" MaxWidth="49" Width="49" Content="{Binding ReactDate.TimeOfDay}" />
                             <TextBox  MaxWidth="49" Width="49" Text="{Binding Text}" />
+                            <CheckBox MaxWidth="49" Width="49" IsChecked="{Binding IsDone}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.Resources>

@@ -46,7 +46,8 @@ namespace BoSi_Reminder
         {
             this.DateBlock.Content = DateTime.Now.ToString("dd/MM/yyyy");
             this.UsernameBlock.Text = StationManager.CurrentUser.Name + " " + StationManager.CurrentUser.Surname;
-            //Fill();
+
+           // Calendar.SelectedDates = new List<DateTime>();
            
         }
 
@@ -87,6 +88,8 @@ namespace BoSi_Reminder
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             this.DateBlock.Content = this.Calendar.SelectedDate.Value.ToString("dd/MM/yyyy");
+            ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList().Where(r=>r.ReactDate.Date==Calendar.SelectedDate.Value);
+
         }
 
         private void DeleteReminder_Click(object sender, RoutedEventArgs e)
@@ -109,12 +112,14 @@ namespace BoSi_Reminder
         private void IsDoneButton_Click(object sender, RoutedEventArgs e)
         {
             int selectedIndex = ListBox.SelectedIndex;
+
+           
+            var item = ListBox.SelectedItem;
             var reminder = StationManager.CurrentUser.SortRemindList().ElementAtOrDefault(selectedIndex);
             if (reminder != null)
             {
                 StationManager.CurrentUser.UsersReminders.SingleOrDefault(r => r.Id == reminder.Id).IsDone = true;
-                var current = ListBox.Items[selectedIndex];
-                ListBox.Items[selectedIndex] = "DONE!";
+                ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
             }
             else
             {

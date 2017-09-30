@@ -11,11 +11,10 @@ namespace BoSi_Reminder
 {
     class CabinetViewModel : INotifyPropertyChanged
     {
-        private Reminder _selectedReminder;
+        
         private RelayCommand _logOutCommand;
         private RelayCommand _createCommand;
         private RelayCommand _deleteCommand;
-        private RelayCommand _doneCommand;
         private RelayCommand _remindCommand;
 
         public List<Reminder> UsersReminders { get; set; }
@@ -46,10 +45,7 @@ namespace BoSi_Reminder
             get { return _deleteCommand ?? (_deleteCommand = new RelayCommand(obj => Delete(obj))); }
         }
 
-        public RelayCommand DoneCommand
-        {
-            get { return _doneCommand ?? (_doneCommand = new RelayCommand(obj => Done(obj))); }
-        }
+       
 
 
         private void Create(Object obj)
@@ -81,14 +77,7 @@ namespace BoSi_Reminder
             loginWindow.ShowDialog();
         }
 
-        public bool IsDone
-        {
-            get => _selectedReminder.IsDone;
-            set
-            {
-                _selectedReminder.IsDone = value;
-            }
-        }
+      
 
         private void Remind(Object obj)
         {
@@ -100,7 +89,7 @@ namespace BoSi_Reminder
             }
             else
             {
-                MessageBox.Show(first.ReactDate + first.Text);
+                MessageBox.Show(first.ReactDate.ToString() + first.Text);
             }
         }
         protected virtual void OnRequestClose(bool isquitapp)
