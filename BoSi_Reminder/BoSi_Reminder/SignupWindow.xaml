@@ -10,7 +10,7 @@
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Width" Value="140pt"/>
-            <Setter Property="Margin" Value="0,10,0,0"/>
+            <Setter Property="Margin" Value="0,13,0,0"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="BorderBrush" Value="DodgerBlue"/>
             <Setter Property="Foreground" Value="Gold"/>
@@ -44,26 +44,39 @@
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Foreground" Value="DodgerBlue"/>
+            <Setter Property="Margin" Value="0,10,0,0"/>
+            <Setter Property="FontWeight" Value="Medium"/>
         </Style>
     </Window.Resources>
-    
-    
+
+
     <Grid>
-        <TextBlock Text="Sign up" HorizontalAlignment="Center" Margin="0,35,0,0"/>
-        <StackPanel Margin="0,100,0,0">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="450"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+      
+        <StackPanel Grid.Column="0" HorizontalAlignment="Right" Margin="110,115,0,0">
             <Label Content="Name"/>
-            <TextBox Name="Name" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="Surname"/>
-            <TextBox Name="Surname" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="Email"/>
-            <TextBox Name="Email" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="Login"/>
-            <TextBox Name="Login" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="Password"/>
-            <PasswordBox Name="Password" Width="140pt" Margin="0,15,0,0" PasswordChanged="Password_OnPasswordChanged"/>
-            <Button Name="SignUpButton" Content="Sign Up" Width="80" Height="30" Margin="0,40,0,0" Command="{Binding SignUpCommand}"/>
         </StackPanel>
 
-        
+        <StackPanel Grid.Column="1" Margin="0,30,180,0">
+            <TextBlock Text="Sign up" HorizontalAlignment="Center" Margin="0,0,0,40"/>
+            <TextBox Name="Name" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Name="Surname" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Name="Email" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Name="Login" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
+            <PasswordBox Name="Password" Width="140pt" Margin="0,15,0,0" PasswordChanged="Password_OnPasswordChanged"/>
+            
+        </StackPanel>
+        <Button Grid.Column="1" Name="SignUpButton" Content="Sign Up" Width="80" Height="30" Margin="0,300,200,0" Command="{Binding SignUpCommand}"/>
+
     </Grid>
 </Window>

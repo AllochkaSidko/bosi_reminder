@@ -61,12 +61,15 @@ private void Window_Loaded(object sender, RoutedEventArgs e)
                 label.Content = k.ReactDate;
                 label.Margin = new Thickness(10, 18, 0, 0);
                 label.FontSize = 17;
+                label.Foreground = System.Windows.Media.Brushes.Orange;
 
                 TextBox textbox = new TextBox();
                 textbox.Text = k.Text;
-                textbox.Margin = new Thickness(100, 20, 0, 0);
+                textbox.Margin = new Thickness(110, 20, 0, 0);
                 textbox.Height = 60;
-                textbox.Width = 400;
+                textbox.Width = 330;
+                textbox.Foreground = System.Windows.Media.Brushes.DodgerBlue;
+                textbox.BorderBrush = System.Windows.Media.Brushes.SlateBlue;
 
                 grid.Children.Add(label);
                 grid.Children.Add(textbox);
@@ -76,6 +79,9 @@ private void Window_Loaded(object sender, RoutedEventArgs e)
             }
            
         }
+
+
+       
 
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {

@@ -14,7 +14,7 @@
                x:Key="LogOutStyle">
             <Setter Property="Background" Value="White"/>
             <Setter Property="Foreground" Value="DodgerBlue"/>
-            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderThickness" Value="3"/>
             <Setter Property="BorderBrush" Value="DodgerBlue"/>
             <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="FontSize" Value="15"/>
@@ -79,49 +79,41 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0*"></ColumnDefinition>
-            <ColumnDefinition Width="437*"/>
-            <ColumnDefinition Width="9*"/>
-            <ColumnDefinition Width="136"></ColumnDefinition>
-            <ColumnDefinition Width="411.167"/>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
 
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0.333,0">
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,1,0">
             <TextBlock Name="UsernameBlock" Text="Oleksandra Bosa" Foreground="SlateBlue" FontWeight="Medium" FontSize="22pt" Margin="20"></TextBlock>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0.333,49.667" Grid.RowSpan="2" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,500,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
 
-            <Calendar x:Name="Calendar"  HorizontalAlignment="Left" SelectionMode="SingleRange" Margin="40,68,0,0" Width="370" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
-
+            <Viewbox Width="500"  Margin="0,50,0,0">
+                <Calendar x:Name="Calendar" SelectionMode="SingleRange" Width="370" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
+            </Viewbox>
             <Popup x:Name="PopUp" StaysOpen="True"/>
 
         </StackPanel>
 
 
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="6,0,0.333,49.667" Grid.RowSpan="2" Grid.Column="3">
+        <StackPanel Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="2" Grid.Column="6">
 
             <Label Name="DateBlock" Content="" FontSize="24" Margin="10,10,0,0" Foreground="Orange"></Label>
 
             <ListBox Name="ListBox" Height="480" Margin="10,0,20,0">
-
-                <Grid Name="MessageBlock">
-                    <TextBox Name="ReminderText" Height="60" TextWrapping="Wrap" Text="Do some stuff" Width="400" HorizontalAlignment="Right" Margin="100,20,0,0"/>
-                    <TextBlock  Name="TimeBlock" Text="10.00 a.m." TextWrapping="Wrap" Margin="10,18,0,0" FontSize="17" Foreground="Orange"/>
-                </Grid>
-
 
             </ListBox>
 
         </StackPanel>
 
 
-        <Button Grid.Row="0" Grid.Column="4" Name="LogOutButton" Style="{StaticResource LogOutStyle}" Content="Log out" HorizontalAlignment="Right"  Margin="0,25,30.333,15" Width="150" Command="{Binding LogOutCommand}"/>
-        <Button Grid.Row="1" Grid.Column="1" Name="RemindMeButton" Style="{StaticResource RemindStyle}" Content="Remind!" Width="100" HorizontalAlignment="Center" Command="{Binding Command}" Margin="174,270,163.333,240.667" />
-        <Button Grid.Row="1" Name="CreateReminder" Style="{StaticResource CreateStyle}" VerticalContentAlignment="Center" Content="Set new reminder" HorizontalAlignment="Center" Margin="108,345,89.333,144.667" Width="240" Command="{Binding CreateCommand}" Grid.Column="1"/>
-        <Button Grid.Row="1" Grid.Column="1" Name="DeleteReminder" Style="{StaticResource DeleteStyle}" VerticalContentAlignment="Center"  Content="Delete" Width="140" HorizontalAlignment="Center" Margin="58,455,239.333,55.667" />
-        <Button Grid.Row="1" Grid.Column="1" Name="IsDoneButton" Style="{StaticResource DoneStyle}" VerticalContentAlignment="Center"  Content="Done!" Width="140" HorizontalAlignment="Center" Margin="232,455,65.333,55.667" />
+        <Button Grid.Row="0" Grid.Column="1" Name="LogOutButton" Style="{StaticResource LogOutStyle}" Content="Log out" HorizontalAlignment="Right"  Margin="0,0,20,0" Width="150" Height="40" Command="{Binding LogOutCommand}"/>
+        <Button Grid.Row="1" Grid.Column="0" Name="RemindMeButton" Style="{StaticResource RemindStyle}" Content="Remind!" Width="100" HorizontalAlignment="Center" Height="40" Command="{Binding RemindCommand}" Margin="0,140,0,0" />
+        <Button Grid.Row="1" Grid.Column="0" Name="CreateReminder" Style="{StaticResource CreateStyle}" VerticalContentAlignment="Center" Content="Set new reminder" HorizontalAlignment="Center"  Height="60" Margin="0,280,0,0" Width="240" Command="{Binding CreateCommand}"/>
+        <Button Grid.Row="1" Grid.Column="0" Name="DeleteReminder" Style="{StaticResource DeleteStyle}" VerticalContentAlignment="Center"  Content="Delete" Width="140" Height="40" HorizontalAlignment="Center" Margin="0,420,180,0" />
+        <Button Grid.Row="1" Grid.Column="0" Name="IsDoneButton" Style="{StaticResource DoneStyle}" VerticalContentAlignment="Center"  Content="Done!" Width="140" HorizontalAlignment="Center" Height="40" Margin="180,420,0,0" />
 
     </Grid>
 </Window>
