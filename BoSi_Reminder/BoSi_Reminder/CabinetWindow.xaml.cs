@@ -59,7 +59,7 @@ private void Window_Loaded(object sender, RoutedEventArgs e)
                 Grid grid = new Grid();
 
                 Label label = new Label();
-                label.Content = k.ReactDate;
+                label.Content = k.ReactDate.ToString();
                 label.Margin = new Thickness(10, 18, 0, 0);
                 label.FontSize = 17;
                 label.Foreground = System.Windows.Media.Brushes.Orange;
