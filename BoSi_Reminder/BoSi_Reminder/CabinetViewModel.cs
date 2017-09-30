@@ -18,6 +18,13 @@ namespace BoSi_Reminder
         private RelayCommand _doneCommand;
         private RelayCommand _remindCommand;
 
+        public List<Reminder> UsersReminders { get; set; }
+
+        public CabinetViewModel()
+        {
+            UsersReminders = StationManager.CurrentUser.SortRemindList();
+        }
+
         public RelayCommand RemindCommand
         {
             get { return _remindCommand ?? (_remindCommand = new RelayCommand(obj => Remind(obj))); }

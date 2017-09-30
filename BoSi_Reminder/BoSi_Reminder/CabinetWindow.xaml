@@ -102,8 +102,15 @@
 
             <Label Name="DateBlock" Content="" FontSize="24" Margin="10,10,0,0" Foreground="Orange"></Label>
 
-            <ListBox Name="ListBox" Height="480" Margin="10,0,20,0">
-
+            <ListBox  ItemsSource="{Binding UsersReminders}"  Name="ListBox" Height="480" Margin="10,0,20,0">
+                <ListBox.Resources>
+                    <DataTemplate DataType="{x:Type local:Reminder}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label MaxWidth="49" Width="49" Content="{Binding ReactDate}" />
+                            <TextBox  MaxWidth="49" Width="49" Text="{Binding Text}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.Resources>
             </ListBox>
 
         </StackPanel>

@@ -40,20 +40,19 @@ namespace BoSi_Reminder
                 Environment.Exit(0);
             }
         }
-
         
-
         
-private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.DateBlock.Content = DateTime.Now.ToString("dd/MM/yyyy");
             this.UsernameBlock.Text = StationManager.CurrentUser.Name + " " + StationManager.CurrentUser.Surname;
-            Fill();
+            //Fill();
            
         }
 
         private void Fill()
         {
+            /*
             foreach (var k in StationManager.CurrentUser.SortRemindList())
             {
                 Grid grid = new Grid();
@@ -78,9 +77,8 @@ private void Window_Loaded(object sender, RoutedEventArgs e)
 
 
             }
-
-
-
+            */
+            
         }
 
 
@@ -98,7 +96,7 @@ private void Window_Loaded(object sender, RoutedEventArgs e)
             if (reminder != null)
             {
                 StationManager.CurrentUser.UsersReminders.Remove(reminder);
-                ListBox.Items.RemoveAt(selectedIndex);
+                ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
             }
             else
             {
