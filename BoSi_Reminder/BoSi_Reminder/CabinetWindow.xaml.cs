@@ -48,12 +48,13 @@ private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.DateBlock.Content = DateTime.Now.ToString("dd/MM/yyyy");
             this.UsernameBlock.Text = StationManager.CurrentUser.Name + " " + StationManager.CurrentUser.Surname;
+            Fill();
+           
+        }
 
-
-
-            StationManager.CurrentUser.UsersReminders.Add(new Reminder(new DateTime(2017,10,13),"Alla"));
-            StationManager.CurrentUser.UsersReminders.Add(new Reminder(new DateTime(2017, 11, 17), "Alla2"));
-            foreach (var k in StationManager.CurrentUser.UsersReminders)
+        private void Fill()
+        {
+            foreach (var k in StationManager.CurrentUser.SortRemindList())
             {
                 Grid grid = new Grid();
 
@@ -74,12 +75,48 @@ private void Window_Loaded(object sender, RoutedEventArgs e)
 
 
             }
-           
+
+
+
         }
 
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             this.DateBlock.Content = this.Calendar.SelectedDate.Value.ToString("dd/MM/yyyy");
+        }
+
+        private void DeleteReminder_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = ListBox.SelectedIndex;
+            var reminder = StationManager.CurrentUser.SortRemindList().ElementAtOrDefault(selectedIndex);
+            if (reminder != null)
+            {
+                StationManager.CurrentUser.UsersReminders.Remove(reminder);
+                ListBox.Items.RemoveAt(selectedIndex);
+            }
+            else
+            {
+                MessageBox.Show("Reminder not found!");
+            }
+           
+            
+        }
+
+        private void IsDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = ListBox.SelectedIndex;
+            var reminder = StationManager.CurrentUser.SortRemindList().ElementAtOrDefault(selectedIndex);
+            if (reminder != null)
+            {
+                StationManager.CurrentUser.UsersReminders.SingleOrDefault(r => r.Id == reminder.Id).IsDone = true;
+                var current = ListBox.Items[selectedIndex];
+                ListBox.Items[selectedIndex] = "DONE!";
+            }
+            else
+            {
+                MessageBox.Show("Reminder not found!");
+            }
+
         }
     }
 }

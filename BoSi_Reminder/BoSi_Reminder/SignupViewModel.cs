@@ -99,7 +99,9 @@ namespace BoSi_Reminder
                 MessageBox.Show("User with this username already exists");
                 return;
             }
-            DBAdapter.Users.Add(new User(Login, Password, Name, Surname, Email));
+            User newuser = new User(Login, Password, Name, Surname, Email);
+            DBAdapter.Users.Add(newuser);
+            StationManager.CurrentUser = newuser;
             MessageBox.Show("User successfully created");
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();

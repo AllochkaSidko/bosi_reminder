@@ -106,10 +106,10 @@
 
             <ListBox Name="ListBox" Height="480" Margin="10,0,20,0">
 
-                <Grid Name="MessageBlock">
+                <!--Grid Name="MessageBlock">
                     <TextBox Name="ReminderText" Height="60" TextWrapping="Wrap" Text="Do some stuff" Width="400" HorizontalAlignment="Right" Margin="100,20,0,0"/>
                     <TextBlock  Name="TimeBlock" Text="10.00 a.m." TextWrapping="Wrap" Margin="10,18,0,0" FontSize="17" Foreground="Orange"/>
-                </Grid>
+                </-->
 
 
             </ListBox>
@@ -118,10 +118,10 @@
 
 
         <Button Grid.Row="0" Grid.Column="4" Name="LogOutButton" Style="{StaticResource LogOutStyle}" Content="Log out" HorizontalAlignment="Right"  Margin="0,25,30.333,15" Width="150" Command="{Binding LogOutCommand}"/>
-        <Button Grid.Row="1" Grid.Column="1" Name="RemindMeButton" Style="{StaticResource RemindStyle}" Content="Remind!" Width="100" HorizontalAlignment="Center" Command="{Binding Command}" Margin="174,270,163.333,240.667" />
+        <Button Grid.Row="1" Grid.Column="1" Name="RemindMeButton" Style="{StaticResource RemindStyle}" Content="Remind!" Width="100" HorizontalAlignment="Center" Command="{Binding RemindCommand}" Margin="174,270,163.333,240.667" />
         <Button Grid.Row="1" Name="CreateReminder" Style="{StaticResource CreateStyle}" VerticalContentAlignment="Center" Content="Set new reminder" HorizontalAlignment="Center" Margin="108,345,89.333,144.667" Width="240" Command="{Binding CreateCommand}" Grid.Column="1"/>
-        <Button Grid.Row="1" Grid.Column="1" Name="DeleteReminder" Style="{StaticResource DeleteStyle}" VerticalContentAlignment="Center"  Content="Delete" Width="140" HorizontalAlignment="Center" Margin="58,455,239.333,55.667" />
-        <Button Grid.Row="1" Grid.Column="1" Name="IsDoneButton" Style="{StaticResource DoneStyle}" VerticalContentAlignment="Center"  Content="Done!" Width="140" HorizontalAlignment="Center" Margin="232,455,65.333,55.667" />
+        <Button Grid.Row="1" Grid.Column="1" Name="DeleteReminder" Style="{StaticResource DeleteStyle}" VerticalContentAlignment="Center"  Content="Delete" Width="140" HorizontalAlignment="Center" Margin="58,455,239.333,55.667" Command="{Binding DeleteCommand}" Click="DeleteReminder_Click"/>
+        <Button Grid.Row="1" Grid.Column="1" Name="IsDoneButton" Style="{StaticResource DoneStyle}" VerticalContentAlignment="Center"  Content="Done!" Width="140" HorizontalAlignment="Center" Margin="232,455,65.333,55.667" Command="{Binding DoneCommand}" Click="IsDoneButton_Click"/>
 
     </Grid>
 </Window>

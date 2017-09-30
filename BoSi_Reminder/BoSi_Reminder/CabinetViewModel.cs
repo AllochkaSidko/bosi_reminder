@@ -14,7 +14,8 @@ namespace BoSi_Reminder
         private Reminder _selectedReminder;
         private RelayCommand _logOutCommand;
         private RelayCommand _createCommand;
-        //private RelayCommand _deleteCommand;
+        private RelayCommand _deleteCommand;
+        private RelayCommand _doneCommand;
         private RelayCommand _remindCommand;
 
         public RelayCommand RemindCommand
@@ -33,6 +34,16 @@ namespace BoSi_Reminder
             get { return _createCommand ?? (_createCommand = new RelayCommand(obj => Create(obj))); }
         }
 
+        public RelayCommand DeleteCommand
+        {
+            get { return _deleteCommand ?? (_deleteCommand = new RelayCommand(obj => Delete(obj))); }
+        }
+
+        public RelayCommand DoneCommand
+        {
+            get { return _doneCommand ?? (_doneCommand = new RelayCommand(obj => Done(obj))); }
+        }
+
 
         private void Create(Object obj)
         {
@@ -40,6 +51,20 @@ namespace BoSi_Reminder
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
             
+        }
+
+        private void Delete(Object obj)
+        {
+
+            
+
+        }
+
+        private void Done(Object obj)
+        {
+
+           
+
         }
 
         public bool IsDone
