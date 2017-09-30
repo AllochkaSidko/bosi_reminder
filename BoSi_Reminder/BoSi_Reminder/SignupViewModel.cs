@@ -103,6 +103,7 @@ namespace BoSi_Reminder
             DBAdapter.Users.Add(newuser);
             StationManager.CurrentUser = newuser;
             MessageBox.Show("User successfully created");
+            OnRequestClose(false);
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();
         }

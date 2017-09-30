@@ -24,9 +24,9 @@ namespace BoSi_Reminder
         }
 
 
-        public RelayCommand LogoutCommand
+        public RelayCommand LogOutCommand
         {
-            get { return _logOutCommand ?? (_logOutCommand = new RelayCommand(obj => OnRequestClose(true))); }
+            get { return _logOutCommand ?? (_logOutCommand = new RelayCommand(LogOut)); }
         }
 
         public RelayCommand CreateCommand
@@ -47,7 +47,7 @@ namespace BoSi_Reminder
 
         private void Create(Object obj)
         {
-
+            OnRequestClose(false);
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
             
@@ -67,6 +67,13 @@ namespace BoSi_Reminder
 
         }
 
+        private void LogOut(object obj)
+        {
+            OnRequestClose(false);
+            var loginWindow = new LoginWindow();
+            loginWindow.ShowDialog();
+        }
+
         public bool IsDone
         {
             get => _selectedReminder.IsDone;
@@ -79,10 +86,15 @@ namespace BoSi_Reminder
         private void Remind(Object obj)
         {
 
-            Reminder first = StationManager.CurrentUser.SortRemindList().First<Reminder>();
-           
-            MessageBox.Show(first.ReactDate + first.Text);
-           
+            Reminder first = StationManager.CurrentUser.SortRemindList()?.First();
+            if (first == null)
+            {
+                MessageBox.Show("You haven't any reminders");
+            }
+            else
+            {
+                MessageBox.Show(first.ReactDate + first.Text);
+            }
         }
         protected virtual void OnRequestClose(bool isquitapp)
         {

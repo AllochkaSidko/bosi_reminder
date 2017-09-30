@@ -82,14 +82,13 @@ namespace BoSi_Reminder
                 MessageBox.Show("You cannot set reminder or earlier date or time");
                 return;
             }
-
-
+            
             StationManager.CurrentUser.UsersReminders.Add(new Reminder(Date, Text));
             MessageBox.Show(Hours + Minutes );
 
+            OnRequestClose(false);
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();
-            OnRequestClose(false);
         }
 
 

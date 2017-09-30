@@ -36,6 +36,11 @@ namespace BoSi_Reminder
 
         }
 
-        public List<Reminder> SortRemindList() => StationManager.CurrentUser.UsersReminders.OrderBy(o => o.ReactDate).ToList();
+        public List<Reminder> SortRemindList()
+        {
+            if (UsersReminders == null || UsersReminders.Count == 0)
+                return null;
+            return StationManager.CurrentUser.UsersReminders?.OrderBy(o => o.ReactDate)?.ToList();
+        }
     }
 }

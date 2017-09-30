@@ -77,17 +77,17 @@ namespace BoSi_Reminder
             }
 
             StationManager.CurrentUser = currentUser;
+            OnRequestClose(false);
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();
-            OnRequestClose(false);
         }
 
         private void SignUp(Object obj)
         {
-            
+            OnRequestClose(false);
             SignupWindow signupWindow = new SignupWindow();
             signupWindow.ShowDialog();
-            OnRequestClose(false);
+            
         }
 
        
