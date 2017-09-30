@@ -65,10 +65,12 @@ namespace BoSi_Reminder
 
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r=>r.ReactDate.Date==Calendar.SelectedDate.Value);
-            Fill();
-            this.DateBlock.Content = this.Calendar.SelectedDate.Value.ToString("dd/MM/yyyy");
+            if (Calendar.SelectedDate != null)
+            {
+                ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
+                Fill();
+                this.DateBlock.Content = this.Calendar.SelectedDate.Value.ToString("dd/MM/yyyy");
+            }
 
         }
 
@@ -78,8 +80,12 @@ namespace BoSi_Reminder
             var reminder = StationManager.CurrentUser.SortRemindList().ElementAtOrDefault(selectedIndex);
             if (reminder != null)
             {
+      
                 StationManager.CurrentUser.UsersReminders.Remove(reminder);
-                ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
+                if (Calendar.SelectedDate != null)
+                    ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
+                else
+                    ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
             }
             else
             {
@@ -99,7 +105,11 @@ namespace BoSi_Reminder
             if (reminder != null)
             {
                 StationManager.CurrentUser.UsersReminders.SingleOrDefault(r => r.Id == reminder.Id).IsDone = true;
+                if(Calendar.SelectedDate!=null)
                 ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
+                else
+                    ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
+
             }
             else
             {
@@ -111,6 +121,7 @@ namespace BoSi_Reminder
         private void DisplayAll_Click(object sender, RoutedEventArgs e)
         {
             ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
+            Calendar.SelectedDate = null;
         }
     }
 }
