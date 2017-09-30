@@ -26,11 +26,12 @@ namespace BoSi_Reminder
             loginWindow.ShowDialog();
             InitializeComponent();
             AppDomain.CurrentDomain.ProcessExit += (sender, args) => OnExit(sender, args);
+              
         }
 
         private void OnExit(object obj, EventArgs a)
         {
-            MessageBox.Show("Salut!");
+           
             Environment.Exit(0);
         }
     }

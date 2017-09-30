@@ -69,7 +69,7 @@ namespace BoSi_Reminder
         {
 
             var currentUser = DBAdapter.Users.FirstOrDefault(user => user.Login == Login &&
-                                                                     user.Password == Password);
+                                                                     user.Password == User.Hash(Password));
             if (currentUser == null)
             {
                 MessageBox.Show("Wrong Username or Password");

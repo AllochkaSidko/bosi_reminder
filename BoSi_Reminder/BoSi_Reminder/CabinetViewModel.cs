@@ -89,7 +89,8 @@ namespace BoSi_Reminder
             }
             else
             {
-                MessageBox.Show(first.ReactDate.ToString() + first.Text);
+               
+                MessageBox.Show(first.Text, first.ReactDate.ToString());
             }
         }
         protected virtual void OnRequestClose(bool isquitapp)

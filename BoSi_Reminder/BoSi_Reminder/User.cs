@@ -20,7 +20,7 @@ namespace BoSi_Reminder
 
         public User(string login, string password, string name, string surname, string email)
         {
-            this.Password = password;
+            this.Password = Hash(password);
             this.Login = login;
             this.Name = name;
             this.Surname = surname;
@@ -41,6 +41,13 @@ namespace BoSi_Reminder
             if (UsersReminders == null || UsersReminders.Count == 0)
                 return null;
             return StationManager.CurrentUser.UsersReminders?.OrderBy(o => o.ReactDate)?.ToList();
+        }
+
+        public static string Hash(string password)
+        {
+            var bytes = new UTF8Encoding().GetBytes(password);
+            var hashBytes = System.Security.Cryptography.MD5.Create().ComputeHash(bytes);
+            return Convert.ToBase64String(hashBytes);
         }
     }
 }

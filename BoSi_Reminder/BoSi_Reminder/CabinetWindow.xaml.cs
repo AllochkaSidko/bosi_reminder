@@ -25,6 +25,8 @@ namespace BoSi_Reminder
             CabinetViewModel = new CabinetViewModel();
             CabinetViewModel.RequestClose += Close;
             DataContext = CabinetViewModel;
+            
+
         }
 
         private CabinetViewModel CabinetViewModel { get; set; }
@@ -44,42 +46,18 @@ namespace BoSi_Reminder
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.DateBlock.Content = DateTime.Now.ToString("dd/MM/yyyy");
+            
             this.UsernameBlock.Text = StationManager.CurrentUser.Name + " " + StationManager.CurrentUser.Surname;
+            Fill();
+            this.DateBlock.Content = DateTime.Now.ToString("dd/MM/yyyy");
 
-           // Calendar.SelectedDates = new List<DateTime>();
-           
+
         }
 
         private void Fill()
         {
-            /*
-            foreach (var k in StationManager.CurrentUser.SortRemindList())
-            {
-                Grid grid = new Grid();
-
-                Label label = new Label();
-                label.Content = k.ReactDate.ToString();
-                label.Margin = new Thickness(10, 18, 0, 0);
-                label.FontSize = 17;
-                label.Foreground = System.Windows.Media.Brushes.Orange;
-
-                TextBox textbox = new TextBox();
-                textbox.Text = k.Text;
-                textbox.Margin = new Thickness(110, 20, 0, 0);
-                textbox.Height = 60;
-                textbox.Width = 330;
-                textbox.Foreground = System.Windows.Media.Brushes.DodgerBlue;
-                textbox.BorderBrush = System.Windows.Media.Brushes.SlateBlue;
-
-                grid.Children.Add(label);
-                grid.Children.Add(textbox);
-                ListBox.Items.Add(grid);
-
-
-            }
-            */
-            
+            foreach (var d in StationManager.CurrentUser.UsersReminders)
+                Calendar.SelectedDates.Add(d.ReactDate);
         }
 
 
@@ -87,8 +65,10 @@ namespace BoSi_Reminder
 
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
+            
+            ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r=>r.ReactDate.Date==Calendar.SelectedDate.Value);
+            Fill();
             this.DateBlock.Content = this.Calendar.SelectedDate.Value.ToString("dd/MM/yyyy");
-            ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList().Where(r=>r.ReactDate.Date==Calendar.SelectedDate.Value);
 
         }
 
@@ -99,7 +79,7 @@ namespace BoSi_Reminder
             if (reminder != null)
             {
                 StationManager.CurrentUser.UsersReminders.Remove(reminder);
-                ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
+                ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
             }
             else
             {
@@ -119,7 +99,7 @@ namespace BoSi_Reminder
             if (reminder != null)
             {
                 StationManager.CurrentUser.UsersReminders.SingleOrDefault(r => r.Id == reminder.Id).IsDone = true;
-                ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
+                ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
             }
             else
             {

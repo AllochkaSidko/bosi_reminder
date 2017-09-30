@@ -102,7 +102,7 @@ namespace BoSi_Reminder
             User newuser = new User(Login, Password, Name, Surname, Email);
             DBAdapter.Users.Add(newuser);
             StationManager.CurrentUser = newuser;
-            MessageBox.Show("User successfully created");
+            
             OnRequestClose(false);
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();
