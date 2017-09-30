@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoSi_Reminder"
         mc:Ignorable="d"
-        Title="CreatorWindow" Height="500" Width="500" Loaded="Window_Loaded">
+        Title="CreatorWindow" MaxHeight="500" Height="500" MaxWidth="500" Width="500" Loaded="Window_Loaded">
 
     <Window.Resources>
         <Style TargetType="TextBlock">
@@ -75,8 +75,8 @@
                 <RowDefinition Height="293*"/>
             </Grid.RowDefinitions>
             <DatePicker  Name="DatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="65,20,0,0" Height="30" Width="120" SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2"/>
-            <ComboBox Name="Hours" Height="30" Width="40" Margin="65,89.667,141.667,173.666"  Loaded="Hours_Loaded" SelectedItem="{Binding Hours, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
-            <ComboBox Name="Minutes" Width="40" Height="30" Margin="145,89.667,61.667,173.666" Loaded="Minutes_Loaded" SelectedItem="{Binding Minutes, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+            <ComboBox Name="Hours" Height="30" Width="60" Margin="-80,-80,0,0" FontWeight="Medium"  Loaded="Hours_Loaded" SelectedItem="{Binding Hours, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+            <ComboBox Name="Minutes" Width="60" Height="30" Margin="120,-80,0,0" FontWeight="Medium" Loaded="Minutes_Loaded" SelectedItem="{Binding Minutes, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
         </Grid>
 
         <StackPanel Grid.Row="1" Grid.Column="1">

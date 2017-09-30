@@ -85,7 +85,7 @@ namespace BoSi_Reminder
             Reminder first = StationManager.CurrentUser.SortRemindList()?.First();
             if (first == null)
             {
-                MessageBox.Show("You haven't any reminders");
+                MessageBox.Show("You haven't got any reminders");
             }
             else
             {
