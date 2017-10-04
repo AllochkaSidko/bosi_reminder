@@ -21,6 +21,7 @@ namespace BoSi_Reminder
             this._newReminder = newReminder;
         }
 
+        //перевірка чи заповнені всі поля
         public RelayCommand CreateCommand
         {
             get
@@ -75,18 +76,21 @@ namespace BoSi_Reminder
             }
         }
 
-
+        //метод створення нагадування
         private void Create(Object obj)
         {
             var date = new DateTime(Date.Year, Date.Month, Date.Day, Hours, Minutes, 0);
+            //перевірка чи встановлена дата нагадування не раніше поточної
             if (DateTime.Now.CompareTo(date)>0)
             {
                 MessageBox.Show("You cannot set reminder or earlier date or time");
                 return;
             }
-            
+
+            //додаваємо нове нагадування користувачу
             StationManager.CurrentUser.UsersReminders.Add(new Reminder(date, Text));
-            
+
+            //перехід назад на вікно Кабінету
             OnRequestClose(false);
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();
@@ -103,10 +107,7 @@ namespace BoSi_Reminder
 
         protected virtual void OnRequestClose(bool isquitapp)
         {
-
-
             RequestClose?.Invoke(isquitapp);
-
         }
 
         internal event CloseHandler RequestClose;

@@ -9,6 +9,8 @@ namespace BoSi_Reminder
 {
     public static class ValidatorExtensions
     {
+        //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
+        //валідація пошти користувача з використанням регулярного виразу
         public static bool IsValidEmailAddress(this string s)
         {
             Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");

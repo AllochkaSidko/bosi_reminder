@@ -30,6 +30,7 @@ namespace BoSi_Reminder
         }
 
         private CabinetViewModel CabinetViewModel { get; set; }
+        //змінна для відслідковування чи увімкнений режим "Показати все"
         bool isDisplayAll = false;
        
 
@@ -42,8 +43,8 @@ namespace BoSi_Reminder
                 Environment.Exit(0);
             }
         }
-        
-        
+
+        //при завантаженні вікна вводиться ім'я поточного користувача та сьогоднішню дату
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
@@ -54,6 +55,8 @@ namespace BoSi_Reminder
 
         }
 
+
+        //заповнення масиву для виділення дат, на які встановлено нагадування
         private void Fill()
         {
             foreach (var d in StationManager.CurrentUser.UsersReminders)
@@ -61,8 +64,8 @@ namespace BoSi_Reminder
         }
 
 
-       
 
+        //виводить нагадування за обраною на календарі датою та відображає цю дату в текстовому блоці
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Calendar.SelectedDate != null)
@@ -71,18 +74,26 @@ namespace BoSi_Reminder
                 this.DateBlock.Content = this.Calendar.SelectedDate.Value.ToString("dd/MM/yyyy");
                 
             }
+            //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
             Fill();
 
         }
 
+        //видалення обраного нагадування
         private void DeleteReminder_Click(object sender, RoutedEventArgs e)
         {
             int selectedIndex = ListBox.SelectedIndex;
+
+            //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
+            //пошук обраного нагадування зі списку користувача
             var reminder = StationManager.CurrentUser.SortRemindList()?.ElementAtOrDefault(selectedIndex);
+            //якщо нагадування існує то видаляємо
+            //в іншому випадку виводимо повідомлення про помилку
             if (reminder != null)
             {
-      
                 StationManager.CurrentUser.UsersReminders.Remove(reminder);
+                //якщо не обрано режим "Показати все" то відображаємо нагадування за обраною датою
+                //в іншому випадку виводимо всі
                 if (!isDisplayAll)
                     ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
                 else
@@ -96,14 +107,17 @@ namespace BoSi_Reminder
             
         }
 
+        //позначення нагадування як виконаного(аналогічно видаленню)
         private void IsDoneButton_Click(object sender, RoutedEventArgs e)
         {
             int selectedIndex = ListBox.SelectedIndex;
 
             var item = ListBox.SelectedItem;
+            //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
             var reminder = StationManager.CurrentUser.SortRemindList()?.ElementAtOrDefault(selectedIndex);
             if (reminder != null)
             {
+                //присвоєння властивості isDone значення true
                 StationManager.CurrentUser.UsersReminders.SingleOrDefault(r => r.Id == reminder.Id).IsDone = true;
                 if (!isDisplayAll)
                    ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
@@ -118,6 +132,7 @@ namespace BoSi_Reminder
 
         }
 
+        //відобразити всі нагадування користувача
         private void DisplayAll_Click(object sender, RoutedEventArgs e)
         {
             
@@ -126,6 +141,20 @@ namespace BoSi_Reminder
             ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
             this.DateBlock.Content = "";
 
+        }
+
+
+        //---------------ВИПРАВЛЕНА ПОМИЛКА---------------//
+        //відображення дати нагадування при натисненні на ньому в списку, коли увімкнений режим "Показати все"
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int selectedIndex = ListBox.SelectedIndex;
+            var reminder = StationManager.CurrentUser.SortRemindList()?.ElementAtOrDefault(selectedIndex);
+
+            if (isDisplayAll)
+            {
+                DateBlock.Content = reminder?.ReactDate.Date.ToString("dd/MM/yyyy");
+            }
         }
     }
 }

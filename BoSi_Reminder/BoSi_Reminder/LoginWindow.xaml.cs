@@ -48,11 +48,5 @@ namespace BoSi_Reminder
         }
 
 
-        private void Login_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        
     }
 }

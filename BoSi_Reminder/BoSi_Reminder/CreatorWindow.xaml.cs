@@ -39,7 +39,7 @@ namespace BoSi_Reminder
             }
         }
 
-
+        //заповнення спадного списку для обирання хвилин
         private void Minutes_Loaded(object sender, RoutedEventArgs e)
         {
             List<string> data = new List<string>();
@@ -59,6 +59,7 @@ namespace BoSi_Reminder
             comboBox.SelectedIndex = 0;
         }
 
+        //заповнення спадного списку для обирання годин
         private void Hours_Loaded(object sender, RoutedEventArgs e)
         {
             List<string> data = new List<string>();
@@ -76,6 +77,7 @@ namespace BoSi_Reminder
             comboBox.SelectedIndex = 0;
         }
 
+        //встановлення поточної дати за замовчуванням
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.DatePicker.SelectedDate = DateTime.Now;

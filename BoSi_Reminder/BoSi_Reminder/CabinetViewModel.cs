@@ -17,6 +17,8 @@ namespace BoSi_Reminder
         private RelayCommand _deleteCommand;
         private RelayCommand _remindCommand;
 
+
+        //список для збереження всіх нагадувань в ListBox
         public List<Reminder> UsersReminders { get; set; }
 
         public CabinetViewModel()
@@ -45,9 +47,9 @@ namespace BoSi_Reminder
             get { return _deleteCommand ?? (_deleteCommand = new RelayCommand(obj => Delete(obj))); }
         }
 
-       
 
 
+        //вікриття вікна створення нагадування
         private void Create(Object obj)
         {
             OnRequestClose(false);
@@ -59,17 +61,19 @@ namespace BoSi_Reminder
         private void Delete(Object obj)
         {
 
-            
+            //не реалізовано MVVM
 
         }
 
         private void Done(Object obj)
         {
 
-           
+            //не реалізовано MVVM
 
         }
 
+
+        //вікриття початкового вікна
         private void LogOut(object obj)
         {
             OnRequestClose(false);
@@ -77,12 +81,14 @@ namespace BoSi_Reminder
             loginWindow.ShowDialog();
         }
 
-      
 
+        //імітація спрацьовування нагадувань
         private void Remind(Object obj)
         {
-
+            //берем найближче нагадування
             Reminder first = StationManager.CurrentUser.SortRemindList()?.First();
+            //якщо список пустий то надходить відповідне повідомлення 
+            //в іншому випадку виводиться текст та дата нагадування
             if (first == null)
             {
                 MessageBox.Show("You haven't got any reminders");
@@ -93,12 +99,11 @@ namespace BoSi_Reminder
                 MessageBox.Show(first.Text, first.ReactDate.ToString());
             }
         }
+
+        //метод для закриття вікна
         protected virtual void OnRequestClose(bool isquitapp)
         {
-
-           
             RequestClose?.Invoke(isquitapp);
-
         }
 
         internal event CloseHandler RequestClose;

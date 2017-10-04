@@ -26,6 +26,8 @@ namespace BoSi_Reminder
             get { return _closeCommand ?? (_closeCommand = new RelayCommand(obj => OnRequestClose(true))); }
         }
 
+
+        //первірка чи всі поля заповнені
         public RelayCommand SignUpCommand
         {
             get
@@ -90,23 +92,29 @@ namespace BoSi_Reminder
             }
         }
 
-
+        //метод створення нового акаунту
         private void SignUp(Object obj)
         {
-            if(!ValidatorExtensions.IsValidEmailAddress(Email))
+            //перевірка на валідність пошти
+            if (!ValidatorExtensions.IsValidEmailAddress(Email))
             {
                 MessageBox.Show("Invalid email!");
                 return;
             }
+
+            //перевірка на унікальність імені користувача
             if (DBAdapter.Users.Any(user => user.Login == Login))
             {
                 MessageBox.Show("User with this username already exists");
                 return;
             }
+            //створення нового користувача
             User newuser = new User(Login, Password, Name, Surname, Email);
             DBAdapter.Users.Add(newuser);
+            //запис поточного користувача
             StationManager.CurrentUser = newuser;
-            
+
+            //перехід на вікно Кабінету
             OnRequestClose(false);
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();

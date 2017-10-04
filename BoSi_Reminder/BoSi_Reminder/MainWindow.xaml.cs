@@ -25,6 +25,8 @@ namespace BoSi_Reminder
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
             InitializeComponent();
+
+            //----------ВИПРАВИЛИ ПОМИЛКУ----------//
             Environment.Exit(0);
 
         }

@@ -17,16 +17,20 @@ namespace BoSi_Reminder
         private RelayCommand _closeCommand;
         private RelayCommand _toSignUpCommand;
 
+
+
         public LoginViewModel(User userCandidate)
         {
             this._userCandidate = userCandidate;
         }
+
 
         public RelayCommand CloseCommand
         {
             get { return _closeCommand ?? (_closeCommand = new RelayCommand(obj => OnRequestClose(true))); }
         }
 
+        //перевірка чи заповнені поля для логіна і паролю
         public RelayCommand SignInCommand
         {
             get
@@ -37,6 +41,7 @@ namespace BoSi_Reminder
             }
         }
 
+        //викликається метод SignUp
         public RelayCommand SignUpCommand
         {
             get
@@ -45,6 +50,7 @@ namespace BoSi_Reminder
             }
         }
 
+        
         internal String Password
         {
             get => _userCandidate.Password;
@@ -63,11 +69,11 @@ namespace BoSi_Reminder
             }
         }
 
-        
 
+        //метод для входу користувача в систему
         private void SignIn(Object obj)
         {
-
+            //перевірка чи є існує такий користувач
             var currentUser = DBAdapter.Users.FirstOrDefault(user => user.Login == Login &&
                                                                      user.Password == User.Hash(Password));
             if (currentUser == null)
@@ -76,12 +82,16 @@ namespace BoSi_Reminder
                 return;
             }
 
+            //записуємопоточного користувача
             StationManager.CurrentUser = currentUser;
             OnRequestClose(false);
+
+            //переходимо на вікно Кабінету 
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();
         }
 
+        //вікриваємо вікно Sign Up
         private void SignUp(Object obj)
         {
             OnRequestClose(false);
@@ -90,7 +100,6 @@ namespace BoSi_Reminder
             
         }
 
-       
 
         internal event CloseHandler RequestClose;
         public delegate void CloseHandler(bool isQuitApp);

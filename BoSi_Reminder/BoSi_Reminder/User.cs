@@ -31,11 +31,9 @@ namespace BoSi_Reminder
            
         }
 
-        public User()
-        {
+        public User(){}
 
-        }
-
+        //сортування списку нагадувань за датою
         public List<Reminder> SortRemindList()
         {
             if (UsersReminders == null || UsersReminders.Count == 0)
@@ -43,6 +41,7 @@ namespace BoSi_Reminder
             return StationManager.CurrentUser.UsersReminders?.OrderBy(o => o.ReactDate)?.ToList();
         }
 
+        //метод хешування паролю
         public static string Hash(string password)
         {
             var bytes = new UTF8Encoding().GetBytes(password);

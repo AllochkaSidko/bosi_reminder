@@ -10,6 +10,8 @@ namespace BoSi_Reminder
     {
         public static List<User> Users { get; set; }
 
+
+        //заповнення початковими даними
         static DBAdapter()
         {
             Users = new List<User>
