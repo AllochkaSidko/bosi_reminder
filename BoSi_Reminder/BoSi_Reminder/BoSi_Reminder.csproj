@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="StationManager.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="ValidatorExtensions.cs" />
     <Page Include="CabinetWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

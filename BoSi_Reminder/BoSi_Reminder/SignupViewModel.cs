@@ -93,7 +93,11 @@ namespace BoSi_Reminder
 
         private void SignUp(Object obj)
         {
-
+            if(!ValidatorExtensions.IsValidEmailAddress(Email))
+            {
+                MessageBox.Show("Invalid email!");
+                return;
+            }
             if (DBAdapter.Users.Any(user => user.Login == Login))
             {
                 MessageBox.Show("User with this username already exists");
@@ -116,7 +120,6 @@ namespace BoSi_Reminder
         public event PropertyChangedEventHandler PropertyChanged;
 
         //[NotifyPropertyChangedInvocator]
-
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

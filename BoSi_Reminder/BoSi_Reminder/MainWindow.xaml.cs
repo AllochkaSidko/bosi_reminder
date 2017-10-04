@@ -25,14 +25,9 @@ namespace BoSi_Reminder
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
             InitializeComponent();
-            AppDomain.CurrentDomain.ProcessExit += (sender, args) => OnExit(sender, args);
-              
+            Environment.Exit(0);
+
         }
 
-        private void OnExit(object obj, EventArgs a)
-        {
-           
-            Environment.Exit(0);
-        }
     }
 }
