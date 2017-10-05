@@ -63,6 +63,7 @@
     <Compile Include="LoginViewModel.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Reminder.cs" />
+    <Compile Include="SerializeManager.cs" />
     <Compile Include="SignupViewModel.cs" />
     <Compile Include="SignupWindow.xaml.cs">
       <DependentUpon>SignupWindow.xaml</DependentUpon>

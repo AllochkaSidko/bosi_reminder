@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,9 +23,20 @@ namespace BoSi_Reminder
     {
         public MainWindow()
         {
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.ShowDialog();
+            if (!Directory.EnumerateFileSystemEntries(SerializeManager.DirPath).Any())
+            {
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.ShowDialog();
+            }
+            else
+            {
+                StationManager.CurrentUser = SerializeManager.Deserialize<User>(Directory.GetFiles(SerializeManager.DirPath).SingleOrDefault().ToString());
+                CabinetWindow cabinetWindow = new CabinetWindow();
+                cabinetWindow.ShowDialog();
+  
+            }
             InitializeComponent();
+
 
             //----------ВИПРАВИЛИ ПОМИЛКУ----------//
             Environment.Exit(0);

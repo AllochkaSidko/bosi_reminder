@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -23,7 +24,7 @@ namespace BoSi_Reminder
 
         public CabinetViewModel()
         {
-            UsersReminders = StationManager.CurrentUser.SortRemindList();
+            UsersReminders = StationManager.CurrentUser?.SortRemindList();
         }
 
         public RelayCommand RemindCommand
@@ -76,6 +77,7 @@ namespace BoSi_Reminder
         //вікриття початкового вікна
         private void LogOut(object obj)
         {
+            File.Delete(SerializeManager.CreateAndGetPath(StationManager.CurrentUser.Filename));
             OnRequestClose(false);
             var loginWindow = new LoginWindow();
             loginWindow.ShowDialog();

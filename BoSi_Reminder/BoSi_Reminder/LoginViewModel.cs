@@ -84,6 +84,9 @@ namespace BoSi_Reminder
 
             //записуємопоточного користувача
             StationManager.CurrentUser = currentUser;
+
+            SerializeManager.Serialize<User>(StationManager.CurrentUser);
+
             OnRequestClose(false);
 
             //переходимо на вікно Кабінету 

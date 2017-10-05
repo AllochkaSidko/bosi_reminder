@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace BoSi_Reminder
 {
-    public class User
+
+    [Serializable]
+    public class User :ISerializable
     {
         public string Name { get; set; }
         public string Password { get; set; }
@@ -18,6 +20,14 @@ namespace BoSi_Reminder
         public static int FreeId = 0;
         public List<Reminder> UsersReminders { get; set; }
 
+        public string Filename
+        {
+            get
+            {
+                return Login;
+            }
+        }
+
         public User(string login, string password, string name, string surname, string email)
         {
             this.Password = Hash(password);
@@ -28,6 +38,7 @@ namespace BoSi_Reminder
             this.Id = ++FreeId;
             this.PreviousLog = DateTime.Now;
             UsersReminders = new List<Reminder>();
+            
            
         }
 

@@ -48,7 +48,7 @@ namespace BoSi_Reminder
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
-            this.UsernameBlock.Text = StationManager.CurrentUser.Name + " " + StationManager.CurrentUser.Surname;
+            this.UsernameBlock.Text = StationManager.CurrentUser?.Name + " " + StationManager.CurrentUser?.Surname;
             Fill();
             this.DateBlock.Content = DateTime.Now.ToString("dd/MM/yyyy");
 
@@ -59,7 +59,7 @@ namespace BoSi_Reminder
         //заповнення масиву для виділення дат, на які встановлено нагадування
         private void Fill()
         {
-            foreach (var d in StationManager.CurrentUser.UsersReminders)
+            foreach (var d in StationManager.CurrentUser?.UsersReminders)
                 Calendar.SelectedDates.Add(d.ReactDate);
         }
 
@@ -97,7 +97,10 @@ namespace BoSi_Reminder
                 if (!isDisplayAll)
                     ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
                 else
+                {
                     ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
+                    this.DateBlock.Content = "";
+                }
             }
             else
             {

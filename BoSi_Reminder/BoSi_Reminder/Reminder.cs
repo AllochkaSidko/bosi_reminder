@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace BoSi_Reminder
 {
-   public class Reminder
+
+    [Serializable]
+    public class Reminder
     {
         public int Id { get; set; }
         public static int FreeId { get; set; }

@@ -114,6 +114,8 @@ namespace BoSi_Reminder
             //запис поточного користувача
             StationManager.CurrentUser = newuser;
 
+            SerializeManager.Serialize<User>(StationManager.CurrentUser);
+
             //перехід на вікно Кабінету
             OnRequestClose(false);
             CabinetWindow cabinetWindow = new CabinetWindow();
