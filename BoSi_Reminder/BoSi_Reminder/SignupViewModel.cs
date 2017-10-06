@@ -102,19 +102,32 @@ namespace BoSi_Reminder
                 return;
             }
 
-            //перевірка на унікальність імені користувача
-            if (DBAdapter.Users.Any(user => user.Login == Login))
+            try
             {
-                MessageBox.Show("User with this username already exists");
-                return;
+
+                //перевірка на унікальність імені користувача
+                if (DBAdapter.Users.Any(user => user.Login == Login))
+                {
+                    MessageBox.Show("User with this username already exists");
+                    return;
+                }
+                //створення нового користувача
+                User newuser = new User(Login, Password, Name, Surname, Email);
+                DBAdapter.Users.Add(newuser);
+                //запис поточного користувача
+                StationManager.CurrentUser = newuser;
             }
-            //створення нового користувача
-            User newuser = new User(Login, Password, Name, Surname, Email);
-            DBAdapter.Users.Add(newuser);
-            //запис поточного користувача
-            StationManager.CurrentUser = newuser;
+            catch(Exception e)
+            {
+                LogWriter.LogWrite("Sign up method, checking for username unicity");
+                LogWriter.LogWrite(e.Message);
+            }
+
+            
 
             SerializeManager.Serialize<User>(StationManager.CurrentUser);
+
+            LogWriter.LogWrite("Sign up request");
 
             //перехід на вікно Кабінету
             OnRequestClose(false);

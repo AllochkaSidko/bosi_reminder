@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoSi_Reminder
 {
+    [Serializable]
     public static class StationManager
     {
         public static User CurrentUser { get; set; }

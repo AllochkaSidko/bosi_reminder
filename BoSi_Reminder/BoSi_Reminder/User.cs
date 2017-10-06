@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BoSi_Reminder
 {
-
     [Serializable]
-    public class User :ISerializable
+    public class User : ISerializable
     {
+        public static string FileName = "user";
         public string Name { get; set; }
         public string Password { get; set; }
         public int Id { get; set; }
@@ -24,7 +24,7 @@ namespace BoSi_Reminder
         {
             get
             {
-                return Login;
+                return FileName;
             }
         }
 
@@ -37,11 +37,10 @@ namespace BoSi_Reminder
             this.Email = email;
             this.Id = ++FreeId;
             this.PreviousLog = DateTime.Now;
-            UsersReminders = new List<Reminder>();
-            
-           
+            UsersReminders = new List<Reminder>();      
         }
 
+        
         public User(){}
 
         //сортування списку нагадувань за датою

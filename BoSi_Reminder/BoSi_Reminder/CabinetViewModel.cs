@@ -53,6 +53,7 @@ namespace BoSi_Reminder
         //вікриття вікна створення нагадування
         private void Create(Object obj)
         {
+            LogWriter.LogWrite("Open create window");
             OnRequestClose(false);
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
@@ -77,7 +78,16 @@ namespace BoSi_Reminder
         //вікриття початкового вікна
         private void LogOut(object obj)
         {
-            File.Delete(SerializeManager.CreateAndGetPath(StationManager.CurrentUser.Filename));
+            LogWriter.LogWrite("Log out");
+            try
+            {
+                File.Delete(SerializeManager.CreateAndGetPath(StationManager.CurrentUser.Filename));
+            }
+            catch(Exception e)
+            {
+                LogWriter.LogWrite("Logout method, deleting the user file");
+                LogWriter.LogWrite(e.Message);
+            }
             OnRequestClose(false);
             var loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
@@ -100,6 +110,8 @@ namespace BoSi_Reminder
                
                 MessageBox.Show(first.Text, first.ReactDate.ToString());
             }
+
+            LogWriter.LogWrite("Reminder immitation");
         }
 
         //метод для закриття вікна

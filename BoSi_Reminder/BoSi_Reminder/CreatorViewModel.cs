@@ -87,9 +87,18 @@ namespace BoSi_Reminder
                 return;
             }
 
-            //додаваємо нове нагадування користувачу
-            StationManager.CurrentUser.UsersReminders.Add(new Reminder(date, Text));
+            try
+            {
+                //додаваємо нове нагадування користувачу
+                StationManager.CurrentUser.UsersReminders.Add(new Reminder(date, Text));
+            }
+            catch(Exception e)
+            {
+                LogWriter.LogWrite("Create reminder method, adding remeinder to user");
+                LogWriter.LogWrite(e.Message);
+            }
 
+            LogWriter.LogWrite("Creted reminder");
             //перехід назад на вікно Кабінету
             OnRequestClose(false);
             CabinetWindow cabinetWindow = new CabinetWindow();
@@ -98,6 +107,7 @@ namespace BoSi_Reminder
 
         private void Close(Object obj)
         {
+            LogWriter.LogWrite("Close creator window");
             OnRequestClose(false);
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();

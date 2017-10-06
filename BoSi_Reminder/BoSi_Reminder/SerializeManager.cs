@@ -40,8 +40,9 @@ namespace BoSi_Reminder
                 }
                 catch (Exception e)
                 {
-                    // TODO Add logging
-                    throw;
+                LogWriter.LogWrite("Serialize method");
+                LogWriter.LogWrite(e.Message);
+                throw;
 
                 }
             }
@@ -59,7 +60,8 @@ namespace BoSi_Reminder
                 }
                 catch (Exception e)
                 {
-                    // TODO add logging
+                LogWriter.LogWrite("Deserialize method");
+                LogWriter.LogWrite(e.Message);
                     throw;
                 }
             }

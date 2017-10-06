@@ -77,6 +77,8 @@ namespace BoSi_Reminder
             //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
             Fill();
 
+            LogWriter.LogWrite("Select remind item");
+
         }
 
         //видалення обраного нагадування
@@ -106,8 +108,8 @@ namespace BoSi_Reminder
             {
                 MessageBox.Show("Reminder not found!");
             }
-           
-            
+
+            LogWriter.LogWrite("Delete reminder");
         }
 
         //позначення нагадування як виконаного(аналогічно видаленню)
@@ -132,7 +134,7 @@ namespace BoSi_Reminder
             {
                 MessageBox.Show("Reminder not found!");
             }
-
+            LogWriter.LogWrite("Done reminder");
         }
 
         //відобразити всі нагадування користувача
@@ -143,7 +145,7 @@ namespace BoSi_Reminder
             isDisplayAll = true;
             ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
             this.DateBlock.Content = "";
-
+            LogWriter.LogWrite("Display all reminders");
         }
 
 

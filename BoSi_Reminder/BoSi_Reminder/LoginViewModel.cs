@@ -73,6 +73,7 @@ namespace BoSi_Reminder
         //метод для входу користувача в систему
         private void SignIn(Object obj)
         {
+            
             //перевірка чи є існує такий користувач
             var currentUser = DBAdapter.Users.FirstOrDefault(user => user.Login == Login &&
                                                                      user.Password == User.Hash(Password));
@@ -87,6 +88,7 @@ namespace BoSi_Reminder
 
             SerializeManager.Serialize<User>(StationManager.CurrentUser);
 
+            LogWriter.LogWrite("Log entry");
             OnRequestClose(false);
 
             //переходимо на вікно Кабінету 
@@ -97,6 +99,7 @@ namespace BoSi_Reminder
         //вікриваємо вікно Sign Up
         private void SignUp(Object obj)
         {
+            LogWriter.LogWrite("Transition to Sign up ");
             OnRequestClose(false);
             SignupWindow signupWindow = new SignupWindow();
             signupWindow.ShowDialog();

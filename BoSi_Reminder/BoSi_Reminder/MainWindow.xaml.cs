@@ -23,14 +23,21 @@ namespace BoSi_Reminder
     {
         public MainWindow()
         {
-            if (!Directory.EnumerateFileSystemEntries(SerializeManager.DirPath).Any())
+
+            
+
+            if (!Directory.Exists(SerializeManager.DirPath))
+                Directory.CreateDirectory(SerializeManager.DirPath);
+
+            var path = System.IO.Path.Combine(SerializeManager.DirPath, User.FileName);
+            if (!File.Exists(path))
             {
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.ShowDialog();
             }
             else
             {
-                StationManager.CurrentUser = SerializeManager.Deserialize<User>(Directory.GetFiles(SerializeManager.DirPath).SingleOrDefault().ToString());
+                StationManager.CurrentUser = SerializeManager.Deserialize<User>(path);
                 CabinetWindow cabinetWindow = new CabinetWindow();
                 cabinetWindow.ShowDialog();
   
