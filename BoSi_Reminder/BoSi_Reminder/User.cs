@@ -48,7 +48,7 @@ namespace BoSi_Reminder
         {
             if (UsersReminders == null || UsersReminders.Count == 0)
                 return null;
-            return StationManager.CurrentUser.UsersReminders?.OrderBy(o => o.ReactDate)?.ToList();
+            return StationManager.CurrentUser?.UsersReminders?.OrderBy(o => o.ReactDate)?.ToList();
         }
 
         //метод хешування паролю

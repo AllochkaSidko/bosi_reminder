@@ -4,29 +4,55 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BoSi_Reminder
 {
   public static class LogWriter
     {
-        private static readonly string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        public static readonly string DirPath = Path.Combine(AppData, "BoSi_Reminder");
-    
-        public static void LogWrite(string logMessage)
-        {
+        private static readonly string FilePath = Path.Combine(StaticResources.DirPathLog,
+            "log" + DateTime.Now.ToString("yyyy_MM_dd") + ".txt");
 
-            if (!File.Exists(DirPath + "\\" + "log.txt"))
-                File.Create(DirPath + "\\" + "log.txt").Dispose();
+        private static Mutex MutexObj = new Mutex(true, FilePath.Replace(Path.DirectorySeparatorChar, '_'));
+
+        private static void CheckingCreateFile()
+        {
+            if (!Directory.Exists(StaticResources.DirPathLog))
+                Directory.CreateDirectory(StaticResources.DirPathLog);
+            
+            if (!File.Exists(FilePath))
+                File.Create(FilePath).Close();
+        }
+
+        public static void LogWrite(string logMessage, Exception ex = null)
+        {
+            CheckingCreateFile();
 
             try
             {
-                using (StreamWriter w = File.AppendText(DirPath + "\\" + "log.txt"))
-                    AppendLog(logMessage, w);
+                using (StreamWriter w = File.AppendText(FilePath))
+                {
+                    if (ex != null)
+                    {
+                        AppendLog(logMessage, w);
+                        var realException = ex;
+                        while (realException != null)
+                        {
+                            AppendLog(realException.Message, w);
+                            AppendLog(realException.StackTrace, w);
+                            realException = realException.InnerException;
+                        }
+                    }
+                    else
+                    {
+                        AppendLog(logMessage, w);
+                    }
+                }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(e.Message);
             }
 
         }
@@ -38,16 +64,19 @@ namespace BoSi_Reminder
                 txtWriter.Write(StationManager.CurrentUser.Login+ "  --- ");
                 txtWriter.Write("{0} {1}", DateTime.Now.ToLongTimeString(),
                     DateTime.Now.ToLongDateString());
-                txtWriter.Write("  :");
-                txtWriter.Write("  :{0}", logMessage);
+                txtWriter.WriteLine("  :{0}", logMessage);
                 txtWriter.WriteLine("-------------------------------");
                 txtWriter.Flush();
                 txtWriter.Close();
+                txtWriter=null;
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
             }
-           
+            MutexObj.ReleaseMutex();
         }
+
+         
     }
 }

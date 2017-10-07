@@ -89,13 +89,13 @@ namespace BoSi_Reminder
 
             try
             {
-                //додаваємо нове нагадування користувачу
+                //додаємо нове нагадування користувачу
                 StationManager.CurrentUser.UsersReminders.Add(new Reminder(date, Text));
+                SerializeManager.Serialize<User>(StationManager.CurrentUser);
             }
             catch(Exception e)
             {
-                LogWriter.LogWrite("Create reminder method, adding remeinder to user");
-                LogWriter.LogWrite(e.Message);
+                LogWriter.LogWrite("Create reminder method, adding remeinder to user", e);
             }
 
             LogWriter.LogWrite("Creted reminder");

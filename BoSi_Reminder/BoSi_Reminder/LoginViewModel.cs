@@ -75,7 +75,7 @@ namespace BoSi_Reminder
         {
             
             //перевірка чи є існує такий користувач
-            var currentUser = DBAdapter.Users.FirstOrDefault(user => user.Login == Login &&
+            var currentUser = DBAdapter.Users?.FirstOrDefault(user => user.Login == Login &&
                                                                      user.Password == User.Hash(Password));
             if (currentUser == null)
             {

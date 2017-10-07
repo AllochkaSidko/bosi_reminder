@@ -49,8 +49,7 @@ namespace BoSi_Reminder
         }
 
 
-
-        //вікриття вікна створення нагадування
+        //відкриття вікна створення нагадування
         private void Create(Object obj)
         {
             LogWriter.LogWrite("Open create window");
@@ -85,8 +84,7 @@ namespace BoSi_Reminder
             }
             catch(Exception e)
             {
-                LogWriter.LogWrite("Logout method, deleting the user file");
-                LogWriter.LogWrite(e.Message);
+                LogWriter.LogWrite("Logout method, deleting the user file",e);
             }
             OnRequestClose(false);
             var loginWindow = new LoginWindow();

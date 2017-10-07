@@ -16,14 +16,12 @@ namespace BoSi_Reminder
       
         internal static class SerializeManager
         {
-            private static readonly string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            public static readonly string DirPath = Path.Combine(AppData, "BoSi_Reminder");
             public static string CreateAndGetPath(string filename)
             {
-                if (!Directory.Exists(DirPath))
-                    Directory.CreateDirectory(DirPath);
+                if (!Directory.Exists(StaticResources.DirPath))
+                    Directory.CreateDirectory(StaticResources.DirPath);
 
-                return Path.Combine(DirPath, filename);
+                return Path.Combine(StaticResources.DirPath, filename);
             }
 
             public static void Serialize<TObject>(TObject obj) where TObject : ISerializable
@@ -38,16 +36,13 @@ namespace BoSi_Reminder
                         formatter.Serialize(fs, obj);
                     }
                 }
-                catch (Exception e)
-                {
-                LogWriter.LogWrite("Serialize method");
-                LogWriter.LogWrite(e.Message);
-                throw;
-
-                }
+            catch (Exception e)
+            {
+                LogWriter.LogWrite("Serialize method",e);
+            }
             }
 
-            public static TObject Deserialize<TObject>(string filename) where TObject : ISerializable
+            public static TObject Deserialize<TObject>(string filename) where TObject : ISerializable, new()
             {
                 try
                 {
@@ -58,12 +53,12 @@ namespace BoSi_Reminder
                         return (TObject)formatter.Deserialize(fs);
                     }
                 }
-                catch (Exception e)
-                {
-                LogWriter.LogWrite("Deserialize method");
-                LogWriter.LogWrite(e.Message);
-                    throw;
-                }
+            catch (Exception e)
+            {
+                LogWriter.LogWrite("Deserialize method",e);
+            }
+
+            return new TObject();
             }
         }
     }

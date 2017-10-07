@@ -23,24 +23,40 @@ namespace BoSi_Reminder
     {
         public MainWindow()
         {
-
-            
-
-            if (!Directory.Exists(SerializeManager.DirPath))
-                Directory.CreateDirectory(SerializeManager.DirPath);
-
-            var path = System.IO.Path.Combine(SerializeManager.DirPath, User.FileName);
-            if (!File.Exists(path))
+            try
             {
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.ShowDialog();
+
+                if (!Directory.Exists(StaticResources.DirPath))
+                    Directory.CreateDirectory(StaticResources.DirPath);
+
+                var path = System.IO.Path.Combine(StaticResources.DirPath, User.FileName);
+                if (!File.Exists(path))
+                {
+                    LoginWindow loginWindow = new LoginWindow();
+                    loginWindow.ShowDialog();
+                }
+                else
+                {
+                    var user = SerializeManager.Deserialize<User>(path);
+                    if (DBAdapter.Users.Where(u => u.Login == user.Login) != null && String.IsNullOrEmpty(user.Login))
+                    {
+                        DBAdapter.Users.RemoveAll(u => u.Login == user.Login);
+                        DBAdapter.Users.Add(user);
+                    }
+                    else
+                    {
+                        DBAdapter.Users.Add(user);
+                    }
+
+                    StationManager.CurrentUser = user;
+                    CabinetWindow cabinetWindow = new CabinetWindow();
+                    cabinetWindow.ShowDialog();
+
+                }
             }
-            else
+            catch (Exception ex)
             {
-                StationManager.CurrentUser = SerializeManager.Deserialize<User>(path);
-                CabinetWindow cabinetWindow = new CabinetWindow();
-                cabinetWindow.ShowDialog();
-  
+                LogWriter.LogWrite("Initialize main window", ex);
             }
             InitializeComponent();
 

@@ -51,6 +51,7 @@ namespace BoSi_Reminder
             this.UsernameBlock.Text = StationManager.CurrentUser?.Name + " " + StationManager.CurrentUser?.Surname;
             Fill();
             this.DateBlock.Content = DateTime.Now.ToString("dd/MM/yyyy");
+            ListBox.ItemsSource = StationManager.CurrentUser?.SortRemindList()?.Where(r => r.ReactDate.Date == DateTime.Now.Date);
 
 
         }
@@ -68,14 +69,21 @@ namespace BoSi_Reminder
         //виводить нагадування за обраною на календарі датою та відображає цю дату в текстовому блоці
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Calendar.SelectedDate != null)
+            try
             {
-                ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
-                this.DateBlock.Content = this.Calendar.SelectedDate.Value.ToString("dd/MM/yyyy");
-                
+                if (Calendar.SelectedDate != null)
+                {
+                    ListBox.ItemsSource = StationManager.CurrentUser?.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
+                    this.DateBlock.Content = this.Calendar.SelectedDate.Value.ToString("dd/MM/yyyy");
+
+                }
+                //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
+                Fill();
             }
-            //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
-            Fill();
+            catch (Exception ex )
+            {
+                LogWriter.LogWrite("SelectedDatesChanged",ex);
+            }
 
             LogWriter.LogWrite("Select remind item");
 
@@ -88,25 +96,34 @@ namespace BoSi_Reminder
 
             //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
             //пошук обраного нагадування зі списку користувача
-            var reminder = StationManager.CurrentUser.SortRemindList()?.ElementAtOrDefault(selectedIndex);
-            //якщо нагадування існує то видаляємо
-            //в іншому випадку виводимо повідомлення про помилку
-            if (reminder != null)
+            try
             {
-                StationManager.CurrentUser.UsersReminders.Remove(reminder);
-                //якщо не обрано режим "Показати все" то відображаємо нагадування за обраною датою
-                //в іншому випадку виводимо всі
-                if (!isDisplayAll)
-                    ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
+                var reminder = StationManager.CurrentUser.SortRemindList()?.ElementAtOrDefault(selectedIndex);
+                //якщо нагадування існує то видаляємо
+                //в іншому випадку виводимо повідомлення про помилку
+                if (reminder != null)
+                {
+                    StationManager.CurrentUser.UsersReminders.Remove(reminder);
+                    SerializeManager.Serialize<User>(StationManager.CurrentUser);
+                    //якщо не обрано режим "Показати все" то відображаємо нагадування за обраною датою
+                    //в іншому випадку виводимо всі
+                    if (!isDisplayAll)
+                        ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
+                    else
+                    {
+                        ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
+                        this.DateBlock.Content = "";
+                    }
+                }
                 else
                 {
-                    ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
-                    this.DateBlock.Content = "";
+                    MessageBox.Show("Reminder not found!");
                 }
+
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Reminder not found!");
+                LogWriter.LogWrite("DeleteReminder", ex);
             }
 
             LogWriter.LogWrite("Delete reminder");
@@ -119,20 +136,28 @@ namespace BoSi_Reminder
 
             var item = ListBox.SelectedItem;
             //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
-            var reminder = StationManager.CurrentUser.SortRemindList()?.ElementAtOrDefault(selectedIndex);
-            if (reminder != null)
+            try
             {
-                //присвоєння властивості isDone значення true
-                StationManager.CurrentUser.UsersReminders.SingleOrDefault(r => r.Id == reminder.Id).IsDone = true;
-                if (!isDisplayAll)
-                   ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
-                else
-                    ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
+                var reminder = StationManager.CurrentUser.SortRemindList()?.ElementAtOrDefault(selectedIndex);
+                if (reminder != null)
+                {
+                    //присвоєння властивості isDone значення true
+                    StationManager.CurrentUser.UsersReminders.SingleOrDefault(r => r.Id == reminder.Id).IsDone = true;
+                    SerializeManager.Serialize<User>(StationManager.CurrentUser);
+                    if (!isDisplayAll)
+                        ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList()?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
+                    else
+                        ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
 
+                }
+                else
+                {
+                    MessageBox.Show("Reminder not found!");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Reminder not found!");
+                LogWriter.LogWrite("Reminder isDone", ex);
             }
             LogWriter.LogWrite("Done reminder");
         }
@@ -143,7 +168,7 @@ namespace BoSi_Reminder
             
             Calendar.SelectedDate = null;
             isDisplayAll = true;
-            ListBox.ItemsSource = StationManager.CurrentUser.SortRemindList();
+            ListBox.ItemsSource = StationManager.CurrentUser?.SortRemindList();
             this.DateBlock.Content = "";
             LogWriter.LogWrite("Display all reminders");
         }
@@ -154,7 +179,7 @@ namespace BoSi_Reminder
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedIndex = ListBox.SelectedIndex;
-            var reminder = StationManager.CurrentUser.SortRemindList()?.ElementAtOrDefault(selectedIndex);
+            var reminder = StationManager.CurrentUser?.SortRemindList()?.ElementAtOrDefault(selectedIndex);
 
             if (isDisplayAll)
             {
