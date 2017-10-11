@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BoSi_Reminder
 {
+    //інтерфейс, метод якого повертає назуву файлу, де буде серіалізований користувач
     internal interface ISerializable
     {
         string Filename { get; }
@@ -16,6 +17,7 @@ namespace BoSi_Reminder
       
         internal static class SerializeManager
         {
+            //якщо немає такої директорії, то ми її створюємо і повертаємо повний шлях до файлу
             public static string CreateAndGetPath(string filename)
             {
                 if (!Directory.Exists(StaticResources.DirPath))
@@ -24,10 +26,14 @@ namespace BoSi_Reminder
                 return Path.Combine(StaticResources.DirPath, filename);
             }
 
-            public static void Serialize<TObject>(TObject obj) where TObject : ISerializable
+        //метод серіалізації
+        public static void Serialize<TObject>(TObject obj) where TObject : ISerializable
             {
-                try
-                {
+
+            //відбувається серіалізація об'єкту у бінарний формат і записується у файл
+            //якщо файлу нема, то він попередньо створиться
+            try
+            {
                     BinaryFormatter formatter = new BinaryFormatter();
                     var filename = CreateAndGetPath(obj.Filename);
 
@@ -38,14 +44,17 @@ namespace BoSi_Reminder
                 }
             catch (Exception e)
             {
+                //запис помилки у лог-файл
                 LogWriter.LogWrite("Serialize method",e);
             }
             }
 
-            public static TObject Deserialize<TObject>(string filename) where TObject : ISerializable, new()
+        //метод десеріалізації
+        public static TObject Deserialize<TObject>(string filename) where TObject : ISerializable, new()
             {
-                try
-                {
+            //з бінарного формату десеріалізується назад в об'єкт
+            try
+            {
                     BinaryFormatter formatter = new BinaryFormatter();
 
                     using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))

@@ -83,7 +83,7 @@ namespace BoSi_Reminder
             //перевірка чи встановлена дата нагадування не раніше поточної
             if (DateTime.Now.CompareTo(date)>0)
             {
-                MessageBox.Show("You cannot set reminder or earlier date or time");
+                MessageBox.Show("You cannot set reminder on earlier date or time");
                 return;
             }
 

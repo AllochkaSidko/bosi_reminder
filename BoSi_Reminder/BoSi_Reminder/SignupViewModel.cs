@@ -121,9 +121,9 @@ namespace BoSi_Reminder
             {
                 LogWriter.LogWrite("Sign up method, checking for username unicity",e);
             }
-            
-            
 
+
+            //серіалізуємо поточного користувача
             SerializeManager.Serialize<User>(StationManager.CurrentUser);
 
             LogWriter.LogWrite("Sign up request");

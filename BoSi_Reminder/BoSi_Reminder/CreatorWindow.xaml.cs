@@ -44,10 +44,9 @@ namespace BoSi_Reminder
         {
             List<string> data = new List<string>();
 
-            for (int i = 0; i < 10; i++)
-                data.Add("0"+i.ToString());
-            for (int i = 10; i<60; i++)
-            data.Add(i.ToString());
+            for (int i = 0; i < 60; i++)
+                data.Add(i.ToString("00"));
+    
 
             // ... Get the ComboBox reference.
             var comboBox = sender as ComboBox;
@@ -65,7 +64,7 @@ namespace BoSi_Reminder
             List<string> data = new List<string>();
 
             for (int i = 0; i < 24; i++)
-                data.Add(i.ToString());
+                data.Add(i.ToString("00"));
 
             // ... Get the ComboBox reference.
             var comboBox = sender as ComboBox;

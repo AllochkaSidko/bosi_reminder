@@ -79,13 +79,13 @@ namespace BoSi_Reminder
                                                                      user.Password == User.Hash(Password));
             if (currentUser == null)
             {
-                MessageBox.Show("Wrong Username or Password");
+                MessageBox.Show("Wrong Login or Password");
                 return;
             }
 
             //записуємопоточного користувача
             StationManager.CurrentUser = currentUser;
-
+            //серіалізуємо поточного користувача
             SerializeManager.Serialize<User>(StationManager.CurrentUser);
 
             LogWriter.LogWrite("Log entry");
@@ -99,6 +99,7 @@ namespace BoSi_Reminder
         //вікриваємо вікно Sign Up
         private void SignUp(Object obj)
         {
+            //записуємо в лог дії користувача
             LogWriter.LogWrite("Transition to Sign up ");
             OnRequestClose(false);
             SignupWindow signupWindow = new SignupWindow();

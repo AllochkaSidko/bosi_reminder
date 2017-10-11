@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoSi_Reminder"
         mc:Ignorable="d"
-        Title="CabinetWindow"  MaxHeight="700" Height="700" MaxWidth="1000" Width="1000" Loaded="Window_Loaded">
+        Title="CabinetWindow"  MaxHeight="700" MinHeight="700" MaxWidth="1000" Width="1000" Loaded="Window_Loaded">
 
 
     <Window.Resources>

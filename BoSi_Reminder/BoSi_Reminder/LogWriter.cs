@@ -11,11 +11,14 @@ namespace BoSi_Reminder
 {
   public static class LogWriter
     {
+
+        //визначаємо шлях і формат назви лог-фалів
         private static readonly string FilePath = Path.Combine(StaticResources.DirPathLog,
             "log" + DateTime.Now.ToString("yyyy_MM_dd") + ".txt");
 
         private static Mutex MutexObj = new Mutex(true, FilePath.Replace(Path.DirectorySeparatorChar, '_'));
 
+        //перевірка чи існує такий файл, якщо не існує, то його створюють
         private static void CheckingCreateFile()
         {
             if (!Directory.Exists(StaticResources.DirPathLog))
@@ -31,11 +34,15 @@ namespace BoSi_Reminder
 
             try
             {
+
+                //створюємо потік для дописування нових логів у файл
+                //якщо отримано ексепшн, то інформацію про нього записують у повідомленя
+                //якщо ні, то просто відправляють повідомлення
                 using (StreamWriter w = File.AppendText(FilePath))
                 {
+                    AppendLog(logMessage, w);
                     if (ex != null)
                     {
-                        AppendLog(logMessage, w);
                         var realException = ex;
                         while (realException != null)
                         {
@@ -44,10 +51,7 @@ namespace BoSi_Reminder
                             realException = realException.InnerException;
                         }
                     }
-                    else
-                    {
-                        AppendLog(logMessage, w);
-                    }
+                   
                 }
             }
             catch (Exception e)
@@ -59,6 +63,8 @@ namespace BoSi_Reminder
 
         private static void AppendLog(string logMessage, TextWriter txtWriter)
         {
+
+            //записуємо лог
             try
             {
                 txtWriter.Write(StationManager.CurrentUser.Login+ "  --- ");

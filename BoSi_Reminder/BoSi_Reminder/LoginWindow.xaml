@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoSi_Reminder"
         mc:Ignorable="d"
-        Title="LoginWindow" MaxHeight="460" Height="460" MaxWidth="660" Width="660">
+        Title="LoginWindow" MaxHeight="460" MinHeight="460" MaxWidth="660" Width="660">
 
     <Window.Resources>
         <Style TargetType="TextBlock"
