@@ -84,7 +84,7 @@ namespace BoSi_Reminder
             }
             catch(Exception e)
             {
-                LogWriter.LogWrite("Logout method, deleting the user file",e);
+                LogWriter.LogWrite("Exception in Logout method, deleting the user file",e);
             }
             OnRequestClose(false);
             var loginWindow = new LoginWindow();

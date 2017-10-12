@@ -82,7 +82,7 @@ namespace BoSi_Reminder
             }
             catch (Exception ex )
             {
-                LogWriter.LogWrite("SelectedDatesChanged",ex);
+                LogWriter.LogWrite("Exception in SelectedDatesChanged method",ex);
             }
 
             LogWriter.LogWrite("Select remind item");
@@ -121,7 +121,7 @@ namespace BoSi_Reminder
             }
             catch (Exception ex)
             {
-                LogWriter.LogWrite("DeleteReminder", ex);
+                LogWriter.LogWrite("Exception in DeleteReminder method", ex);
             }
 
             LogWriter.LogWrite("Delete reminder");
@@ -152,7 +152,7 @@ namespace BoSi_Reminder
             }
             catch (Exception ex)
             {
-                LogWriter.LogWrite("Reminder isDone", ex);
+                LogWriter.LogWrite("Exception in isDone method", ex);
             }
             LogWriter.LogWrite("Done reminder");
         }

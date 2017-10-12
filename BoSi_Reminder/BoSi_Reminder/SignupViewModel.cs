@@ -119,7 +119,7 @@ namespace BoSi_Reminder
             }
             catch(Exception e)
             {
-                LogWriter.LogWrite("Sign up method, checking for username unicity",e);
+                LogWriter.LogWrite("Exception in Sign up method, checking for username unicity",e);
             }
 
 
