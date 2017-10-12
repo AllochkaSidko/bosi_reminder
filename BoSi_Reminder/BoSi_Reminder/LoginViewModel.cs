@@ -88,6 +88,7 @@ namespace BoSi_Reminder
             //серіалізуємо поточного користувача
             SerializeManager.Serialize<User>(StationManager.CurrentUser);
 
+            //записуємо в лог дії користувача
             LogWriter.LogWrite("Log entry");
             OnRequestClose(false);
 
@@ -99,12 +100,9 @@ namespace BoSi_Reminder
         //вікриваємо вікно Sign Up
         private void SignUp(Object obj)
         {
-            //записуємо в лог дії користувача
-            LogWriter.LogWrite("Transition to Sign up ");
             OnRequestClose(false);
             SignupWindow signupWindow = new SignupWindow();
-            signupWindow.ShowDialog();
-            
+            signupWindow.ShowDialog();  
         }
 
 

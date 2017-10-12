@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,16 @@ namespace BoSi_Reminder
         public string Email { get; set; }
         public DateTime PreviousLog { get; set; }
         public static int FreeId = 0;
-        public List<Reminder> UsersReminders { get; set; }
+        private List<Reminder> _reminders;
+        public List<Reminder> Reminders {
+            //сортування списку нагадувань за датою 
+            get
+            {
+                _reminders = _reminders?.OrderBy(o => o.ReactDate)?.ToList();
+                return _reminders;
+            }
+            set => _reminders = value; 
+        }
 
         public string Filename
         {
@@ -37,19 +47,11 @@ namespace BoSi_Reminder
             this.Email = email;
             this.Id = ++FreeId;
             this.PreviousLog = DateTime.Now;
-            UsersReminders = new List<Reminder>();      
+            Reminders = new List<Reminder>();      
         }
 
         
         public User(){}
-
-        //сортування списку нагадувань за датою
-        public List<Reminder> SortRemindList()
-        {
-            if (UsersReminders == null || UsersReminders.Count == 0)
-                return null;
-            return StationManager.CurrentUser?.UsersReminders?.OrderBy(o => o.ReactDate)?.ToList();
-        }
 
         //метод хешування паролю
         public static string Hash(string password)

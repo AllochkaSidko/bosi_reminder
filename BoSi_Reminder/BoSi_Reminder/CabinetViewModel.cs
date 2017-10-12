@@ -24,7 +24,7 @@ namespace BoSi_Reminder
 
         public CabinetViewModel()
         {
-            UsersReminders = StationManager.CurrentUser?.SortRemindList();
+            UsersReminders = StationManager.CurrentUser?.Reminders;
         }
 
         public RelayCommand RemindCommand
@@ -96,7 +96,7 @@ namespace BoSi_Reminder
         private void Remind(Object obj)
         {
             //берем найближче нагадування
-            Reminder first = StationManager.CurrentUser.SortRemindList()?.First();
+            Reminder first = StationManager.CurrentUser.Reminders?.First();
             //якщо список пустий то надходить відповідне повідомлення 
             //в іншому випадку виводиться текст та дата нагадування
             if (first == null)

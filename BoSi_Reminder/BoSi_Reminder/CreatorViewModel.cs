@@ -90,7 +90,7 @@ namespace BoSi_Reminder
             try
             {
                 //додаємо нове нагадування користувачу
-                StationManager.CurrentUser.UsersReminders.Add(new Reminder(date, Text));
+                StationManager.CurrentUser.Reminders.Add(new Reminder(date, Text));
                 SerializeManager.Serialize<User>(StationManager.CurrentUser);
             }
             catch(Exception e)

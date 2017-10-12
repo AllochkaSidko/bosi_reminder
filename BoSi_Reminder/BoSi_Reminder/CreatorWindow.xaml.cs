@@ -39,47 +39,26 @@ namespace BoSi_Reminder
             }
         }
 
-        //заповнення спадного списку для обирання хвилин
-        private void Minutes_Loaded(object sender, RoutedEventArgs e)
-        {
-            List<string> data = new List<string>();
-
-            for (int i = 0; i < 60; i++)
-                data.Add(i.ToString("00"));
-    
-
-            // ... Get the ComboBox reference.
-            var comboBox = sender as ComboBox;
-
-            // ... Assign the ItemsSource to the List.
-            comboBox.ItemsSource = data;
-
-            // ... Make the first item selected.
-            comboBox.SelectedIndex = 0;
-        }
-
-        //заповнення спадного списку для обирання годин
-        private void Hours_Loaded(object sender, RoutedEventArgs e)
-        {
-            List<string> data = new List<string>();
-
-            for (int i = 0; i < 24; i++)
-                data.Add(i.ToString("00"));
-
-            // ... Get the ComboBox reference.
-            var comboBox = sender as ComboBox;
-
-            // ... Assign the ItemsSource to the List.
-            comboBox.ItemsSource = data;
-
-            // ... Make the first item selected.
-            comboBox.SelectedIndex = 0;
-        }
-
-        //встановлення поточної дати за замовчуванням
+        
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //встановлення поточної дати за замовчуванням
             this.DatePicker.SelectedDate = DateTime.Now;
+
+            //заповнення спадного списку для обирання годин
+            List<string> data = new List<string>();
+            for (int i = 0; i < 24; i++)
+                data.Add(i.ToString("00"));
+            Hours.ItemsSource = data;
+            Hours.SelectedIndex = 0;
+
+            //заповнення спадного списку для обирання хвилин
+            List<string> data2 = new List<string>();
+            for (int i = 0; i < 60; i++)
+                data2.Add(i.ToString("00"));
+            Minutes.ItemsSource = data2;
+            Minutes.SelectedIndex = 0;
+
         }
     }
 }
