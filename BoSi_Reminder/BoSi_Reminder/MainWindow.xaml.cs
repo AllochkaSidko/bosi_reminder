@@ -63,7 +63,7 @@ namespace BoSi_Reminder
             }
             catch (Exception ex)
             {
-                LogWriter.LogWrite("Initialize main window", ex);
+                LogWriter.LogWrite("Exception while Initializing main window", ex);
             }
             //----------ВИПРАВИЛИ ПОМИЛКУ----------//
             Environment.Exit(0);

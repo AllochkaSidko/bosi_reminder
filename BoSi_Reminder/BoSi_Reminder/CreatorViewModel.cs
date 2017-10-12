@@ -95,7 +95,7 @@ namespace BoSi_Reminder
             }
             catch(Exception e)
             {
-                LogWriter.LogWrite("Create reminder method, adding remeinder to user", e);
+                LogWriter.LogWrite("Exception in Create reminder method, adding remeinder to user", e);
             }
 
             LogWriter.LogWrite("Creted reminder");

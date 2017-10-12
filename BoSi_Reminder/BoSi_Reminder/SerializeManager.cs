@@ -45,7 +45,7 @@ namespace BoSi_Reminder
             catch (Exception e)
             {
                 //запис помилки у лог-файл
-                LogWriter.LogWrite("Serialize method",e);
+                LogWriter.LogWrite("Exception in Serialize method",e);
             }
             }
 
@@ -64,7 +64,7 @@ namespace BoSi_Reminder
                 }
             catch (Exception e)
             {
-                LogWriter.LogWrite("Deserialize method",e);
+                LogWriter.LogWrite("Exception in Deserialize method",e);
             }
 
             return new TObject();
