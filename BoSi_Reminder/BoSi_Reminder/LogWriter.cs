@@ -34,25 +34,22 @@ namespace BoSi_Reminder
 
             try
             {
-
-                //створюємо потік для дописування нових логів у файл
                 //якщо отримано ексепшн, то інформацію про нього записують у повідомленя
                 //якщо ні, то просто відправляють повідомлення
-                using (StreamWriter w = File.AppendText(FilePath))
-                {
-                    AppendLog(logMessage, w);
+                
+                    AppendLog(logMessage);
                     if (ex != null)
                     {
                         var realException = ex;
                         while (realException != null)
                         {
-                            AppendLog(realException.Message, w);
-                            AppendLog(realException.StackTrace, w);
+                            AppendLog(realException.Message);
+                            AppendLog(realException.StackTrace);
                             realException = realException.InnerException;
                         }
                     }
                    
-                }
+                
             }
             catch (Exception e)
             {
@@ -61,24 +58,30 @@ namespace BoSi_Reminder
 
         }
 
-        private static void AppendLog(string logMessage, TextWriter txtWriter)
+        private static void AppendLog(string logMessage)
         {
-
+            //створюємо потік для дописування нових логів у файл
             //записуємо лог
+            StreamWriter txtWriter = null;
             try
             {
-                txtWriter.Write(StationManager.CurrentUser.Login+ "  --- ");
+                txtWriter = File.AppendText(FilePath);
+                txtWriter.Write(StationManager.CurrentUser.Login + "  --- ");
                 txtWriter.Write("{0} {1}", DateTime.Now.ToLongTimeString(),
                     DateTime.Now.ToLongDateString());
                 txtWriter.WriteLine("  :{0}", logMessage);
                 txtWriter.WriteLine("-------------------------------");
-                txtWriter.Flush();
-                txtWriter.Close();
-                txtWriter=null;
+                
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                txtWriter.Flush();
+                txtWriter.Close();
+                txtWriter = null;
             }
             MutexObj.ReleaseMutex();
         }

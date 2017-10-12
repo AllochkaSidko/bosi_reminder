@@ -95,21 +95,24 @@ namespace BoSi_Reminder
         //імітація спрацьовування нагадувань
         private void Remind(Object obj)
         {
-            //берем найближче нагадування
-            Reminder first = StationManager.CurrentUser.Reminders?.First();
-            //якщо список пустий то надходить відповідне повідомлення 
-            //в іншому випадку виводиться текст та дата нагадування
-            if (first == null)
-            {
-                MessageBox.Show("You haven't got any reminders");
-            }
-            else
-            {
-               
-                MessageBox.Show(first.Text, first.ReactDate.ToString());
-            }
-
             LogWriter.LogWrite("Reminder immitation");
+         
+            try
+            {
+                //берем найближче нагадування
+                Reminder first = StationManager.CurrentUser.Reminders?.FirstOrDefault();
+                //якщо список пустий то надходить відповідне повідомлення 
+                //в іншому випадку виводиться текст та дата нагадування
+                if (first == null)
+                    MessageBox.Show("You haven't got any reminders");
+                else
+                    MessageBox.Show(first.Text, first.ReactDate.ToString());
+            }
+            catch (Exception e)
+            {
+               LogWriter.LogWrite("Exception in Reminder immitation method", e);
+            }
+  
         }
 
         //метод для закриття вікна
