@@ -50,12 +50,11 @@ namespace BoSi_Reminder
             
             this.UsernameBlock.Text = StationManager.CurrentUser?.Name + " " + StationManager.CurrentUser?.Surname;
             Fill();
+            Calendar.SelectedDate = DateTime.Now.Date;
             this.DateBlock.Content = DateTime.Now.ToString("dd/MM/yyyy");
-            ListBox.ItemsSource = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == DateTime.Now.Date);
-
+            ListBox.ItemsSource = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
 
         }
-
 
         //заповнення масиву для виділення дат, на які встановлено нагадування
         private void Fill()
