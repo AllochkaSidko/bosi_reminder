@@ -90,11 +90,13 @@ namespace BoSi_Reminder
 
             //записуємо в лог дії користувача
             LogWriter.LogWrite("Log entry");
-            OnRequestClose(false);
 
+            OnRequestClose(false);
+           
             //переходимо на вікно Кабінету 
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();
+            
         }
 
         //вікриваємо вікно Sign Up

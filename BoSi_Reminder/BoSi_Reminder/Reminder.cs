@@ -15,6 +15,7 @@ namespace BoSi_Reminder
         public DateTime ReactDate { get; set; }
         public bool IsDone { get; set; }
         public string Text { get; set; }
+        public bool Status { get; set; }
 
         public Reminder(DateTime reactDate, string text)
         {
@@ -22,6 +23,7 @@ namespace BoSi_Reminder
             this.Text = text;
             this.Id = ++FreeId;
             this.IsDone = false;
+            this.Status = false;
         }
 
         public Reminder()

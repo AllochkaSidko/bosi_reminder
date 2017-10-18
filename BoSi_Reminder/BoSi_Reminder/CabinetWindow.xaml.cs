@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,9 +26,13 @@ namespace BoSi_Reminder
             CabinetViewModel = new CabinetViewModel();
             CabinetViewModel.RequestClose += Close;
             DataContext = CabinetViewModel;
+
             
 
+
         }
+
+       
 
         private CabinetViewModel CabinetViewModel { get; set; }
         //змінна для відслідковування чи увімкнений режим "Показати все"
@@ -52,7 +57,10 @@ namespace BoSi_Reminder
             Fill();
             Calendar.SelectedDate = DateTime.Now.Date;
             this.DateBlock.Content = DateTime.Now.ToString("dd/MM/yyyy");
+
             ListBox.ItemsSource = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
+
+            TimeTracker.ShowPrevious();
 
         }
 
