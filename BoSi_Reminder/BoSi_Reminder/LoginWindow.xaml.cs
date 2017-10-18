@@ -30,6 +30,7 @@ namespace BoSi_Reminder
 
         private LoginViewModel LoginViewModel { get; set; }
 
+
         private void Password_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             LoginViewModel.Password = Password.Password;

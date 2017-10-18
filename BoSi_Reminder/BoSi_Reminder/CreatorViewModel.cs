@@ -15,10 +15,21 @@ namespace BoSi_Reminder
         private Reminder _newReminder;
         private RelayCommand _createCommand;
         private RelayCommand _closeCommand;
+        public List<string> HoursList { get; set; }
+        public List<string> MinutesList { get; set; }
 
         public CreatorViewModel(Reminder newReminder)
         {
             this._newReminder = newReminder;
+            HoursList = new List<string>();
+            MinutesList = new List<string>();
+            //заповнення спадного списку для обирання годин
+            for (int i = 0; i < 24; i++)
+                HoursList.Add(i.ToString("00"));
+            //заповнення спадного списку для обирання хвилин
+            for (int i = 0; i < 60; i++)
+               MinutesList.Add(i.ToString("00"));
+            Date = DateTime.Now;
         }
 
         //перевірка чи заповнені всі поля

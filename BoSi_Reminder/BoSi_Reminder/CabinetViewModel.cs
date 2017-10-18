@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace BoSi_Reminder
@@ -18,26 +20,52 @@ namespace BoSi_Reminder
         private RelayCommand _logOutCommand;
         private RelayCommand _createCommand;
         private RelayCommand _deleteCommand;
-        private RelayCommand _remindCommand;
+        private RelayCommand _showLogInWindowCommand;
+        public string UsernameBlockText { get; set; }
+        public DateTime Date { get; set; }
+        public string DateBlockContent { get; set; }
+        //змінна для відслідковування чи увімкнений режим "Показати все"
+        bool isDisplayAll = false;
+        public Reminder SelectedReminder { get; set; }
 
-       
-
+        //при завантаженні вікна вводиться ім'я поточного користувача та сьогоднішню дату
 
         //список для збереження всіх нагадувань в ListBox
-        public List<Reminder> UsersReminders { get; set; }
+        public List<Reminder> _usersReminders;
 
         public CabinetViewModel()
         {
-            UsersReminders = StationManager.CurrentUser?.Reminders;
-            
-
+            UsersReminders = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == Date).ToList();
+            UsernameBlockText = StationManager.CurrentUser?.Name + " " + StationManager.CurrentUser?.Surname;
+            Date = DateTime.Now.Date;
+            DateBlockContent = DateTime.Now.ToString("dd/MM/yyyy");
         }
-        
-        public RelayCommand RemindCommand
+
+        /*
+        //заповнення масиву для виділення дат, на які встановлено нагадування
+        private void Fill()
         {
-            get { return _remindCommand ?? (_remindCommand = new RelayCommand(obj => Remind(obj))); }
+            foreach (var d in StationManager.CurrentUser?.Reminders)
+                Calendar.SelectedDates.Add(d.ReactDate);
+        }
+        */
+
+        public RelayCommand WindowLoaded
+        {
+            get
+            {
+                if (_showLogInWindowCommand == null)
+                {
+                    _showLogInWindowCommand = new RelayCommand(OnLoaded);
+                }
+                return _showLogInWindowCommand;
+            }
         }
 
+        private void OnLoaded(object obj)
+        {
+            TimeTracker.ShowPrevious();
+        }
 
         public RelayCommand LogOutCommand
         {
@@ -65,11 +93,52 @@ namespace BoSi_Reminder
             
         }
 
+        public List<Reminder> UsersReminders
+        {
+            get => _usersReminders;
+            set
+            {
+                _usersReminders = value;
+                OnPropertyChanged("_userReminders");
+            }
+        }
+        //видалення обраного нагадування
         private void Delete(Object obj)
         {
+            
+            //пошук обраного нагадування зі списку користувача
+            try
+                {
+               
+                    //якщо нагадування існує то видаляємо
+                    //в іншому випадку виводимо повідомлення про помилку
+                    if (SelectedReminder != null)
+                    {
+                        StationManager.CurrentUser.Reminders.Remove(SelectedReminder);
+                        SerializeManager.Serialize<User>(StationManager.CurrentUser);
+                        //якщо не обрано режим "Показати все" то відображаємо нагадування за обраною датою
+                        //в іншому випадку виводимо всі
+                       // if (!isDisplayAll)
+                         //   UsersReminders = StationManager.CurrentUser.Reminders?.Where(r => r.ReactDate.Date == Date).ToList();
+                       // else
+                        //{
+                            UsersReminders = StationManager.CurrentUser.Reminders;
+                            DateBlockContent = "";
+                        //}
+                    }
+                    else
+                    {
+                        MessageBox.Show("Reminder not found!");
+                    }
 
-            //не реалізовано MVVM
+                }
+                catch (Exception ex)
+                {
+                    LogWriter.LogWrite("Exception in DeleteReminder method", ex);
+                }
 
+                LogWriter.LogWrite("Delete reminder");
+            
         }
 
         private void Done(Object obj)
@@ -100,28 +169,6 @@ namespace BoSi_Reminder
         }
 
 
-        //імітація спрацьовування нагадувань
-        private void Remind(Object obj)
-        {
-            LogWriter.LogWrite("Reminder immitation");
-         
-            try
-            {
-                //берем найближче нагадування
-                Reminder first = StationManager.CurrentUser.Reminders?.FirstOrDefault();
-                //якщо список пустий то надходить відповідне повідомлення 
-                //в іншому випадку виводиться текст та дата нагадування
-                if (first == null)
-                    MessageBox.Show("You haven't got any reminders");
-                else
-                    MessageBox.Show(first.Text, first.ReactDate.ToString());
-            }
-            catch (Exception e)
-            {
-               LogWriter.LogWrite("Exception in Reminder immitation method", e);
-            }
-  
-        }
 
         //метод для закриття вікна
         protected virtual void OnRequestClose(bool isquitapp)
@@ -138,8 +185,27 @@ namespace BoSi_Reminder
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /*
+        RelayCommand _selectionCommand;
+        public RelayCommand SelectionCommand
+        {
+            get
+            {
+                if (_selectionCommand == null)
+                {
+                    _selectionCommand = new RelayCommand(a =>
+                    {
+                        SelectedDatesCollection dates = a as SelectedDatesCollection;
+                        dates.ToList();
+                        foreach (var d in StationManager.CurrentUser?.Reminders)
+                            dates.Add(d.ReactDate);
+                    });
 
-
+                }
+                return _selectionCommand;
+            }
+        }
+        */
 
     }
 }

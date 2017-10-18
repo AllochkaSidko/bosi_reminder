@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoSi_Reminder"
+       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="CabinetWindow"  MaxHeight="700" MinHeight="700" MaxWidth="1000" Width="1000" Loaded="Window_Loaded">
-
+        Title="CabinetWindow"  MaxHeight="700" MinHeight="700" MaxWidth="1000" Width="1000" >
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding WindowLoaded}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Window.Resources>
 
@@ -143,14 +149,18 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,1,0">
-            <TextBlock Name="UsernameBlock" Text="Oleksandra Bosa" Foreground="SlateBlue" FontWeight="Medium" FontSize="22pt" Margin="20"></TextBlock>
+            <TextBlock Name="UsernameBlock" Text="{Binding UsernameBlockText}" Foreground="SlateBlue" FontWeight="Medium" FontSize="22pt" Margin="20"></TextBlock>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,500,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
 
             <Viewbox Width="500"  Margin="0,50,0,0">
-                <Calendar x:Name="Calendar"  SelectionMode="MultipleRange"  Width="370" SelectedDatesChanged="Calendar_SelectedDatesChanged">
-                    
+                <Calendar x:Name="Calendar"  SelectionMode="MultipleRange"  Width="370" SelectedDate="{Binding Date}" DisplayDate="10/22/2017"  SelectedDatesChanged="Calendar_SelectedDatesChanged">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedDatesChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionCommand}" CommandParameter="{Binding SelectedDates, ElementName=Calendar}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </Calendar>
             </Viewbox>
             <Popup x:Name="PopUp" StaysOpen="True"/>
@@ -160,9 +170,9 @@
 
         <StackPanel Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="2" Grid.Column="6">
 
-            <Label Name="DateBlock" Content="" FontSize="24" Width="200" MaxWidth="200" Margin="0,10,270,0" Foreground="Orange"></Label>
+            <Label Name="DateBlock" FontSize="24" Width="200" MaxWidth="200" Margin="0,10,270,0" Content="{Binding DateBlockContent}" Foreground="Orange"></Label>
 
-            <ListBox  ItemsSource="{Binding UsersReminders}"  Name="ListBox" Height="480" Margin="10,0,20,0" SelectionChanged="ListBox_SelectionChanged">
+            <ListBox  ItemsSource="{Binding UsersReminders, UpdateSourceTrigger=PropertyChanged}"   SelectedItem="{Binding SelectedReminder,UpdateSourceTrigger=PropertyChanged}" Name="ListBox" Height="480" Margin="10,0,20,0" SelectionChanged="ListBox_SelectionChanged">
                 <ListBox.Resources>
                     <DataTemplate DataType="{x:Type local:Reminder}">
                         <StackPanel Name ="StackPanel1" Orientation="Horizontal">
@@ -181,7 +191,7 @@
         <Button Grid.Row="1" Grid.Column="1" Name="DisplayAll" Style="{StaticResource DisplayStyle}" Content="Display all" HorizontalAlignment="Right"  Margin="0,-510,20,0" Width="150" Height="40" Click="DisplayAll_Click"/>
         <Button Grid.Row="1" Grid.Column="0" Name="RemindMeButton" Style="{StaticResource RemindStyle}" Content="Remind!" Width="100" HorizontalAlignment="Center" Height="40" Command="{Binding RemindCommand}" Margin="0,140,0,0" />
         <Button Grid.Row="1" Grid.Column="0" Name="CreateReminder" Style="{StaticResource CreateStyle}" VerticalContentAlignment="Center" Content="Set new reminder" HorizontalAlignment="Center"  Height="60" Margin="0,280,0,0" Width="240" Command="{Binding CreateCommand}"/>
-        <Button Grid.Row="1" Grid.Column="0" Name="DeleteReminder" Style="{StaticResource DeleteStyle}" VerticalContentAlignment="Center"  Content="Delete" Width="140" Height="40" HorizontalAlignment="Center" Margin="0,420,180,0" Click="DeleteReminder_Click"/>
+        <Button Grid.Row="1" Grid.Column="0" Name="DeleteReminder" Style="{StaticResource DeleteStyle}" VerticalContentAlignment="Center"  Content="Delete" Width="140" Height="40" HorizontalAlignment="Center" Margin="0,420,180,0" Command="{Binding DeleteCommand}"/>
         <Button Grid.Row="1" Grid.Column="0" Name="IsDoneButton" Style="{StaticResource DoneStyle}" VerticalContentAlignment="Center"  Content="Done!" Width="140" HorizontalAlignment="Center" Height="40" Margin="180,420,0,0" Click="IsDoneButton_Click"/>
 
     </Grid>

@@ -27,17 +27,11 @@ namespace BoSi_Reminder
             CabinetViewModel.RequestClose += Close;
             DataContext = CabinetViewModel;
 
-            
-
 
         }
 
-       
-
         private CabinetViewModel CabinetViewModel { get; set; }
-        //змінна для відслідковування чи увімкнений режим "Показати все"
         bool isDisplayAll = false;
-       
 
         private void Close(bool isQuitApp)
         {
@@ -49,20 +43,7 @@ namespace BoSi_Reminder
             }
         }
 
-        //при завантаженні вікна вводиться ім'я поточного користувача та сьогоднішню дату
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-            this.UsernameBlock.Text = StationManager.CurrentUser?.Name + " " + StationManager.CurrentUser?.Surname;
-            Fill();
-            Calendar.SelectedDate = DateTime.Now.Date;
-            this.DateBlock.Content = DateTime.Now.ToString("dd/MM/yyyy");
-
-            ListBox.ItemsSource = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
-
-            TimeTracker.ShowPrevious();
-
-        }
+       
 
         //заповнення масиву для виділення дат, на які встановлено нагадування
         private void Fill()
@@ -85,7 +66,7 @@ namespace BoSi_Reminder
 
                 }
                 //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
-                Fill();
+                //Fill();
             }
             catch (Exception ex )
             {
@@ -96,43 +77,7 @@ namespace BoSi_Reminder
 
         }
 
-        //видалення обраного нагадування
-        private void DeleteReminder_Click(object sender, RoutedEventArgs e)
-        {
-            //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
-            //пошук обраного нагадування зі списку користувача
-            try
-            {
-                Reminder reminder = (Reminder)ListBox.SelectedItem;
-                //якщо нагадування існує то видаляємо
-                //в іншому випадку виводимо повідомлення про помилку
-                if (reminder != null)
-                {
-                    StationManager.CurrentUser.Reminders.Remove(reminder);
-                    SerializeManager.Serialize<User>(StationManager.CurrentUser);
-                    //якщо не обрано режим "Показати все" то відображаємо нагадування за обраною датою
-                    //в іншому випадку виводимо всі
-                    if (!isDisplayAll)
-                        ListBox.ItemsSource = StationManager.CurrentUser.Reminders?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
-                    else
-                    {
-                        ListBox.ItemsSource = StationManager.CurrentUser.Reminders;
-                        this.DateBlock.Content = "";
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Reminder not found!");
-                }
-
-            }
-            catch (Exception ex)
-            {
-                LogWriter.LogWrite("Exception in DeleteReminder method", ex);
-            }
-
-            LogWriter.LogWrite("Delete reminder");
-        }
+        
 
         //позначення нагадування як виконаного(аналогічно видаленню)
         private void IsDoneButton_Click(object sender, RoutedEventArgs e)
