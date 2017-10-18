@@ -13,20 +13,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace BoSi_Reminder
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
+    /// 
+    
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
-
             try
             {
+                RemindTimer.Start();
 
                 if (!Directory.Exists(StaticResources.DirPath))
                     Directory.CreateDirectory(StaticResources.DirPath);
@@ -70,5 +74,6 @@ namespace BoSi_Reminder
 
         }
 
+       
     }
 }

@@ -5,8 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace BoSi_Reminder
 {
@@ -18,6 +20,8 @@ namespace BoSi_Reminder
         private RelayCommand _deleteCommand;
         private RelayCommand _remindCommand;
 
+       
+
 
         //список для збереження всіх нагадувань в ListBox
         public List<Reminder> UsersReminders { get; set; }
@@ -25,8 +29,10 @@ namespace BoSi_Reminder
         public CabinetViewModel()
         {
             UsersReminders = StationManager.CurrentUser?.Reminders;
-        }
+            
 
+        }
+        
         public RelayCommand RemindCommand
         {
             get { return _remindCommand ?? (_remindCommand = new RelayCommand(obj => Remind(obj))); }
@@ -86,6 +92,8 @@ namespace BoSi_Reminder
             {
                 LogWriter.LogWrite("Exception in Logout method, deleting the user file",e);
             }
+
+            StationManager.CurrentUser = null;
             OnRequestClose(false);
             var loginWindow = new LoginWindow();
             loginWindow.ShowDialog();

@@ -64,6 +64,7 @@
     <Compile Include="LogWriter.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Reminder.cs" />
+    <Compile Include="RemindTimer.cs" />
     <Compile Include="SerializeManager.cs" />
     <Compile Include="SignupViewModel.cs" />
     <Compile Include="SignupWindow.xaml.cs">
@@ -71,6 +72,7 @@
     </Compile>
     <Compile Include="StaticResources.cs" />
     <Compile Include="StationManager.cs" />
+    <Compile Include="TimeTracker.cs" />
     <Compile Include="User.cs" />
     <Compile Include="ValidatorExtensions.cs" />
     <Page Include="CabinetWindow.xaml">

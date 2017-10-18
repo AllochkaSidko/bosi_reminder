@@ -20,7 +20,7 @@ namespace BoSi_Reminder
                 new User("alla", "password2", "Alla", "Sidko", "allochka.sidko@gmail.com")
             };
             Users[0].Reminders.Add(new Reminder(new DateTime(2017, 10, 13,18,30,0), "Do c#"));
-            Users[1].Reminders.Add(new Reminder(new DateTime(2017, 11, 17,20,23,0), "Do hometask"));
+            Users[1].Reminders.Add(new Reminder(new DateTime(2017, 09, 17,20,23,0), "Do hometask"));
 
         }
 
