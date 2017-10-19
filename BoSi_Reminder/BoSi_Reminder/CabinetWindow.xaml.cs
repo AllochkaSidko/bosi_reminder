@@ -83,30 +83,7 @@ namespace BoSi_Reminder
         private void IsDoneButton_Click(object sender, RoutedEventArgs e)
         {
           
-            //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
-            try
-            {
-                Reminder reminder = (Reminder)ListBox.SelectedItem;
-                if (reminder != null)
-                {
-                    //присвоєння властивості isDone значення true
-                    reminder.IsDone = true;
-                    SerializeManager.Serialize<User>(StationManager.CurrentUser);
-                    if (!isDisplayAll)
-                        ListBox.ItemsSource = StationManager.CurrentUser.Reminders?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
-                    else
-                        ListBox.ItemsSource = StationManager.CurrentUser.Reminders;
-                }
-                else
-                {
-                    MessageBox.Show("Reminder not found!");
-                }
-            }
-            catch (Exception ex)
-            {
-                LogWriter.LogWrite("Exception in isDone method", ex);
-            }
-            LogWriter.LogWrite("Done reminder");
+           
         }
 
         //відобразити всі нагадування користувача

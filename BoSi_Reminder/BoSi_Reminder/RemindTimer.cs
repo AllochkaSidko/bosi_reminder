@@ -30,7 +30,6 @@ namespace BoSi_Reminder
 
             if (StationManager.CurrentUser != null)
             {
-               // MessageBox.Show("AAAA");
                 TimeTracker.TimerReact();
             }
 

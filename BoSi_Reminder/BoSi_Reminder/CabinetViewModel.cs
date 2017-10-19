@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace BoSi_Reminder
         private RelayCommand _logOutCommand;
         private RelayCommand _createCommand;
         private RelayCommand _deleteCommand;
+        private RelayCommand _isDoneCommand;
         private RelayCommand _showLogInWindowCommand;
         public string UsernameBlockText { get; set; }
         public DateTime Date { get; set; }
@@ -30,12 +32,11 @@ namespace BoSi_Reminder
 
         //при завантаженні вікна вводиться ім'я поточного користувача та сьогоднішню дату
 
-        //список для збереження всіх нагадувань в ListBox
-        public List<Reminder> _usersReminders;
 
         public CabinetViewModel()
         {
-            UsersReminders = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == Date).ToList();
+            //StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == Date
+            UsersReminders = new ObservableCollection<Reminder>(StationManager.CurrentUser?.Reminders.ToList());
             UsernameBlockText = StationManager.CurrentUser?.Name + " " + StationManager.CurrentUser?.Surname;
             Date = DateTime.Now.Date;
             DateBlockContent = DateTime.Now.ToString("dd/MM/yyyy");
@@ -82,6 +83,11 @@ namespace BoSi_Reminder
             get { return _deleteCommand ?? (_deleteCommand = new RelayCommand(obj => Delete(obj))); }
         }
 
+        public RelayCommand IsDoneCommand
+        {
+            get { return _isDoneCommand ?? (_isDoneCommand = new RelayCommand(obj => Done(obj))); }
+        }
+
 
         //відкриття вікна створення нагадування
         private void Create(Object obj)
@@ -93,13 +99,15 @@ namespace BoSi_Reminder
             
         }
 
-        public List<Reminder> UsersReminders
+        //список для збереження всіх нагадувань в ListBox
+        private  ObservableCollection<Reminder> _usersReminders;
+        public  ObservableCollection<Reminder> UsersReminders
         {
             get => _usersReminders;
             set
             {
                 _usersReminders = value;
-                OnPropertyChanged("_userReminders");
+                OnPropertyChanged("UsersReminders");
             }
         }
         //видалення обраного нагадування
@@ -114,17 +122,12 @@ namespace BoSi_Reminder
                     //в іншому випадку виводимо повідомлення про помилку
                     if (SelectedReminder != null)
                     {
-                        StationManager.CurrentUser.Reminders.Remove(SelectedReminder);
+                    StationManager.CurrentUser.Reminders.Remove(SelectedReminder);
+                       UsersReminders.Remove(SelectedReminder);
                         SerializeManager.Serialize<User>(StationManager.CurrentUser);
-                        //якщо не обрано режим "Показати все" то відображаємо нагадування за обраною датою
-                        //в іншому випадку виводимо всі
-                       // if (!isDisplayAll)
-                         //   UsersReminders = StationManager.CurrentUser.Reminders?.Where(r => r.ReactDate.Date == Date).ToList();
-                       // else
-                        //{
-                            UsersReminders = StationManager.CurrentUser.Reminders;
-                            DateBlockContent = "";
-                        //}
+
+                            //DateBlockContent = "";
+                        
                     }
                     else
                     {
@@ -144,7 +147,28 @@ namespace BoSi_Reminder
         private void Done(Object obj)
         {
 
-            //не реалізовано MVVM
+            //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
+            try
+            {
+                
+                if (SelectedReminder != null)
+                {
+                    //присвоєння властивості isDone значення true
+                    UsersReminders.Where(r => r.Id == SelectedReminder.Id).FirstOrDefault().IsDone = true;
+                    SelectedReminder.IsDone = true;
+                    SerializeManager.Serialize<User>(StationManager.CurrentUser);
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Reminder not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+                LogWriter.LogWrite("Exception in isDone method", ex);
+            }
+            LogWriter.LogWrite("Done reminder");
 
         }
 
