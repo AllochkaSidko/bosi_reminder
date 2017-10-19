@@ -22,16 +22,21 @@ namespace BoSi_Reminder
     {
         public CabinetWindow()
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             InitializeComponent();
+
             CabinetViewModel = new CabinetViewModel();
+
             CabinetViewModel.RequestClose += Close;
+            CabinetViewModel.UpdateList += UpdateItemSource;
+            CabinetViewModel.FillDates += Fill;
+
             DataContext = CabinetViewModel;
-
-
         }
 
         private CabinetViewModel CabinetViewModel { get; set; }
-        bool isDisplayAll = false;
+      
 
         private void Close(bool isQuitApp)
         {
@@ -42,9 +47,7 @@ namespace BoSi_Reminder
                 Environment.Exit(0);
             }
         }
-
-       
-
+        
         //заповнення масиву для виділення дат, на які встановлено нагадування
         private void Fill()
         {
@@ -52,51 +55,16 @@ namespace BoSi_Reminder
                 Calendar.SelectedDates.Add(d.ReactDate);
         }
 
-
-
-        //виводить нагадування за обраною на календарі датою та відображає цю дату в текстовому блоці
-        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        private void UpdateItemSource()
         {
-            try
-            {
-                if (Calendar.SelectedDate != null)
-                {
-                    ListBox.ItemsSource = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == Calendar.SelectedDate.Value);
-                    this.DateBlock.Content = this.Calendar.SelectedDate.Value.ToString("dd/MM/yyyy");
-
-                }
-                //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
-                //Fill();
-            }
-            catch (Exception ex )
-            {
-                LogWriter.LogWrite("Exception in SelectedDatesChanged method",ex);
-            }
-
-            LogWriter.LogWrite("Select remind item");
-
+            ListBox.Items.Refresh();
         }
 
-        
+       
 
-        //позначення нагадування як виконаного(аналогічно видаленню)
-        private void IsDoneButton_Click(object sender, RoutedEventArgs e)
-        {
-          
-           
-        }
-
-        //відобразити всі нагадування користувача
-        private void DisplayAll_Click(object sender, RoutedEventArgs e)
-        {
-            
-            Calendar.SelectedDate = null;
-            isDisplayAll = true;
-            ListBox.ItemsSource = StationManager.CurrentUser?.Reminders;
-            this.DateBlock.Content = "";
-            LogWriter.LogWrite("Display all reminders");
-        }
-
+       
+       
+       
 
         //---------------ВИПРАВЛЕНА ПОМИЛКА---------------//
         //відображення дати нагадування при натисненні на ньому в списку, коли увімкнений режим "Показати все"
@@ -104,10 +72,10 @@ namespace BoSi_Reminder
         {
             Reminder reminder = (Reminder)ListBox.SelectedItem;
 
-            if (isDisplayAll)
-            {
-                DateBlock.Content = reminder?.ReactDate.Date.ToString("dd/MM/yyyy");
-            }
+           // if (isDisplayAll)
+           // {
+             //   DateBlock.Content = reminder?.ReactDate.Date.ToString("dd/MM/yyyy");
+            //}
         }
     }
 }

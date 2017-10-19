@@ -23,33 +23,45 @@ namespace BoSi_Reminder
         private RelayCommand _deleteCommand;
         private RelayCommand _isDoneCommand;
         private RelayCommand _showLogInWindowCommand;
+        private RelayCommand _displayAllCommand;
+        private RelayCommand _selectedDatesChangedCommand;
+
         public string UsernameBlockText { get; set; }
-        public DateTime Date { get; set; }
-        public string DateBlockContent { get; set; }
+        public DateTime? Date { get; set; }
+
+        private string _dateBlockContent;
+        public string DateBlockContent {
+            get => _dateBlockContent;
+            set
+            {
+                _dateBlockContent = value;
+                OnPropertyChanged();
+            }
+        }
         //змінна для відслідковування чи увімкнений режим "Показати все"
         bool isDisplayAll = false;
         public Reminder SelectedReminder { get; set; }
+        //список для збереження всіх нагадувань в ListBox
+
+        private List<Reminder> _usersReminders;
+        public List<Reminder> UsersReminders
+        {
+            get => _usersReminders;
+            set
+            {
+                _usersReminders = value;
+                OnPropertyChanged();
+            }
+        }
 
         //при завантаженні вікна вводиться ім'я поточного користувача та сьогоднішню дату
-
-
         public CabinetViewModel()
         {
-            //StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == Date
-            UsersReminders = new ObservableCollection<Reminder>(StationManager.CurrentUser?.Reminders.ToList());
+            UsersReminders = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
             UsernameBlockText = StationManager.CurrentUser?.Name + " " + StationManager.CurrentUser?.Surname;
             Date = DateTime.Now.Date;
             DateBlockContent = DateTime.Now.ToString("dd/MM/yyyy");
         }
-
-        /*
-        //заповнення масиву для виділення дат, на які встановлено нагадування
-        private void Fill()
-        {
-            foreach (var d in StationManager.CurrentUser?.Reminders)
-                Calendar.SelectedDates.Add(d.ReactDate);
-        }
-        */
 
         public RelayCommand WindowLoaded
         {
@@ -65,6 +77,7 @@ namespace BoSi_Reminder
 
         private void OnLoaded(object obj)
         {
+            OnRequestFillDates();
             TimeTracker.ShowPrevious();
         }
 
@@ -87,8 +100,7 @@ namespace BoSi_Reminder
         {
             get { return _isDoneCommand ?? (_isDoneCommand = new RelayCommand(obj => Done(obj))); }
         }
-
-
+        
         //відкриття вікна створення нагадування
         private void Create(Object obj)
         {
@@ -96,68 +108,66 @@ namespace BoSi_Reminder
             OnRequestClose(false);
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
-            
+        }
+        
+        public RelayCommand DisplayAllCommand
+        {
+            get { return _displayAllCommand ?? (_displayAllCommand = new RelayCommand(obj => DisplayAll(obj))); }
         }
 
-        //список для збереження всіх нагадувань в ListBox
-        private  ObservableCollection<Reminder> _usersReminders;
-        public  ObservableCollection<Reminder> UsersReminders
+        //відобразити всі нагадування користувача
+        private void DisplayAll(Object obj)
         {
-            get => _usersReminders;
-            set
-            {
-                _usersReminders = value;
-                OnPropertyChanged("UsersReminders");
-            }
+            Date = null;
+            isDisplayAll = true;
+            UsersReminders = StationManager.CurrentUser?.Reminders;
+            OnRequestUpdateList();
+            DateBlockContent = "";
+            LogWriter.LogWrite("Display all reminders");
         }
+        
         //видалення обраного нагадування
         private void Delete(Object obj)
-        {
-            
+        { 
             //пошук обраного нагадування зі списку користувача
             try
+            {
+                //якщо нагадування існує то видаляємо
+                //в іншому випадку виводимо повідомлення про помилку
+                if (SelectedReminder != null)
                 {
-               
-                    //якщо нагадування існує то видаляємо
-                    //в іншому випадку виводимо повідомлення про помилку
-                    if (SelectedReminder != null)
-                    {
                     StationManager.CurrentUser.Reminders.Remove(SelectedReminder);
-                       UsersReminders.Remove(SelectedReminder);
-                        SerializeManager.Serialize<User>(StationManager.CurrentUser);
+                    UsersReminders.Remove(SelectedReminder);
+                    SerializeManager.Serialize<User>(StationManager.CurrentUser);
 
-                            //DateBlockContent = "";
-                        
-                    }
-                    else
-                    {
-                        MessageBox.Show("Reminder not found!");
-                    }
-
+                    if (isDisplayAll)
+                        DateBlockContent = "";
+                    
+                    OnRequestUpdateList();
                 }
-                catch (Exception ex)
+                else
                 {
-                    LogWriter.LogWrite("Exception in DeleteReminder method", ex);
+                    MessageBox.Show("Reminder not found!");
                 }
+            }
+            catch (Exception ex)
+            {
+                LogWriter.LogWrite("Exception in DeleteReminder method", ex);
+            }
 
-                LogWriter.LogWrite("Delete reminder");
-            
+            LogWriter.LogWrite("Delete reminder");
         }
 
         private void Done(Object obj)
         {
-
-            //-----------ВИПРАВЛЕНО ПОМИЛКУ-----------//
             try
             {
-                
                 if (SelectedReminder != null)
                 {
                     //присвоєння властивості isDone значення true
-                    UsersReminders.Where(r => r.Id == SelectedReminder.Id).FirstOrDefault().IsDone = true;
                     SelectedReminder.IsDone = true;
                     SerializeManager.Serialize<User>(StationManager.CurrentUser);
-                    
+                    OnRequestUpdateList();
                 }
                 else
                 {
@@ -169,10 +179,8 @@ namespace BoSi_Reminder
                 LogWriter.LogWrite("Exception in isDone method", ex);
             }
             LogWriter.LogWrite("Done reminder");
-
         }
-
-
+        
         //вікриття початкового вікна
         private void LogOut(object obj)
         {
@@ -194,42 +202,76 @@ namespace BoSi_Reminder
 
 
 
+        public RelayCommand SelectedDatesChangedCommand
+        {
+            get
+            {
+                if (_selectedDatesChangedCommand == null)
+                {
+                    _selectedDatesChangedCommand = new RelayCommand(DatesChanged);
+                }
+                return _selectedDatesChangedCommand;
+            }
+        }
+
+        //виводить нагадування за обраною на календарі датою та відображає цю дату в текстовому блоці
+        private void DatesChanged(Object obj)
+        {
+            try
+            {
+                if (Date != null)
+                {
+                    UsersReminders = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == Date.Value).ToList();
+                    OnRequestUpdateList();
+                    DateBlockContent = Date.Value.ToString("dd/MM/yyyy");
+                }
+
+                OnRequestFillDates();
+            }
+            catch (Exception ex)
+            {
+                LogWriter.LogWrite("Exception in SelectedDatesChanged method", ex);
+            }
+
+            LogWriter.LogWrite("Select remind item");
+        }
+
+     
+
+        internal event UpdateListHandler UpdateList;
+        public delegate void UpdateListHandler();
+
+        //метод для оновлення списку
+        protected virtual void OnRequestUpdateList()
+        {
+            UpdateList?.Invoke();
+        }
+
+
+        internal event FillDatesHandler FillDates;
+        public delegate void FillDatesHandler();
+
+        //метод для оновлення списку
+        protected virtual void OnRequestFillDates()
+        {
+            FillDates?.Invoke();
+        }
+
+        internal event CloseHandler RequestClose;
+        public delegate void CloseHandler(bool isQuitApp);
+
         //метод для закриття вікна
         protected virtual void OnRequestClose(bool isquitapp)
         {
             RequestClose?.Invoke(isquitapp);
         }
 
-        internal event CloseHandler RequestClose;
-        public delegate void CloseHandler(bool isQuitApp);
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        /*
-        RelayCommand _selectionCommand;
-        public RelayCommand SelectionCommand
-        {
-            get
-            {
-                if (_selectionCommand == null)
-                {
-                    _selectionCommand = new RelayCommand(a =>
-                    {
-                        SelectedDatesCollection dates = a as SelectedDatesCollection;
-                        dates.ToList();
-                        foreach (var d in StationManager.CurrentUser?.Reminders)
-                            dates.Add(d.ReactDate);
-                    });
-
-                }
-                return _selectionCommand;
-            }
-        }
-        */
 
     }
 }
