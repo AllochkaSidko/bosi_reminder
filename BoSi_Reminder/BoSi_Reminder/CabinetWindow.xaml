@@ -172,7 +172,12 @@
 
             <Label Name="DateBlock" FontSize="24" Width="200" MaxWidth="200" Margin="0,10,270,0" Content="{Binding DateBlockContent, UpdateSourceTrigger=PropertyChanged}" Foreground="Orange"></Label>
 
-            <ListBox  ItemsSource="{Binding UsersReminders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   SelectedItem="{Binding SelectedReminder}" Name="ListBox" Height="480" Margin="10,0,20,0" SelectionChanged="ListBox_SelectionChanged">
+            <ListBox  ItemsSource="{Binding UsersReminders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   SelectedItem="{Binding SelectedReminder}" Name="ListBox" Height="480" Margin="10,0,20,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding ListBoxSelectionChanged}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <ListBox.Resources>
                     <DataTemplate DataType="{x:Type local:Reminder}">
                         <StackPanel Name ="StackPanel1" Orientation="Horizontal">

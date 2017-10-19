@@ -25,6 +25,7 @@ namespace BoSi_Reminder
         private RelayCommand _showLogInWindowCommand;
         private RelayCommand _displayAllCommand;
         private RelayCommand _selectedDatesChangedCommand;
+        private RelayCommand _listBoxSelectionChanged;
 
         public string UsernameBlockText { get; set; }
         public DateTime? Date { get; set; }
@@ -62,6 +63,40 @@ namespace BoSi_Reminder
             Date = DateTime.Now.Date;
             DateBlockContent = DateTime.Now.ToString("dd/MM/yyyy");
         }
+
+
+        /*
+         //відображення дати нагадування при натисненні на ньому в списку, коли увімкнений режим "Показати все"
+         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+         {
+             Reminder reminder = (Reminder)ListBox.SelectedItem;
+
+             // if (isDisplayAll)
+             // {
+             //   DateBlock.Content = reminder?.ReactDate.Date.ToString("dd/MM/yyyy");
+             //}
+         }*/
+
+        public RelayCommand ListBoxSelectionChanged
+        {
+            get
+            {
+                if (_listBoxSelectionChanged == null)
+                {
+                    _listBoxSelectionChanged = new RelayCommand(SelectionChangedItem);
+                }
+                return _listBoxSelectionChanged;
+            }
+        }
+
+        private void SelectionChangedItem(Object obj)
+        {
+            if (isDisplayAll)
+            {
+                DateBlockContent = SelectedReminder?.ReactDate.Date.ToString("dd/MM/yyyy");
+            }
+        }
+
 
         public RelayCommand WindowLoaded
         {

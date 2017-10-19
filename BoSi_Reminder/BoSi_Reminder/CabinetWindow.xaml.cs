@@ -59,23 +59,5 @@ namespace BoSi_Reminder
         {
             ListBox.Items.Refresh();
         }
-
-       
-
-       
-       
-       
-
-        //---------------ВИПРАВЛЕНА ПОМИЛКА---------------//
-        //відображення дати нагадування при натисненні на ньому в списку, коли увімкнений режим "Показати все"
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Reminder reminder = (Reminder)ListBox.SelectedItem;
-
-           // if (isDisplayAll)
-           // {
-             //   DateBlock.Content = reminder?.ReactDate.Date.ToString("dd/MM/yyyy");
-            //}
-        }
     }
 }
