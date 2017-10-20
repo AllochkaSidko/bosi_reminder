@@ -175,10 +175,9 @@ namespace BoSi_Reminder
                     UsersReminders.Remove(SelectedReminder);
                     SerializeManager.Serialize<User>(StationManager.CurrentUser);
 
+                    OnRequestUpdateList();
                     if (isDisplayAll)
                         DateBlockContent = "";
-                    
-                    OnRequestUpdateList();
                 }
                 else
                 {

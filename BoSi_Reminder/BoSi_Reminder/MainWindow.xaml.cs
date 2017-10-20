@@ -69,7 +69,7 @@ namespace BoSi_Reminder
             {
                 LogWriter.LogWrite("Exception while Initializing main window", ex);
             }
-            //----------ВИПРАВИЛИ ПОМИЛКУ----------//
+           
             Environment.Exit(0);
 
         }
