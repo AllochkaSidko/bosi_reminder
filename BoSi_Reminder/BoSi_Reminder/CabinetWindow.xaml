@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BoSi_Reminder"
        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="CabinetWindow"  MaxHeight="550" MinHeight="550" MaxWidth="1000" Width="1000" >
+        Title="CabinetWindow"  MaxHeight="670" MinHeight="670" MaxWidth="1000" Width="1000" >
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -193,10 +193,10 @@
 
 
         <Button Grid.Row="0" Grid.Column="1" Name="LogOutButton" Style="{StaticResource LogOutStyle}" Content="Log out" HorizontalAlignment="Right"  Margin="0,0,20,0" Width="150" Height="40" Command="{Binding LogOutCommand}"/>
-        <Button Grid.Row="1" Grid.Column="1" Name="DisplayAll" Style="{StaticResource DisplayStyle}" Content="Display all" HorizontalAlignment="Right"  Margin="0,-510,20,0" Width="150" Height="40"  Command="{Binding DisplayAllCommand}"/>
-        <Button Grid.Row="1" Grid.Column="0" Name="CreateReminder" Style="{StaticResource CreateStyle}" VerticalContentAlignment="Center" Content="Set new reminder" HorizontalAlignment="Center"  Height="60" Margin="0,250,0,0" Width="240" Command="{Binding CreateCommand}"/>
-        <Button Grid.Row="1" Grid.Column="0" Name="DeleteReminder" Style="{StaticResource DeleteStyle}" VerticalContentAlignment="Center"  Content="Delete" Width="140" Height="40" HorizontalAlignment="Center" Margin="0,390,180,0" Command="{Binding DeleteCommand}"/>
-        <Button Grid.Row="1" Grid.Column="0" Name="IsDoneButton" Style="{StaticResource DoneStyle}" VerticalContentAlignment="Center"  Content="Done!" Width="140" HorizontalAlignment="Center" Height="40" Margin="180,390,0,0"  Command="{Binding IsDoneCommand}"/>
+        <Button Grid.Row="1" Grid.Column="1" Name="DisplayAll" Style="{StaticResource DisplayStyle}" Content="Display all" HorizontalAlignment="Right"  Margin="0,-480,20,0" Width="150" Height="40"  Command="{Binding DisplayAllCommand}"/>
+        <Button Grid.Row="1" Grid.Column="0" Name="CreateReminder" Style="{StaticResource CreateStyle}" VerticalContentAlignment="Center" Content="Set new reminder" HorizontalAlignment="Center"  Height="60" Margin="3,200,0,0" Width="250" Command="{Binding CreateCommand}"/>
+        <Button Grid.Row="1" Grid.Column="0" Name="DeleteReminder" Style="{StaticResource DeleteStyle}" VerticalContentAlignment="Center"  Content="Delete" Width="140" Height="40" HorizontalAlignment="Center" Margin="0,350,180,0" Command="{Binding DeleteCommand}"/>
+        <Button Grid.Row="1" Grid.Column="0" Name="IsDoneButton" Style="{StaticResource DoneStyle}" VerticalContentAlignment="Center"  Content="Done!" Width="140" HorizontalAlignment="Center" Height="40" Margin="180,350,0,0"  Command="{Binding IsDoneCommand}"/>
 
     </Grid>
 </Window>
