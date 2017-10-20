@@ -13,29 +13,42 @@ namespace BoSi_Reminder
         static DispatcherTimer timer;
         public static void Start()
         {
-            var now = DateTime.UtcNow;
-            var nextMinute = now.AddTicks(-(now.Ticks % TimeSpan.TicksPerMinute)).AddMinutes(1);
-            timer = new DispatcherTimer(DispatcherPriority.Normal);
-            timer.Interval = nextMinute - DateTime.UtcNow;
-            timer.Tick += Func;
-            timer.Start();
-
-
+            try
+            {
+                var now = DateTime.UtcNow;
+                var nextMinute = now.AddTicks(-(now.Ticks % TimeSpan.TicksPerMinute)).AddMinutes(1);
+                timer = new DispatcherTimer(DispatcherPriority.Normal);
+                timer.Interval = nextMinute - DateTime.UtcNow;
+                timer.Tick += Func;
+                timer.Start();
+            }
+            catch(Exception ex)
+            {
+                LogWriter.LogWrite("Exception in RemindTimer class, method Start", ex);
+            }
         }
+
         private static void Func(object sender, EventArgs e)
         {
             var correctionNow = DateTime.UtcNow;
             var timeCorrection = correctionNow.AddTicks(-(correctionNow.Ticks % TimeSpan.TicksPerMinute)).AddMinutes(1);
             timer.Interval = timeCorrection - DateTime.UtcNow;
 
-            if (StationManager.CurrentUser != null)
+            try
             {
-                TimeTracker.TimerReact();
-            }
+                if (StationManager.CurrentUser != null)
+                {
+                    TimeTracker.TimerReact();
+                }
 
-            if (DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0)
+                if (DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0)
+                {
+                    TimeTracker.TodayReminds = StationManager.CurrentUser.Reminders.Where(d => d.ReactDate.Date == DateTime.Today).ToList();
+                }
+            }
+            catch(Exception ex)
             {
-                TimeTracker.TodayReminds = StationManager.CurrentUser.Reminders.Where(d => d.ReactDate.Date == DateTime.Today).ToList();
+                LogWriter.LogWrite("Exception in RemindTimer class, method Func", ex);
             }
         }
 

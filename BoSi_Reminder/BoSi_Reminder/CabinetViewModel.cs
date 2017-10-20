@@ -29,31 +29,12 @@ namespace BoSi_Reminder
 
         public string UsernameBlockText { get; set; }
         public DateTime? Date { get; set; }
-
+        //список для збереження всіх нагадувань в ListBox
+        private List<Reminder> _usersReminders;
         private string _dateBlockContent;
-        public string DateBlockContent {
-            get => _dateBlockContent;
-            set
-            {
-                _dateBlockContent = value;
-                OnPropertyChanged();
-            }
-        }
         //змінна для відслідковування чи увімкнений режим "Показати все"
         bool isDisplayAll = false;
         public Reminder SelectedReminder { get; set; }
-        //список для збереження всіх нагадувань в ListBox
-
-        private List<Reminder> _usersReminders;
-        public List<Reminder> UsersReminders
-        {
-            get => _usersReminders;
-            set
-            {
-                _usersReminders = value;
-                OnPropertyChanged();
-            }
-        }
 
         //при завантаженні вікна вводиться ім'я поточного користувача та сьогоднішню дату
         public CabinetViewModel()
@@ -65,55 +46,33 @@ namespace BoSi_Reminder
         }
 
 
-        /*
-         //відображення дати нагадування при натисненні на ньому в списку, коли увімкнений режим "Показати все"
-         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-         {
-             Reminder reminder = (Reminder)ListBox.SelectedItem;
-
-             // if (isDisplayAll)
-             // {
-             //   DateBlock.Content = reminder?.ReactDate.Date.ToString("dd/MM/yyyy");
-             //}
-         }*/
+        public string DateBlockContent {
+            get => _dateBlockContent;
+            set
+            {
+                _dateBlockContent = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public List<Reminder> UsersReminders
+        {
+            get => _usersReminders;
+            set
+            {
+                _usersReminders = value;
+                OnPropertyChanged();
+            }
+        }
 
         public RelayCommand ListBoxSelectionChanged
         {
-            get
-            {
-                if (_listBoxSelectionChanged == null)
-                {
-                    _listBoxSelectionChanged = new RelayCommand(SelectionChangedItem);
-                }
-                return _listBoxSelectionChanged;
-            }
+            get{ return _listBoxSelectionChanged ?? (_listBoxSelectionChanged = new RelayCommand(SelectionChangedItem)); }
         }
-
-        private void SelectionChangedItem(Object obj)
-        {
-            if (isDisplayAll)
-            {
-                DateBlockContent = SelectedReminder?.ReactDate.Date.ToString("dd/MM/yyyy");
-            }
-        }
-
 
         public RelayCommand WindowLoaded
         {
-            get
-            {
-                if (_showLogInWindowCommand == null)
-                {
-                    _showLogInWindowCommand = new RelayCommand(OnLoaded);
-                }
-                return _showLogInWindowCommand;
-            }
-        }
-
-        private void OnLoaded(object obj)
-        {
-            OnRequestFillDates();
-            TimeTracker.ShowPrevious();
+            get { return _showLogInWindowCommand ?? (_showLogInWindowCommand = new RelayCommand(OnLoaded)); }
         }
 
         public RelayCommand LogOutCommand
@@ -135,7 +94,18 @@ namespace BoSi_Reminder
         {
             get { return _isDoneCommand ?? (_isDoneCommand = new RelayCommand(obj => Done(obj))); }
         }
-        
+
+        public RelayCommand DisplayAllCommand
+        {
+            get { return _displayAllCommand ?? (_displayAllCommand = new RelayCommand(obj => DisplayAll(obj))); }
+        }
+
+
+        public RelayCommand SelectedDatesChangedCommand
+        {
+            get { return _selectedDatesChangedCommand ?? (_selectedDatesChangedCommand = new RelayCommand(DatesChanged)); }
+        }
+
         //відкриття вікна створення нагадування
         private void Create(Object obj)
         {
@@ -144,10 +114,20 @@ namespace BoSi_Reminder
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
         }
-        
-        public RelayCommand DisplayAllCommand
+
+
+        private void SelectionChangedItem(Object obj)
         {
-            get { return _displayAllCommand ?? (_displayAllCommand = new RelayCommand(obj => DisplayAll(obj))); }
+            if (isDisplayAll)
+            {
+                DateBlockContent = SelectedReminder?.ReactDate.Date.ToString("dd/MM/yyyy");
+            }
+        }
+
+        private void OnLoaded(object obj)
+        {
+            OnRequestFillDates();
+            TimeTracker.ShowPrevious();
         }
 
         //відобразити всі нагадування користувача
@@ -234,20 +214,6 @@ namespace BoSi_Reminder
             loginWindow.ShowDialog();
         }
 
-
-
-        public RelayCommand SelectedDatesChangedCommand
-        {
-            get
-            {
-                if (_selectedDatesChangedCommand == null)
-                {
-                    _selectedDatesChangedCommand = new RelayCommand(DatesChanged);
-                }
-                return _selectedDatesChangedCommand;
-            }
-        }
-
         //виводить нагадування за обраною на календарі датою та відображає цю дату в текстовому блоці
         private void DatesChanged(Object obj)
         {
@@ -281,11 +247,10 @@ namespace BoSi_Reminder
             UpdateList?.Invoke();
         }
 
-
         internal event FillDatesHandler FillDates;
         public delegate void FillDatesHandler();
 
-        //метод для оновлення списку
+        //метод для позначення дат на календарі, на які встановлено нагадування
         protected virtual void OnRequestFillDates()
         {
             FillDates?.Invoke();

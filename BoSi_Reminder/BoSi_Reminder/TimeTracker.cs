@@ -9,14 +9,12 @@ namespace BoSi_Reminder
 {
     public class TimeTracker
     {
-        public static List<Reminder> TodayReminds = StationManager.CurrentUser.Reminders.Where(d => d.ReactDate.Date == DateTime.Today).ToList();
+        public static List<Reminder> TodayReminds = StationManager.CurrentUser.Reminders.Where(d => d.ReactDate.Date == DateTime.Now.Date).ToList();
         public static void TimerReact()
         {
-
-            var reminder = TodayReminds.Where(d => d.ReactDate.Hour == DateTime.Now.Hour&& d.ReactDate.Minute == DateTime.Now.Minute).ToList();
+            var reminder = StationManager.CurrentUser.Reminders.Where(d => d.ReactDate.Hour == DateTime.Now.Hour && d.ReactDate.Minute == DateTime.Now.Minute).ToList();
             foreach (var r in reminder)
-                ShowReminder(r);
-     
+             ShowReminder(r);
         }
 
         public static void ShowReminder(Reminder reminder)
@@ -27,12 +25,14 @@ namespace BoSi_Reminder
                 {
                     MessageBox.Show(reminder.Text, reminder.ReactDate.ToString());
                     reminder.Status = true;
+                    SerializeManager.Serialize(StationManager.CurrentUser);
                 }
+                LogWriter.LogWrite("Show Riminder:" + reminder.Text);
 
             }
             catch (Exception e)
             {
-                LogWriter.LogWrite("Exception in Reminder immitation method", e);
+                LogWriter.LogWrite("Exception in ShowReminder method", e);
             }
         }
 
