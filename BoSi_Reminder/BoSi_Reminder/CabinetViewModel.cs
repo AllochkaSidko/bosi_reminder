@@ -28,7 +28,7 @@ namespace BoSi_Reminder
         private RelayCommand _listBoxSelectionChanged;
 
         public string UsernameBlockText { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime? _date;
         //список для збереження всіх нагадувань в ListBox
         private List<Reminder> _usersReminders;
         private string _dateBlockContent;
@@ -54,7 +54,16 @@ namespace BoSi_Reminder
                 OnPropertyChanged();
             }
         }
-        
+        public DateTime? Date
+        {
+            get => _date;
+            set
+            {
+                _date = value;
+                OnPropertyChanged();
+            }
+        }
+
         public List<Reminder> UsersReminders
         {
             get => _usersReminders;
@@ -99,7 +108,6 @@ namespace BoSi_Reminder
         {
             get { return _displayAllCommand ?? (_displayAllCommand = new RelayCommand(obj => DisplayAll(obj))); }
         }
-
 
         public RelayCommand SelectedDatesChangedCommand
         {
@@ -156,6 +164,7 @@ namespace BoSi_Reminder
                     SerializeManager.Serialize<User>(StationManager.CurrentUser);
 
                     OnRequestUpdateList();
+                  
                     if (isDisplayAll)
                         DateBlockContent = "";
                 }

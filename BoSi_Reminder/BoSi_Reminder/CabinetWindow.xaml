@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoSi_Reminder"
        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
         Title="CabinetWindow"  MaxHeight="670" MinHeight="670" MaxWidth="1000" Width="1000" >
     
@@ -155,7 +156,7 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,500,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
 
             <Viewbox Width="500"  Margin="0,50,0,0">
-                <Calendar x:Name="Calendar"  SelectionMode="MultipleRange"  Width="370" SelectedDate="{Binding Date}">
+                <Calendar x:Name="Calendar"  SelectionMode="MultipleRange"  Width="370" SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedDatesChanged">
                             <i:InvokeCommandAction Command="{Binding SelectedDatesChangedCommand}"/>
