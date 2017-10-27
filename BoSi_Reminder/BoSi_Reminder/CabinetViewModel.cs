@@ -123,7 +123,7 @@ namespace BoSi_Reminder
             creatorWindow.ShowDialog();
         }
 
-
+        //зміна дати в лейблі при зміні елементу ListBox
         private void SelectionChangedItem(Object obj)
         {
             if (isDisplayAll)
@@ -132,6 +132,7 @@ namespace BoSi_Reminder
             }
         }
 
+        //метод завантаження вікна
         private void OnLoaded(object obj)
         {
             OnRequestFillDates();
@@ -181,6 +182,7 @@ namespace BoSi_Reminder
             LogWriter.LogWrite("Delete reminder");
         }
 
+        //позначення нагадування як зробленого
         private void Done(Object obj)
         {
             try
@@ -190,6 +192,7 @@ namespace BoSi_Reminder
                     //присвоєння властивості isDone значення true
                     SelectedReminder.IsDone = true;
                     SerializeManager.Serialize<User>(StationManager.CurrentUser);
+                    //оновлення ListBox 
                     OnRequestUpdateList();
                 }
                 else
@@ -203,13 +206,14 @@ namespace BoSi_Reminder
             }
             LogWriter.LogWrite("Done reminder");
         }
-        
-        //вікриття початкового вікна
+
+        //вихід з персонального кабінету
         private void LogOut(object obj)
         {
             LogWriter.LogWrite("Log out");
             try
             {
+                //видалення файлу з серіалізацією користувача
                 File.Delete(SerializeManager.CreateAndGetPath(StationManager.CurrentUser.Filename));
             }
             catch(Exception e)
@@ -219,6 +223,7 @@ namespace BoSi_Reminder
 
             StationManager.CurrentUser = null;
             OnRequestClose(false);
+            //вікриття вікна логіну
             var loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
         }

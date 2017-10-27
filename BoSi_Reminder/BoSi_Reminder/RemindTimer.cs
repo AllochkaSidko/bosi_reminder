@@ -16,10 +16,13 @@ namespace BoSi_Reminder
             try
             {
                 var now = DateTime.UtcNow;
+                //вирахування часу для спрацювання кожної хвилини, що настала
                 var nextMinute = now.AddTicks(-(now.Ticks % TimeSpan.TicksPerMinute)).AddMinutes(1);
                 timer = new DispatcherTimer(DispatcherPriority.Normal);
                 timer.Interval = nextMinute - DateTime.UtcNow;
+                //встановлення методу, який має виконуватись кожну хвилину, таймеру
                 timer.Tick += Func;
+                //запуск таймера
                 timer.Start();
             }
             catch(Exception ex)
@@ -31,6 +34,7 @@ namespace BoSi_Reminder
         private static void Func(object sender, EventArgs e)
         {
             var correctionNow = DateTime.UtcNow;
+            //вирахування часу для спрацювання кожної хвилини, що настала
             var timeCorrection = correctionNow.AddTicks(-(correctionNow.Ticks % TimeSpan.TicksPerMinute)).AddMinutes(1);
             timer.Interval = timeCorrection - DateTime.UtcNow;
 
@@ -40,10 +44,10 @@ namespace BoSi_Reminder
                 {
                     TimeTracker.TimerReact();
                 }
-
+                //зміна поточного списку нагадувань на сьогодні з наставанням 00:00 
                 if (DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0)
                 {
-                    TimeTracker.TodayReminds = StationManager.CurrentUser.Reminders.Where(d => d.ReactDate.Date == DateTime.Today).ToList();
+                    TimeTracker.TodayReminds = StationManager.CurrentUser.Reminders.Where(d => d.ReactDate.Date == DateTime.Today).ToList();  
                 }
             }
             catch(Exception ex)

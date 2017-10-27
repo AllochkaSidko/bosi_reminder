@@ -27,7 +27,6 @@ namespace BoSi_Reminder
         
         public MainWindow()
         {
-            InitializeComponent();
             try
             {
                 RemindTimer.Start();

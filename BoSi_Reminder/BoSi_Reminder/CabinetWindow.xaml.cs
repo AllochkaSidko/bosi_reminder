@@ -55,6 +55,7 @@ namespace BoSi_Reminder
                 Calendar.SelectedDates.Add(d.ReactDate);
         }
 
+        //оновлення елементів ListBox
         private void UpdateItemSource()
         {
             ListBox.Items.Refresh();

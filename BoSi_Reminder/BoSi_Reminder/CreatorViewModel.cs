@@ -100,8 +100,12 @@ namespace BoSi_Reminder
 
             try
             {
+                var reminder = new Reminder(date, Text);
+                //додвання новостворенного нагадування до списку нагадувань користувача на сьогодні
+                if (date.Date == DateTime.Now.Date)
+                    TimeTracker.TodayReminds.Add(reminder);
                 //додаємо нове нагадування користувачу
-                StationManager.CurrentUser.Reminders.Add(new Reminder(date, Text));
+                StationManager.CurrentUser.Reminders.Add(reminder);
                 SerializeManager.Serialize<User>(StationManager.CurrentUser);
             }
             catch(Exception e)
