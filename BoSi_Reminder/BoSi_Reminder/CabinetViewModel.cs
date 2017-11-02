@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace BoSi_Reminder
 {
@@ -39,7 +32,8 @@ namespace BoSi_Reminder
         //при завантаженні вікна вводиться ім'я поточного користувача та сьогоднішню дату
         public CabinetViewModel()
         {
-            UsersReminders = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
+            // UsersReminders = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
+            UsersReminders = EntityWraper.GetAll()?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
             UsernameBlockText = StationManager.CurrentUser?.Name + " " + StationManager.CurrentUser?.Surname;
             Date = DateTime.Now.Date;
             DateBlockContent = DateTime.Now.ToString("dd/MM/yyyy");
@@ -161,7 +155,8 @@ namespace BoSi_Reminder
                 if (SelectedReminder != null)
                 {
                     StationManager.CurrentUser.Reminders.Remove(SelectedReminder);
-                    UsersReminders.Remove(SelectedReminder);
+                    //UsersReminders.Remove(SelectedReminder);
+                    EntityWraper.Delete(SelectedReminder);
                     SerializeManager.Serialize<User>(StationManager.CurrentUser);
 
                     OnRequestUpdateList();
@@ -191,6 +186,7 @@ namespace BoSi_Reminder
                 {
                     //присвоєння властивості isDone значення true
                     SelectedReminder.IsDone = true;
+                    EntityWraper.Edit(SelectedReminder);
                     SerializeManager.Serialize<User>(StationManager.CurrentUser);
                     //оновлення ListBox 
                     OnRequestUpdateList();

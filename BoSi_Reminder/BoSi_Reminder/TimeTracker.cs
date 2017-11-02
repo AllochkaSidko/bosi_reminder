@@ -31,6 +31,7 @@ namespace BoSi_Reminder
                     MessageBox.Show(reminder.Text, reminder.ReactDate.ToString());
                     //зміна статусу
                     reminder.Status = true;
+                    EntityWraper.Edit(reminder);
                     SerializeManager.Serialize(StationManager.CurrentUser);
                 }
                 LogWriter.LogWrite("Show Riminder:" + reminder.Text);
@@ -45,7 +46,7 @@ namespace BoSi_Reminder
         public static void ShowPrevious()
         {
             //виведення нагадування, час спрацювання яких вже минув
-            foreach (var r in StationManager.CurrentUser.Reminders)
+            foreach (var r in StationManager.CurrentUser?.Reminders)
                 if (DateTime.Now.CompareTo(r.ReactDate) > 0)
                     ShowReminder(r);
         }

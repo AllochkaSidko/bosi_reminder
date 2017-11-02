@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -95,33 +96,39 @@ namespace BoSi_Reminder
         //метод створення нового акаунту
         private void SignUp(Object obj)
         {
-            //перевірка на валідність пошти
-            if (!ValidatorExtensions.IsValidEmailAddress(Email))
+            User newuser = null;
+
+            try
             {
-                MessageBox.Show("Invalid email!");
+                if(!new EmailAddressAttribute().IsValid(Email))
+                {
+                    MessageBox.Show("Invalid email");
+                    return;
+                }
+
+                if(EntityWraper.UserExist(Login))
+                {
+                    MessageBox.Show("User with such login aleady exists");
+                    return;
+                }
+            }
+            catch(Exception ex)
+            {
+                LogWriter.LogWrite("Exception while checking email and login in SignUp method", ex);
                 return;
             }
 
             try
             {
-
-                //перевірка на унікальність імені користувача
-                if (DBAdapter.Users.Any(user => user.Login == Login))
-                {
-                    MessageBox.Show("User with this username already exists");
-                    return;
-                }
                 //створення нового користувача
-                User newuser = new User(Login, Password, Name, Surname, Email);
-                DBAdapter.Users.Add(newuser);
-                //запис поточного користувача
-                StationManager.CurrentUser = newuser;
+                newuser = new User(Login, Password, Name, Surname, Email);
+                EntityWraper.AddUser(newuser);
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
-                LogWriter.LogWrite("Exception in Sign up method, checking for username unicity",e);
+                LogWriter.LogWrite("Exception while creating new user", ex);
             }
-
+            StationManager.CurrentUser = newuser;
 
             //серіалізуємо поточного користувача
             SerializeManager.Serialize<User>(StationManager.CurrentUser);
@@ -132,6 +139,8 @@ namespace BoSi_Reminder
             OnRequestClose(false);
             CabinetWindow cabinetWindow = new CabinetWindow();
             cabinetWindow.ShowDialog();
+            return;
+
         }
 
 

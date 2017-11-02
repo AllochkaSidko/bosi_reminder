@@ -97,7 +97,7 @@ namespace BoSi_Reminder
                 MessageBox.Show("You cannot set reminder on earlier date or time");
                 return;
             }
-
+            //to do: split in two trys, problem in log writer no exception message
             try
             {
                 var reminder = new Reminder(date, Text);
@@ -105,15 +105,16 @@ namespace BoSi_Reminder
                 if (date.Date == DateTime.Now.Date)
                     TimeTracker.TodayReminds.Add(reminder);
                 //додаємо нове нагадування користувачу
-                StationManager.CurrentUser.Reminders.Add(reminder);
+                //StationManager.CurrentUser.Reminders.Add(reminder);
+                EntityWraper.AddReminder(reminder);
                 SerializeManager.Serialize<User>(StationManager.CurrentUser);
             }
             catch(Exception e)
             {
-                LogWriter.LogWrite("Exception in Create reminder method, adding remeinder to user", e);
+                LogWriter.LogWrite("Exception in Create reminder method, adding reminder to user" + e.Message, e);
             }
 
-            LogWriter.LogWrite("Creted reminder");
+            LogWriter.LogWrite("Created reminder");
             //перехід назад на вікно Кабінету
             OnRequestClose(false);
             CabinetWindow cabinetWindow = new CabinetWindow();

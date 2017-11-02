@@ -4,6 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity.ModelConfiguration;
 
 namespace BoSi_Reminder
 {
@@ -13,14 +14,14 @@ namespace BoSi_Reminder
         public static string FileName = "user";
         public string Name { get; set; }
         public string Password { get; set; }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Surname { get; set; }
         public string Login { get; set; }
         public string Email { get; set; }
         public DateTime PreviousLog { get; set; }
-        public static int FreeId = 0;
         private List<Reminder> _reminders;
-        public List<Reminder> Reminders {
+        public List<Reminder> Reminders
+        {
             //сортування списку нагадувань за датою 
             get
             {
@@ -38,20 +39,22 @@ namespace BoSi_Reminder
             }
         }
 
-        public User(string login, string password, string name, string surname, string email)
+        public User(string login, string password, string name, string surname, string email):this()
         {
+            Id = Guid.NewGuid();
             this.Password = Hash(password);
             this.Login = login;
             this.Name = name;
             this.Surname = surname;
             this.Email = email;
-            this.Id = ++FreeId;
-            this.PreviousLog = DateTime.Now;
-            Reminders = new List<Reminder>();      
+            this.PreviousLog = DateTime.Now;    
         }
 
-        
-        public User(){}
+        //private?
+        public User()
+        {
+            Reminders = new List<Reminder>();
+        }
 
         //метод хешування паролю
         public static string Hash(string password)
@@ -59,6 +62,41 @@ namespace BoSi_Reminder
             var bytes = new UTF8Encoding().GetBytes(password);
             var hashBytes = System.Security.Cryptography.MD5.Create().ComputeHash(bytes);
             return Convert.ToBase64String(hashBytes);
+        }
+
+        public class UserEntityConfiguration : EntityTypeConfiguration<User>
+        {
+            public UserEntityConfiguration()
+            {
+                ToTable("Users");
+
+                HasKey(s => s.Id);
+
+                Property(p => p.Name)
+                    .HasColumnName("Name")
+                    .IsRequired();
+
+                Property(p => p.Surname)
+                    .HasColumnName("Surname")
+                    .IsRequired();
+
+                Property(p => p.Email)
+                    .HasColumnName("Email")
+                    .IsRequired();
+
+                Property(p => p.Password)
+                    .HasColumnName("Password")
+                    .IsRequired();
+
+                Property(p => p.Login)
+                    .HasColumnName("Login")
+                    .IsRequired();
+
+                HasMany(s => s.Reminders)
+                    .WithRequired(w => w.User)
+                    .HasForeignKey(w => w.UserId)
+                    .WillCascadeOnDelete(true);
+            }
         }
     }
 }

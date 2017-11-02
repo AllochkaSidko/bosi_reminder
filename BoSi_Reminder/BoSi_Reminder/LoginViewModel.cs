@@ -73,15 +73,28 @@ namespace BoSi_Reminder
         //метод для входу користувача в систему
         private void SignIn(Object obj)
         {
-            
+            User currentUser = null;
             //перевірка чи є існує такий користувач
-            var currentUser = DBAdapter.Users?.FirstOrDefault(user => user.Login == Login &&
-                                                                     user.Password == User.Hash(Password));
+            try
+            {
+                currentUser = EntityWraper.GetUserByLogin(Login);
+            }
+            catch (Exception ex)
+            {
+                LogWriter.LogWrite("Exception while trying to get user with such login " + Login, ex);
+            }
+
             if (currentUser == null)
             {
-                MessageBox.Show("Wrong Login or Password");
+                MessageBox.Show("Wrong Login");
                 return;
             }
+
+            if (currentUser.Password != Password)
+            {
+                MessageBox.Show("Wrong password!");
+                return;
+            } 
 
             //записуємопоточного користувача
             StationManager.CurrentUser = currentUser;
