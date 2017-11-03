@@ -47,7 +47,7 @@ namespace BoSi_Reminder
                 //зміна поточного списку нагадувань на сьогодні з наставанням 00:00 
                 if (DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0)
                 {
-                    TimeTracker.TodayReminds = StationManager.CurrentUser.Reminders.Where(d => d.ReactDate.Date == DateTime.Today).ToList();  
+                    TimeTracker.TodayReminds = EntityWraper.GetAllRemindsCurrUser().Where(d => d.ReactDate.Date == DateTime.Today).ToList();  
                 }
             }
             catch(Exception ex)

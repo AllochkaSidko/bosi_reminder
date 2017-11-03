@@ -105,9 +105,7 @@ namespace BoSi_Reminder
                 if (date.Date == DateTime.Now.Date)
                     TimeTracker.TodayReminds.Add(reminder);
                 //додаємо нове нагадування користувачу
-                //StationManager.CurrentUser.Reminders.Add(reminder);
                 EntityWraper.AddReminder(reminder);
-                SerializeManager.Serialize<User>(StationManager.CurrentUser);
             }
             catch(Exception e)
             {

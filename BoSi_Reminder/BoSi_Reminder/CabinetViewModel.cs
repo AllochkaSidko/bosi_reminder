@@ -33,7 +33,7 @@ namespace BoSi_Reminder
         public CabinetViewModel()
         {
             // UsersReminders = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
-            UsersReminders = EntityWraper.GetAll()?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
+            UsersReminders = EntityWraper.GetAllRemindsCurrUser()?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
             UsernameBlockText = StationManager.CurrentUser?.Name + " " + StationManager.CurrentUser?.Surname;
             Date = DateTime.Now.Date;
             DateBlockContent = DateTime.Now.ToString("dd/MM/yyyy");
@@ -129,8 +129,15 @@ namespace BoSi_Reminder
         //метод завантаження вікна
         private void OnLoaded(object obj)
         {
-            OnRequestFillDates();
-            TimeTracker.ShowPrevious();
+            try
+            {
+                OnRequestFillDates();
+                TimeTracker.ShowPrevious();
+            }
+            catch (Exception ex)
+            {
+                LogWriter.LogWrite("Exception in OnLoaded cabinet window method", ex);
+            }
         }
 
         //відобразити всі нагадування користувача
@@ -138,7 +145,7 @@ namespace BoSi_Reminder
         {
             Date = null;
             isDisplayAll = true;
-            UsersReminders = StationManager.CurrentUser?.Reminders;
+            UsersReminders = EntityWraper.GetAllRemindsCurrUser();
             OnRequestUpdateList();
             DateBlockContent = "";
             LogWriter.LogWrite("Display all reminders");
@@ -154,10 +161,8 @@ namespace BoSi_Reminder
                 //в іншому випадку виводимо повідомлення про помилку
                 if (SelectedReminder != null)
                 {
-                    StationManager.CurrentUser.Reminders.Remove(SelectedReminder);
-                    //UsersReminders.Remove(SelectedReminder);
+                    UsersReminders.Remove(SelectedReminder);
                     EntityWraper.Delete(SelectedReminder);
-                    SerializeManager.Serialize<User>(StationManager.CurrentUser);
 
                     OnRequestUpdateList();
                   
@@ -187,7 +192,7 @@ namespace BoSi_Reminder
                     //присвоєння властивості isDone значення true
                     SelectedReminder.IsDone = true;
                     EntityWraper.Edit(SelectedReminder);
-                    SerializeManager.Serialize<User>(StationManager.CurrentUser);
+
                     //оновлення ListBox 
                     OnRequestUpdateList();
                 }
@@ -231,7 +236,7 @@ namespace BoSi_Reminder
             {
                 if (Date != null)
                 {
-                    UsersReminders = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == Date.Value).ToList();
+                    UsersReminders = EntityWraper.GetAllRemindsCurrUser().Where(r => r.ReactDate.Date == Date.Value).ToList();
                     OnRequestUpdateList();
                     DateBlockContent = Date.Value.ToString("dd/MM/yyyy");
                 }

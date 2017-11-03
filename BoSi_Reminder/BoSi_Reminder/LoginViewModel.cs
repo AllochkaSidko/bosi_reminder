@@ -17,8 +17,6 @@ namespace BoSi_Reminder
         private RelayCommand _closeCommand;
         private RelayCommand _toSignUpCommand;
 
-
-
         public LoginViewModel(User userCandidate)
         {
             this._userCandidate = userCandidate;
@@ -78,6 +76,8 @@ namespace BoSi_Reminder
             try
             {
                 currentUser = EntityWraper.GetUserByLogin(Login);
+                currentUser.PreviousLog = DateTime.Now;
+                EntityWraper.EditUser(currentUser);
             }
             catch (Exception ex)
             {
@@ -90,12 +90,11 @@ namespace BoSi_Reminder
                 return;
             }
 
-            if (currentUser.Password != Password)
+            if (currentUser.Password != User.Hash(Password))
             {
                 MessageBox.Show("Wrong password!");
                 return;
             } 
-
             //записуємопоточного користувача
             StationManager.CurrentUser = currentUser;
             //серіалізуємо поточного користувача

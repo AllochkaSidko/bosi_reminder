@@ -43,35 +43,51 @@ namespace BoSi_Reminder
             }
         }
 
-        public static List<Reminder> GetAll()
+        public static List<Reminder> GetAllRemindsCurrUser()
         {
             using (var context = new ReminderContext())
             {
-                return context.Reminders.AsNoTracking().ToList();    
+                return context.Reminders.Where(r=>r.UserId == StationManager.CurrentUser.Id).ToList();    
             }
         }
 
-        public static Reminder Get(Guid id)
+        public static Reminder GetReminder(Guid id)
         {
             using (var context = new ReminderContext())
             {
-               return context.Reminders.AsNoTracking().SingleOrDefault(item => (Guid)item.GetType().GetProperty("Id").GetValue(item) == id);
+               return context.Reminders.FirstOrDefault(item => item.Id == id);
             }
         }
-        
+
+        public static User GetUser(Guid id)
+        {
+            using (var context = new ReminderContext())
+            {
+                return context.Users.FirstOrDefault(item => item.Id == id);
+            }
+        }
+
 
         public static bool Delete(Reminder item)
         {
             using (var context = new ReminderContext())
             {
-                context.Reminders.Remove(item);
+                context.Entry(item).State = EntityState.Deleted;
                 context.SaveChanges();
-                context.Entry(item).State = EntityState.Detached;
             }
             return true;
         }
 
         public static Reminder Edit(Reminder item)
+        {
+            using (var context = new ReminderContext())
+            {
+                context.Entry(item).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            return item;
+        }
+        public static User EditUser(User item)
         {
             using (var context = new ReminderContext())
             {

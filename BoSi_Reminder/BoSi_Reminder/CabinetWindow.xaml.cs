@@ -41,7 +41,7 @@ namespace BoSi_Reminder
         //заповнення масиву для виділення дат, на які встановлено нагадування
         private void Fill()
         {
-            foreach (var d in StationManager.CurrentUser?.Reminders)
+            foreach (var d in EntityWraper.GetAllRemindsCurrUser())
                 Calendar.SelectedDates.Add(d.ReactDate);
         }
 

@@ -10,7 +10,7 @@ namespace BoSi_Reminder
     public class TimeTracker
     {
         //список нагадувань на сьогдні поточного користувача
-        public static List<Reminder> TodayReminds = StationManager.CurrentUser.Reminders.Where(d => d.ReactDate.Date == DateTime.Now.Date).ToList();
+        public static List<Reminder> TodayReminds = EntityWraper.GetAllRemindsCurrUser().Where(d => d.ReactDate.Date == DateTime.Now.Date).ToList();
 
         public static void TimerReact()
         {
@@ -32,7 +32,6 @@ namespace BoSi_Reminder
                     //зміна статусу
                     reminder.Status = true;
                     EntityWraper.Edit(reminder);
-                    SerializeManager.Serialize(StationManager.CurrentUser);
                 }
                 LogWriter.LogWrite("Show Riminder:" + reminder.Text);
 
@@ -46,7 +45,7 @@ namespace BoSi_Reminder
         public static void ShowPrevious()
         {
             //виведення нагадування, час спрацювання яких вже минув
-            foreach (var r in StationManager.CurrentUser?.Reminders)
+            foreach (var r in EntityWraper.GetAllRemindsCurrUser())
                 if (DateTime.Now.CompareTo(r.ReactDate) > 0)
                     ShowReminder(r);
         }
