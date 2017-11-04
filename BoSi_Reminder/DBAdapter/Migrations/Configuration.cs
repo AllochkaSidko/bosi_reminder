@@ -1,11 +1,12 @@
-namespace BoSi_Reminder.Migrations
+
+namespace BoSi_Reminder.DBAdapter.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BoSi_Reminder.ReminderContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ReminderContext>
     {
         public Configuration()
         {
@@ -14,7 +15,7 @@ namespace BoSi_Reminder.Migrations
                 ContextKey = "ReminderContext";
         }
 
-protected override void Seed(BoSi_Reminder.ReminderContext context)
+protected override void Seed(ReminderContext context)
         {
             //  This method will be called after migrating to the latest version.
 

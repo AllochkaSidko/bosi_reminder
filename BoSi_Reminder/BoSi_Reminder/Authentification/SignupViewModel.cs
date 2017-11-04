@@ -7,8 +7,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using BoSi_Reminder.Interface.Models;
+using BoSi_Reminder.Tools;
+using BoSi_Reminder.DBAdapter;
 
-namespace BoSi_Reminder
+namespace BoSi_Reminder.Authentification
 {
     public class SignupViewModel : INotifyPropertyChanged
     {

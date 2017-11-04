@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Windows;
-
+using BoSi_Reminder.Interface.Models;
+using BoSi_Reminder.Tools;
+using BoSi_Reminder.DBAdapter;
+using BoSi_Reminder.Authentification;
 
 namespace BoSi_Reminder
 {

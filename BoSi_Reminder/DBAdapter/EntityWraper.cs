@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BoSi_Reminder.Interface.Models;
 
-namespace BoSi_Reminder
+
+namespace BoSi_Reminder.DBAdapter
 {
     public static class EntityWraper
     {
@@ -43,11 +43,11 @@ namespace BoSi_Reminder
             }
         }
 
-        public static List<Reminder> GetAllRemindsCurrUser()
+        public static List<Reminder> GetAllRemindsCurrUser(User user)
         {
             using (var context = new ReminderContext())
             {
-                return context.Reminders.Where(r=>r.UserId == StationManager.CurrentUser.Id).ToList();    
+                return context.Reminders.Where(r=>r.UserId == user.Id).ToList();    
             }
         }
 

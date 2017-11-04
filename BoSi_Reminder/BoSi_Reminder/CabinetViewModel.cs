@@ -5,6 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using BoSi_Reminder.Interface.Models;
+using BoSi_Reminder.Tools;
+using BoSi_Reminder.DBAdapter;
+using BoSi_Reminder.Authentification;
 
 namespace BoSi_Reminder
 {
@@ -32,8 +36,14 @@ namespace BoSi_Reminder
         //при завантаженні вікна вводиться ім'я поточного користувача та сьогоднішню дату
         public CabinetViewModel()
         {
-            // UsersReminders = StationManager.CurrentUser?.Reminders?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
-            UsersReminders = EntityWraper.GetAllRemindsCurrUser()?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
+            try
+            {
+                UsersReminders = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser)?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogWriter.LogWrite("Exception in CabinetViewModel constructor while getting reminders", ex);
+            }
             UsernameBlockText = StationManager.CurrentUser?.Name + " " + StationManager.CurrentUser?.Surname;
             Date = DateTime.Now.Date;
             DateBlockContent = DateTime.Now.ToString("dd/MM/yyyy");
@@ -145,7 +155,14 @@ namespace BoSi_Reminder
         {
             Date = null;
             isDisplayAll = true;
-            UsersReminders = EntityWraper.GetAllRemindsCurrUser();
+            try
+            {
+                UsersReminders = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser);
+            }
+            catch (Exception ex)
+            {
+                LogWriter.LogWrite("Exception in DisplayAll method while getting reminders", ex);
+            }
             OnRequestUpdateList();
             DateBlockContent = "";
             LogWriter.LogWrite("Display all reminders");
@@ -236,7 +253,7 @@ namespace BoSi_Reminder
             {
                 if (Date != null)
                 {
-                    UsersReminders = EntityWraper.GetAllRemindsCurrUser().Where(r => r.ReactDate.Date == Date.Value).ToList();
+                    UsersReminders = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(r => r.ReactDate.Date == Date.Value).ToList();
                     OnRequestUpdateList();
                     DateBlockContent = Date.Value.ToString("dd/MM/yyyy");
                 }

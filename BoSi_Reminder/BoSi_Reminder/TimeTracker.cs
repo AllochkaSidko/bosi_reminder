@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using BoSi_Reminder.Interface.Models;
+using BoSi_Reminder.DBAdapter;
+using BoSi_Reminder.Tools;
 
 namespace BoSi_Reminder
 {
     public class TimeTracker
     {
         //список нагадувань на сьогдні поточного користувача
-        public static List<Reminder> TodayReminds = EntityWraper.GetAllRemindsCurrUser().Where(d => d.ReactDate.Date == DateTime.Now.Date).ToList();
+        public static List<Reminder> TodayReminds; 
 
         public static void TimerReact()
         {
+            try
+            {
+                TodayReminds = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(d => d.ReactDate.Date == DateTime.Now.Date).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogWriter.LogWrite("Exception in TimerReact constructor while getting reminders", ex);
+            }
             //список нагадувань, які мають спрацювати в поточний час
             var reminder = TodayReminds.Where(d => d.ReactDate.Hour == DateTime.Now.Hour && d.ReactDate.Minute == DateTime.Now.Minute).ToList();
             //вивід цих нагадувань
@@ -45,9 +54,16 @@ namespace BoSi_Reminder
         public static void ShowPrevious()
         {
             //виведення нагадування, час спрацювання яких вже минув
-            foreach (var r in EntityWraper.GetAllRemindsCurrUser())
-                if (DateTime.Now.CompareTo(r.ReactDate) > 0)
-                    ShowReminder(r);
+            try
+            {
+                foreach (var r in EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser))
+                    if (DateTime.Now.CompareTo(r.ReactDate) > 0)
+                        ShowReminder(r);
+            }
+            catch (Exception ex)
+            {
+                LogWriter.LogWrite("Exception in ShowPrevious method while getting reminders", ex);
+            }
         }
     }
 }

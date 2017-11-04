@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Threading;
+using BoSi_Reminder.Tools;
+using BoSi_Reminder.DBAdapter;
 
 namespace BoSi_Reminder
 {
@@ -47,7 +45,7 @@ namespace BoSi_Reminder
                 //зміна поточного списку нагадувань на сьогодні з наставанням 00:00 
                 if (DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0)
                 {
-                    TimeTracker.TodayReminds = EntityWraper.GetAllRemindsCurrUser().Where(d => d.ReactDate.Date == DateTime.Today).ToList();  
+                    TimeTracker.TodayReminds = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(d => d.ReactDate.Date == DateTime.Today).ToList();  
                 }
             }
             catch(Exception ex)

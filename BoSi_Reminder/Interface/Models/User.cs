@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity.ModelConfiguration;
+using BoSi_Reminder.Tools;
 
-namespace BoSi_Reminder
+
+namespace BoSi_Reminder.Interface.Models
 {
     [Serializable]
     public class User : ISerializable
@@ -63,6 +63,7 @@ namespace BoSi_Reminder
             var hashBytes = System.Security.Cryptography.MD5.Create().ComputeHash(bytes);
             return Convert.ToBase64String(hashBytes);
         }
+
 
         public class UserEntityConfiguration : EntityTypeConfiguration<User>
         {

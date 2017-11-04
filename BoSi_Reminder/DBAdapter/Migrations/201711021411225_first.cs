@@ -1,4 +1,4 @@
-namespace BoSi_Reminder.Migrations
+namespace BoSi_Reminder.DBAdapter.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

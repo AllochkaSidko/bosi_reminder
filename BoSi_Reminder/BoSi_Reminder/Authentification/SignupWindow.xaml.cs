@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Windows;
+using BoSi_Reminder.Interface.Models;
 
 
-namespace BoSi_Reminder
+namespace BoSi_Reminder.Authentification
 {
     /// <summary>
     /// Interaction logic for SignupWindow.xaml

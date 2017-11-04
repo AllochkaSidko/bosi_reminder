@@ -97,27 +97,15 @@
     </ApplicationDefinition>
     <Compile Include="CabinetViewModel.cs" />
     <Compile Include="CreatorViewModel.cs" />
-    <Compile Include="EntityWraper.cs" />
-    <Compile Include="LoginViewModel.cs" />
-    <Compile Include="LogWriter.cs" />
-    <Compile Include="Migrations\201711021411225_first.cs" />
-    <Compile Include="Migrations\201711021411225_first.Designer.cs">
-      <DependentUpon>201711021411225_first.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Authentification\LoginViewModel.cs" />
     <Compile Include="RelayCommand.cs" />
-    <Compile Include="Models\Reminder.cs" />
-    <Compile Include="ReminderContext.cs" />
-    <Compile Include="RemindTimer.cs" />
-    <Compile Include="SerializeManager.cs" />
-    <Compile Include="SignupViewModel.cs" />
-    <Compile Include="SignupWindow.xaml.cs">
+    <Compile Include="Authentification\SignupViewModel.cs" />
+    <Compile Include="Authentification\SignupWindow.xaml.cs">
       <DependentUpon>SignupWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StaticResources.cs" />
+    <Compile Include="RemindTimer.cs" />
     <Compile Include="StationManager.cs" />
     <Compile Include="TimeTracker.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="CabinetWindow.xaml">
@@ -128,7 +116,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoginWindow.xaml">
+    <Page Include="Authentification\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -146,14 +134,14 @@
     <Compile Include="CreatorWindow.xaml.cs">
       <DependentUpon>CreatorWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoginWindow.xaml.cs">
+    <Compile Include="Authentification\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="SignupWindow.xaml">
+    <Page Include="Authentification\SignupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,9 +160,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201711021411225_first.resx">
-      <DependentUpon>201711021411225_first.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -188,6 +173,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DBAdapter\DBAdapter.csproj">
+      <Project>{f905117c-7348-4976-a600-a65804095342}</Project>
+      <Name>DBAdapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interface\Interface.csproj">
+      <Project>{af7a31ba-a159-4705-9860-ea9810dd8ab3}</Project>
+      <Name>Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools\Tools.csproj">
+      <Project>{71c46922-d221-40ae-97af-8a03ee2278bd}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

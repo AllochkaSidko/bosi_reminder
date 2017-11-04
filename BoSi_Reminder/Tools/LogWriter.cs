@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
-namespace BoSi_Reminder
+namespace BoSi_Reminder.Tools
 {
-  public static class LogWriter
+  public class LogWriter
     {
 
         //визначаємо шлях і формат назви лог-фалів
@@ -17,6 +12,13 @@ namespace BoSi_Reminder
             "log" + DateTime.Now.ToString("yyyy_MM_dd") + ".txt");
 
         private static Mutex MutexObj = new Mutex(true, FilePath.Replace(Path.DirectorySeparatorChar, '_'));
+
+       // private static User _user;
+
+       /* public LogWriter(User user)
+        {
+            _user = user;
+        }*/
 
         //перевірка чи існує такий файл, якщо не існує, то його створюють
         private static void CheckingCreateFile()
@@ -66,7 +68,7 @@ namespace BoSi_Reminder
             try
             {
                 txtWriter = File.AppendText(FilePath);
-                txtWriter.Write(StationManager.CurrentUser.Login + "  --- ");
+                //txtWriter.Write(_user.Login + "  --- ");
                 txtWriter.Write("{0} {1}", DateTime.Now.ToLongTimeString(),
                     DateTime.Now.ToLongDateString());
                 txtWriter.WriteLine("  :{0}", logMessage);

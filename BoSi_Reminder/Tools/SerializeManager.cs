@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BoSi_Reminder
+
+namespace BoSi_Reminder.Tools
 {
     //інтерфейс, метод якого повертає назуву файлу, де буде серіалізований користувач
-    internal interface ISerializable
+    public interface ISerializable
     {
         string Filename { get; }
     }
-
-      
-        internal static class SerializeManager
+        public static class SerializeManager
         {
             //якщо немає такої директорії, то ми її створюємо і повертаємо повний шлях до файлу
             public static string CreateAndGetPath(string filename)

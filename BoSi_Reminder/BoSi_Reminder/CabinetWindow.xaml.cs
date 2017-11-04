@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using BoSi_Reminder.DBAdapter;
+using BoSi_Reminder.Tools;
 
 
 namespace BoSi_Reminder
@@ -41,8 +43,15 @@ namespace BoSi_Reminder
         //заповнення масиву для виділення дат, на які встановлено нагадування
         private void Fill()
         {
-            foreach (var d in EntityWraper.GetAllRemindsCurrUser())
-                Calendar.SelectedDates.Add(d.ReactDate);
+            try
+            {
+                foreach (var d in EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser))
+                    Calendar.SelectedDates.Add(d.ReactDate);
+            }
+            catch (Exception ex)
+            {
+                LogWriter.LogWrite("Exception in Fill() method while getting reminders", ex);
+            }
         }
 
         //оновлення елементів ListBox

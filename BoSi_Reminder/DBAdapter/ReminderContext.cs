@@ -1,8 +1,9 @@
-﻿using BoSi_Reminder.Migrations;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using BoSi_Reminder.Interface.Models;
+using BoSi_Reminder.DBAdapter.Migrations;
 
 
-namespace BoSi_Reminder
+namespace BoSi_Reminder.DBAdapter
 {
     public class ReminderContext : DbContext
     {

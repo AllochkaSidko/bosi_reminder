@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using BoSi_Reminder.Interface.Models;
+using BoSi_Reminder.Tools;
+using BoSi_Reminder.DBAdapter;
 
 namespace BoSi_Reminder
 {
@@ -100,7 +100,7 @@ namespace BoSi_Reminder
             //to do: split in two trys, problem in log writer no exception message
             try
             {
-                var reminder = new Reminder(date, Text);
+                var reminder = new Reminder(date, Text, StationManager.CurrentUser);
                 //додвання новостворенного нагадування до списку нагадувань користувача на сьогодні
                 if (date.Date == DateTime.Now.Date)
                     TimeTracker.TodayReminds.Add(reminder);

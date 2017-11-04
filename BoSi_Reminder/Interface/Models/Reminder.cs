@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BoSi_Reminder
+namespace BoSi_Reminder.Interface.Models
 {
 
     [Serializable]
@@ -20,10 +16,10 @@ namespace BoSi_Reminder
         public Guid UserId { get; set; }
         public User User { get; set; }
 
-        public Reminder(DateTime reactDate, string text)
+        public Reminder(DateTime reactDate, string text, User user)
         {
            // User = StationManager.CurrentUser;
-            UserId = StationManager.CurrentUser.Id;
+            UserId = user.Id;
             Id = Guid.NewGuid();
             this.ReactDate = reactDate;
             this.Text = text;
