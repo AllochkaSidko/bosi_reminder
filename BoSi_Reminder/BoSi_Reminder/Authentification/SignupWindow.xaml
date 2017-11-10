@@ -50,7 +50,7 @@
     </Window.Resources>
 
 
-    <Grid>
+    <Grid Name="MainGrid">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>

@@ -13,13 +13,6 @@ namespace BoSi_Reminder.Tools
 
         private static Mutex MutexObj = new Mutex(true, FilePath.Replace(Path.DirectorySeparatorChar, '_'));
 
-       // private static User _user;
-
-       /* public LogWriter(User user)
-        {
-            _user = user;
-        }*/
-
         //перевірка чи існує такий файл, якщо не існує, то його створюють
         private static void CheckingCreateFile()
         {
@@ -62,13 +55,13 @@ namespace BoSi_Reminder.Tools
 
         private static void AppendLog(string logMessage)
         {
+            MutexObj.WaitOne();
             //створюємо потік для дописування нових логів у файл
             //записуємо лог
             StreamWriter txtWriter = null;
             try
             {
                 txtWriter = File.AppendText(FilePath);
-                //txtWriter.Write(_user.Login + "  --- ");
                 txtWriter.Write("{0} {1}", DateTime.Now.ToLongTimeString(),
                     DateTime.Now.ToLongDateString());
                 txtWriter.WriteLine("  :{0}", logMessage);
@@ -82,7 +75,7 @@ namespace BoSi_Reminder.Tools
             finally
             {
                 txtWriter.Flush();
-                txtWriter.Close();
+                txtWriter?.Close();
                 txtWriter = null;
             }
             MutexObj.ReleaseMutex();

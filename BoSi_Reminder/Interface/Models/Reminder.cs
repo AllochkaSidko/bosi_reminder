@@ -18,7 +18,6 @@ namespace BoSi_Reminder.Interface.Models
 
         public Reminder(DateTime reactDate, string text, User user)
         {
-           // User = StationManager.CurrentUser;
             UserId = user.Id;
             Id = Guid.NewGuid();
             this.ReactDate = reactDate;

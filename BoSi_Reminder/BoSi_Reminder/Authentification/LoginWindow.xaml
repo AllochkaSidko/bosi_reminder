@@ -51,7 +51,7 @@
 
     </Window.Resources>
 
-    <Grid>
+    <Grid Name="MainGrid">
 
         <Grid.RowDefinitions>
             <RowDefinition  Height="140" MinHeight="30"></RowDefinition>

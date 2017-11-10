@@ -7,6 +7,7 @@ using System.Windows;
 using BoSi_Reminder.Interface.Models;
 using BoSi_Reminder.DBAdapter;
 using BoSi_Reminder.Tools;
+using System.Threading.Tasks;
 
 namespace BoSi_Reminder.Authentification
 {
@@ -70,46 +71,54 @@ namespace BoSi_Reminder.Authentification
 
 
         //метод для входу користувача в систему
-        private void SignIn(Object obj)
+        private async void SignIn(Object obj)
         {
-            User currentUser = null;
-            //перевірка чи є існує такий користувач
-            try
+            OnRequestLoader(true);
+            var result = await Task.Run(() =>
             {
-                currentUser = EntityWraper.GetUserByLogin(Login);
-                currentUser.PreviousLog = DateTime.Now;
-                EntityWraper.EditUser(currentUser);
+                User currentUser = null;
+                //перевірка чи є існує такий користувач
+                try
+                {
+                    currentUser = EntityWraper.GetUserByLogin(Login);
+                    currentUser.PreviousLog = DateTime.Now;
+                    EntityWraper.EditUser(currentUser);
+                }
+                catch (Exception ex)
+                {
+                    LogWriter.LogWrite("Exception while trying to get user with such login " + Login, ex);
+                    return false;
+                }
+
+                if (currentUser == null)
+                {
+                    MessageBox.Show("Wrong Login");
+                    return false;
+                }
+
+                if (currentUser.Password != User.Hash(Password))
+                {
+                    MessageBox.Show("Wrong password!");
+                    return false;
+                }
+                //записуємопоточного користувача
+                StationManager.CurrentUser = currentUser;
+                //серіалізуємо поточного користувача
+                SerializeManager.Serialize<User>(StationManager.CurrentUser);
+                return true;
+                
+            });
+
+            OnRequestLoader(false);
+            if (result)
+            {
+                //записуємо в лог дії користувача
+                LogWriter.LogWrite(StationManager.CurrentUser.Login + " entered to the system.");
+                OnRequestClose(false);
+                //переходимо на вікно Кабінету
+                CabinetWindow cabinetWindow = new CabinetWindow();
+                cabinetWindow.ShowDialog();
             }
-            catch (Exception ex)
-            {
-                LogWriter.LogWrite("Exception while trying to get user with such login " + Login, ex);
-            }
-
-            if (currentUser == null)
-            {
-                MessageBox.Show("Wrong Login");
-                return;
-            }
-
-            if (currentUser.Password != User.Hash(Password))
-            {
-                MessageBox.Show("Wrong password!");
-                return;
-            } 
-            //записуємопоточного користувача
-            StationManager.CurrentUser = currentUser;
-            //серіалізуємо поточного користувача
-            SerializeManager.Serialize<User>(StationManager.CurrentUser);
-
-            //записуємо в лог дії користувача
-            LogWriter.LogWrite("Log entry");
-
-            OnRequestClose(false);
-           
-            //переходимо на вікно Кабінету 
-            CabinetWindow cabinetWindow = new CabinetWindow();
-            cabinetWindow.ShowDialog();
-            
         }
 
         //вікриваємо вікно Sign Up
@@ -136,6 +145,13 @@ namespace BoSi_Reminder.Authentification
         protected virtual void OnRequestClose(bool isquitapp)
         {
             RequestClose?.Invoke(isquitapp);
+        }
+        internal event LoaderHandler RequestLoader;
+        internal delegate void LoaderHandler(bool isShow);
+
+        internal virtual void OnRequestLoader(bool isShow)
+        {
+            RequestLoader?.Invoke(isShow);
         }
     }
 }

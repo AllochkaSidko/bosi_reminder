@@ -97,28 +97,31 @@ namespace BoSi_Reminder.Authentification
         }
 
         //метод створення нового акаунту
-        private void SignUp(Object obj)
+        private async void SignUp(Object obj)
         {
-            User newuser = null;
+            OnRequestLoader(true);
+            var result = await Task.Run(() =>
+            {
+                User newuser = null;
 
             try
             {
                 if(!new EmailAddressAttribute().IsValid(Email))
                 {
                     MessageBox.Show("Invalid email");
-                    return;
+                    return false;
                 }
 
                 if(EntityWraper.UserExist(Login))
                 {
                     MessageBox.Show("User with such login aleady exists");
-                    return;
+                    return false;
                 }
             }
             catch(Exception ex)
             {
                 LogWriter.LogWrite("Exception while checking email and login in SignUp method", ex);
-                return;
+                return false;
             }
 
             try
@@ -136,14 +139,19 @@ namespace BoSi_Reminder.Authentification
             //серіалізуємо поточного користувача
             SerializeManager.Serialize<User>(StationManager.CurrentUser);
 
-            LogWriter.LogWrite("Sign up request");
+            return true;
+            });
+            OnRequestLoader(false);
 
-            //перехід на вікно Кабінету
-            OnRequestClose(false);
-            CabinetWindow cabinetWindow = new CabinetWindow();
-            cabinetWindow.ShowDialog();
+            if (result)
+            {
+                LogWriter.LogWrite("Sign up request \n" + StationManager.CurrentUser.Login + " entered to the system.");
+                OnRequestClose(false);
+                //переходимо на вікно Кабінету
+                CabinetWindow cabinetWindow = new CabinetWindow();
+                cabinetWindow.ShowDialog();
+            }
             return;
-
         }
 
 
@@ -162,6 +170,13 @@ namespace BoSi_Reminder.Authentification
         protected virtual void OnRequestClose(bool isquitapp)
         {
             RequestClose?.Invoke(isquitapp);
+        }
+        internal event LoaderHandler RequestLoader;
+        internal delegate void LoaderHandler(bool isShow);
+
+        internal virtual void OnRequestLoader(bool isShow)
+        {
+            RequestLoader?.Invoke(isShow);
         }
     }
 }
