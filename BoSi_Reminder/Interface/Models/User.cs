@@ -64,7 +64,7 @@ namespace BoSi_Reminder.Interface.Models
             return Convert.ToBase64String(hashBytes);
         }
 
-
+        //визначаємо конфігурацію для таблиці нагадувань
         public class UserEntityConfiguration : EntityTypeConfiguration<User>
         {
             public UserEntityConfiguration()
@@ -93,6 +93,7 @@ namespace BoSi_Reminder.Interface.Models
                     .HasColumnName("Login")
                     .IsRequired();
 
+                //властивість, що користувач може мати багато нагадувань
                 HasMany(s => s.Reminders)
                     .WithRequired(w => w.User)
                     .HasForeignKey(w => w.UserId)

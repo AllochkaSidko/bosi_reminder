@@ -38,6 +38,7 @@ namespace BoSi_Reminder
         {
             try
             {
+                //звертаємось до бази, щоб вивести нагадування поточного користувача
                 UsersReminders = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser)?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
             }
             catch (Exception ex)
@@ -157,6 +158,7 @@ namespace BoSi_Reminder
             isDisplayAll = true;
             try
             {
+                //звертаємось о бд, щоб показати всі нагадування почного користувача
                 UsersReminders = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser);
             }
             catch (Exception ex)
@@ -179,6 +181,7 @@ namespace BoSi_Reminder
                 if (SelectedReminder != null)
                 {
                     UsersReminders.Remove(SelectedReminder);
+                    //звертаємось до бд, щоб видалити обране нагадування
                     EntityWraper.Delete(SelectedReminder);
 
                     OnRequestUpdateList();
@@ -208,6 +211,7 @@ namespace BoSi_Reminder
                 {
                     //присвоєння властивості isDone значення true
                     SelectedReminder.IsDone = true;
+                    //звертаємос до бд, щоб змінити поле IDone в обраного нагадуання
                     EntityWraper.Edit(SelectedReminder);
 
                     //оновлення ListBox 
