@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
 
-
-namespace BoSi_Reminder.Tools
+namespace Tools
 {
    
     public class StaticResources

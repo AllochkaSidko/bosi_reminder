@@ -1,8 +1,8 @@
 
-namespace BoSi_Reminder.DBAdapter.Migrations
-{
-    using System.Data.Entity.Migrations;
+using System.Data.Entity.Migrations;
 
+namespace DBAdapter.Migrations
+{
     internal sealed class Configuration : DbMigrationsConfiguration<ReminderContext>
     {
         public Configuration()

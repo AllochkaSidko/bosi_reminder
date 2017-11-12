@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
-using System.Data.Entity.ModelConfiguration;
-using BoSi_Reminder.Tools;
+using Tools;
 
-
-namespace BoSi_Reminder.Interface.Models
+namespace Interface.Models
 {
     [Serializable]
     public class User : ISerializable
@@ -25,7 +24,7 @@ namespace BoSi_Reminder.Interface.Models
             //сортування списку нагадувань за датою 
             get
             {
-                _reminders = _reminders?.OrderBy(o => o.ReactDate)?.ToList();
+                _reminders = _reminders?.OrderBy(o => o.ReactDate).ToList();
                 return _reminders;
             }
             set => _reminders = value; 
@@ -42,12 +41,12 @@ namespace BoSi_Reminder.Interface.Models
         public User(string login, string password, string name, string surname, string email):this()
         {
             Id = Guid.NewGuid();
-            this.Password = Hash(password);
-            this.Login = login;
-            this.Name = name;
-            this.Surname = surname;
-            this.Email = email;
-            this.PreviousLog = DateTime.Now;    
+            Password = Hash(password);
+            Login = login;
+            Name = name;
+            Surname = surname;
+            Email = email;
+            PreviousLog = DateTime.Now;    
         }
 
         //private?

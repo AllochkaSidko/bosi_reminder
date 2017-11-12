@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using BoSi_Reminder.Interface.Models;
+using Interface.Models;
 
-
-namespace BoSi_Reminder.DBAdapter
+namespace DBAdapter
 {
     public static class EntityWraper
     {

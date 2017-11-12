@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity.ModelConfiguration;
 
-namespace BoSi_Reminder.Interface.Models
+namespace Interface.Models
 {
 
     [Serializable]
@@ -20,10 +20,10 @@ namespace BoSi_Reminder.Interface.Models
         {
             UserId = user.Id;
             Id = Guid.NewGuid();
-            this.ReactDate = reactDate;
-            this.Text = text;
-            this.IsDone = false;
-            this.Status = false;
+            ReactDate = reactDate;
+            Text = text;
+            IsDone = false;
+            Status = false;
         }
 
         public Reminder()

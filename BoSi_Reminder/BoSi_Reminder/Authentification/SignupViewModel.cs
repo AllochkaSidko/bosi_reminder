@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using BoSi_Reminder.Interface.Models;
-using BoSi_Reminder.Tools;
-using BoSi_Reminder.DBAdapter;
+using DBAdapter;
+using Interface.Models;
+using Tools;
 
 namespace BoSi_Reminder.Authentification
 {

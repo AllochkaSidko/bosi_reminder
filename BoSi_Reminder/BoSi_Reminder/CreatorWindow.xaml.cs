@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using BoSi_Reminder.Interface.Models;
+using Interface.Models;
 
 namespace BoSi_Reminder
 {
@@ -21,12 +17,12 @@ namespace BoSi_Reminder
             DataContext = CreatorViewModel;
         }
 
-        private CreatorViewModel CreatorViewModel { get; set; }
+        private CreatorViewModel CreatorViewModel { get; }
 
         private void Close(bool isQuitApp)
         {
             if (!isQuitApp)
-                this.Close();
+                Close();
             else
             {
                 Environment.Exit(0);

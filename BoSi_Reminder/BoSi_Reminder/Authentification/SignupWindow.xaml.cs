@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using BoSi_Reminder.Interface.Models;
 using FontAwesome.WPF;
+using Interface.Models;
 
 namespace BoSi_Reminder.Authentification
 {

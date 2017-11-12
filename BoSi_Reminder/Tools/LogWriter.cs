@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading;
 
-namespace BoSi_Reminder.Tools
+namespace Tools
 {
   public class LogWriter
     {
@@ -11,7 +11,7 @@ namespace BoSi_Reminder.Tools
         private static readonly string FilePath = Path.Combine(StaticResources.DirPathLog,
             "log" + DateTime.Now.ToString("yyyy_MM_dd") + ".txt");
 
-        private static Mutex MutexObj = new Mutex(true, FilePath.Replace(Path.DirectorySeparatorChar, '_'));
+        private static readonly Mutex MutexObj = new Mutex(true, FilePath.Replace(Path.DirectorySeparatorChar, '_'));
 
         //перевірка чи існує такий файл, якщо не існує, то його створюють
         private static void CheckingCreateFile()
@@ -74,8 +74,11 @@ namespace BoSi_Reminder.Tools
             }
             finally
             {
-                txtWriter.Flush();
-                txtWriter?.Close();
+                if (txtWriter != null)
+                {
+                    txtWriter.Flush();
+                    txtWriter.Close();
+                }
                 txtWriter = null;
             }
             MutexObj.ReleaseMutex();

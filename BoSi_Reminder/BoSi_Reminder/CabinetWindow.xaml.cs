@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using BoSi_Reminder.DBAdapter;
-using BoSi_Reminder.Tools;
+using DBAdapter;
+using Tools;
 
 
 namespace BoSi_Reminder
@@ -27,13 +26,13 @@ namespace BoSi_Reminder
             DataContext = CabinetViewModel;
         }
 
-        private CabinetViewModel CabinetViewModel { get; set; }
+        private CabinetViewModel CabinetViewModel { get; }
       
 
         private void Close(bool isQuitApp)
         {
             if (!isQuitApp)
-                this.Close();
+                Close();
             else
             {
                 Environment.Exit(0);

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using BoSi_Reminder.Interface.Models;
-using BoSi_Reminder.DBAdapter;
-using BoSi_Reminder.Tools;
+using DBAdapter;
+using Interface.Models;
+using Tools;
 
 namespace BoSi_Reminder
 {

@@ -1,4 +1,4 @@
-﻿using BoSi_Reminder.Interface.Models;
+﻿using Interface.Models;
 
 namespace BoSi_Reminder
 {

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Threading;
-using BoSi_Reminder.Tools;
-using BoSi_Reminder.DBAdapter;
+using DBAdapter;
+using Tools;
 
 namespace BoSi_Reminder
 {
     public class RemindTimer
     {
-        static DispatcherTimer timer;
+        static DispatcherTimer _timer;
         public static void Start()
         {
             try
@@ -16,12 +16,12 @@ namespace BoSi_Reminder
                 var now = DateTime.UtcNow;
                 //вирахування часу для спрацювання кожної хвилини, що настала
                 var nextMinute = now.AddTicks(-(now.Ticks % TimeSpan.TicksPerMinute)).AddMinutes(1);
-                timer = new DispatcherTimer(DispatcherPriority.Normal);
-                timer.Interval = nextMinute - DateTime.UtcNow;
+                _timer = new DispatcherTimer(DispatcherPriority.Normal);
+                _timer.Interval = nextMinute - DateTime.UtcNow;
                 //встановлення методу, який має виконуватись кожну хвилину, таймеру
-                timer.Tick += Func;
+                _timer.Tick += Func;
                 //запуск таймера
-                timer.Start();
+                _timer.Start();
             }
             catch(Exception ex)
             {
@@ -34,7 +34,7 @@ namespace BoSi_Reminder
             var correctionNow = DateTime.UtcNow;
             //вирахування часу для спрацювання кожної хвилини, що настала
             var timeCorrection = correctionNow.AddTicks(-(correctionNow.Ticks % TimeSpan.TicksPerMinute)).AddMinutes(1);
-            timer.Interval = timeCorrection - DateTime.UtcNow;
+            _timer.Interval = timeCorrection - DateTime.UtcNow;
 
             try
             {
