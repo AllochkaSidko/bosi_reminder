@@ -49,6 +49,7 @@ namespace Tools
             //з бінарного формату десеріалізується назад в об'єкт
             try
             {
+                //if(!File.Exists(CreateAndGetPath(filename))) return null;
                 BinaryFormatter formatter = new BinaryFormatter();
 
                 using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
