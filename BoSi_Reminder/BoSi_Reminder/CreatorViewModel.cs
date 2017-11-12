@@ -104,7 +104,7 @@ namespace BoSi_Reminder
                 //додвання новостворенного нагадування до списку нагадувань користувача на сьогодні
                 if (date.Date == DateTime.Now.Date)
                     TimeTracker.TodayReminds.Add(reminder);
-                //додаємо нове нагадування користувачу
+                //звертаємось до бд, щоб додати нове нагадування
                 EntityWraper.AddReminder(reminder);
             }
             catch(Exception e)

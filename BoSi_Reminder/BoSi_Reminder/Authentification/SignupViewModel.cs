@@ -100,6 +100,7 @@ namespace BoSi_Reminder.Authentification
         private async void SignUp(Object obj)
         {
             OnRequestLoader(true);
+            //виконання методу в потоці
             var result = await Task.Run(() =>
             {
                 User newuser = null;

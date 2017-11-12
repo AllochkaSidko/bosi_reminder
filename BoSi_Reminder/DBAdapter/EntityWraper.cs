@@ -9,6 +9,7 @@ namespace BoSi_Reminder.DBAdapter
 {
     public static class EntityWraper
     {
+        //перевірка чи існує в бд користувач з таким логіном
         public static bool UserExist(string login)
         {
             using (var context = new ReminderContext())
@@ -17,6 +18,7 @@ namespace BoSi_Reminder.DBAdapter
             }
         }
 
+        //витягаємо до користувача через логін
         public static User GetUserByLogin(string login)
         {
             using (var context = new ReminderContext())
@@ -25,6 +27,7 @@ namespace BoSi_Reminder.DBAdapter
             }
         }
 
+        //додаємо нового користувача
         public static void AddUser(User user)
         {
             using (var context = new ReminderContext())
@@ -34,6 +37,7 @@ namespace BoSi_Reminder.DBAdapter
             }
         }
 
+        //додаємо нове нагадування
         public static void AddReminder(Reminder reminder)
         {
             using (var context = new ReminderContext())
@@ -43,6 +47,7 @@ namespace BoSi_Reminder.DBAdapter
             }
         }
 
+        //дістаємо всі нагадування поточного користвача
         public static List<Reminder> GetAllRemindsCurrUser(User user)
         {
             using (var context = new ReminderContext())
@@ -51,6 +56,7 @@ namespace BoSi_Reminder.DBAdapter
             }
         }
 
+        //дістаємо нагадування за ід
         public static Reminder GetReminder(Guid id)
         {
             using (var context = new ReminderContext())
@@ -59,6 +65,7 @@ namespace BoSi_Reminder.DBAdapter
             }
         }
 
+        //дістаємо користувача за ід
         public static User GetUser(Guid id)
         {
             using (var context = new ReminderContext())
@@ -67,7 +74,7 @@ namespace BoSi_Reminder.DBAdapter
             }
         }
 
-
+        //видаляємо нагадування
         public static bool Delete(Reminder item)
         {
             using (var context = new ReminderContext())
@@ -78,6 +85,7 @@ namespace BoSi_Reminder.DBAdapter
             return true;
         }
 
+        //зберігаємо змінити нагадування
         public static Reminder Edit(Reminder item)
         {
             using (var context = new ReminderContext())
@@ -87,6 +95,8 @@ namespace BoSi_Reminder.DBAdapter
             }
             return item;
         }
+
+        //зберігаємо зміни корстувача 
         public static User EditUser(User item)
         {
             using (var context = new ReminderContext())

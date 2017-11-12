@@ -23,8 +23,10 @@ namespace BoSi_Reminder.Authentification
             DataContext = SignupViewModel;
         }
 
+        //поява лоардера
         private void OnRequestLoader(bool isShow)
         {
+            //встановлення параметрів лоадера
             if (isShow && _loader == null)
             {
                 _loader = new ImageAwesome();

@@ -29,6 +29,8 @@ namespace BoSi_Reminder.Interface.Models
         public Reminder()
         { }
 
+
+        //визначаємо конфігурацію для полів користувача
         public class ReminderEntityConfiguration : EntityTypeConfiguration<Reminder>
         {
             public ReminderEntityConfiguration()

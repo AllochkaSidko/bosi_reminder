@@ -74,6 +74,7 @@ namespace BoSi_Reminder.Authentification
         private async void SignIn(Object obj)
         {
             OnRequestLoader(true);
+            //виконання методу в потоці
             var result = await Task.Run(() =>
             {
                 User currentUser = null;
@@ -110,6 +111,7 @@ namespace BoSi_Reminder.Authentification
             });
 
             OnRequestLoader(false);
+
             if (result)
             {
                 //записуємо в лог дії користувача
