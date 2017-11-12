@@ -52,7 +52,8 @@ namespace BoSi_Reminder.Tools
             //з бінарного формату десеріалізується назад в об'єкт
             try
             {
-                    BinaryFormatter formatter = new BinaryFormatter();
+                //if(!File.Exists(CreateAndGetPath(filename))) return null;
+                BinaryFormatter formatter = new BinaryFormatter();
 
                     using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
                     {

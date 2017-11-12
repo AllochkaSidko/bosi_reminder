@@ -47,7 +47,7 @@ namespace BoSi_Reminder.DBAdapter
         {
             using (var context = new ReminderContext())
             {
-                return context.Reminders.Where(r=>r.UserId == user.Id).ToList();    
+                return context.Reminders.Where(r=>r.UserId == user.Id).ToList().OrderBy(o => o.ReactDate).ToList();
             }
         }
 

@@ -109,8 +109,6 @@
     <Compile Include="RemindTimer.cs" />
     <Compile Include="StationManager.cs" />
     <Compile Include="TimeTracker.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="CabinetWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -19,17 +19,7 @@ namespace BoSi_Reminder.Interface.Models
         public string Login { get; set; }
         public string Email { get; set; }
         public DateTime PreviousLog { get; set; }
-        private List<Reminder> _reminders;
-        public List<Reminder> Reminders
-        {
-            //сортування списку нагадувань за датою 
-            get
-            {
-                _reminders = _reminders?.OrderBy(o => o.ReactDate)?.ToList();
-                return _reminders;
-            }
-            set => _reminders = value; 
-        }
+        public List<Reminder> Reminders { get; set; }
 
         public string Filename
         {
