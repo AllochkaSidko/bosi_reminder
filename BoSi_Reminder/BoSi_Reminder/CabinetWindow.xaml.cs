@@ -22,6 +22,7 @@ namespace BoSi_Reminder
             CabinetViewModel.RequestClose += Close;
             CabinetViewModel.UpdateList += UpdateItemSource;
             CabinetViewModel.FillDates += Fill;
+            CabinetViewModel.RequestVisibilityChange += (x) => Visibility = x;
 
             DataContext = CabinetViewModel;
         }

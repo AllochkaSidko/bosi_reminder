@@ -42,11 +42,6 @@ namespace BoSi_Reminder
                 {
                     TimeTracker.TimerReact();
                 }
-                //зміна поточного списку нагадувань на сьогодні з наставанням 00:00 
-                if (DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0)
-                {
-                    TimeTracker.TodayReminds = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(d => d.ReactDate.Date == DateTime.Today).ToList();  
-                }
             }
             catch(Exception ex)
             {

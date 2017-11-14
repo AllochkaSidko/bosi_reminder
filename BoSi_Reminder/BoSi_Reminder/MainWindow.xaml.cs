@@ -20,14 +20,10 @@ namespace BoSi_Reminder
         {
             try
             {
-                RemindTimer.Start();
+                var user = SerializeManager.Deserialize<User>(User.FileName);
 
-                if (!Directory.Exists(StaticResources.DirPath))
-                    Directory.CreateDirectory(StaticResources.DirPath);
-
-                var path = Path.Combine(StaticResources.DirPath, User.FileName);
                 //якщо не існує файлу з серіалізованим користувачем, то ми відкриваємо вікно Логіну
-                if (!File.Exists(path))
+                if (user==null)
                 {
                     LoginWindow loginWindow = new LoginWindow();
                     loginWindow.ShowDialog();
@@ -35,14 +31,22 @@ namespace BoSi_Reminder
                 //в іншому випадку користувача десеріалізують
                 else
                 {
-                    var user = SerializeManager.Deserialize<User>(path);
                     var curUser = EntityWraper.GetUser(user.Id);
-                    curUser.PreviousLog = DateTime.Now;
-                    EntityWraper.EditUser(curUser);
-                    //встановлюємо поточного користувача та відриваємо вікно Кабінету
-                    StationManager.CurrentUser = curUser;
-                    CabinetWindow cabinetWindow = new CabinetWindow();
-                    cabinetWindow.ShowDialog();
+                    if (curUser == null)
+                    {
+                        LoginWindow loginWindow = new LoginWindow();
+                        loginWindow.ShowDialog();
+                    }
+                    else
+                    {
+                        curUser.PreviousLog = DateTime.Now;
+                        EntityWraper.EditUser(curUser);
+
+                        //встановлюємо поточного користувача та відриваємо вікно Кабінету
+                        StationManager.CurrentUser = curUser;
+                        CabinetWindow cabinetWindow = new CabinetWindow();
+                        cabinetWindow.ShowDialog();
+                    }
 
                 }
             }

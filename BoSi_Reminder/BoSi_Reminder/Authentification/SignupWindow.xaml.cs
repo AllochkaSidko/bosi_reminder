@@ -12,7 +12,7 @@ namespace BoSi_Reminder.Authentification
     public partial class SignupWindow : Window
     {
         private ImageAwesome _loader;
-        private SignupViewModel SignupViewModel { get; set; }
+        private SignupViewModel SignupViewModel { get; }
 
         public SignupWindow()
         {

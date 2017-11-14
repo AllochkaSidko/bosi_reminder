@@ -82,12 +82,10 @@ namespace BoSi_Reminder.Authentification
                 try
                 {
                     currentUser = EntityWraper.GetUserByLogin(Login);
-                    currentUser.PreviousLog = DateTime.Now;
-                    EntityWraper.EditUser(currentUser);
                 }
                 catch (Exception ex)
                 {
-                    LogWriter.LogWrite("Exception while trying to get user with such login " + Login, ex);
+                    LogWriter.LogWrite("Exception while trying to get user with such login as " + Login, ex);
                     return false;
                 }
 
@@ -100,6 +98,17 @@ namespace BoSi_Reminder.Authentification
                 if (currentUser.Password != User.Hash(Password))
                 {
                     MessageBox.Show("Wrong password!");
+                    return false;
+                }
+
+                try
+                {
+                    currentUser.PreviousLog = DateTime.Now;
+                    EntityWraper.EditUser(currentUser);
+                }
+                catch (Exception ex)
+                {
+                    LogWriter.LogWrite("Exception while trying to edit user", ex);
                     return false;
                 }
                 //записуємопоточного користувача

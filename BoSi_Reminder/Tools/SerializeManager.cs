@@ -44,15 +44,17 @@ namespace Tools
         }
 
         //метод десеріалізації
-        public static TObject Deserialize<TObject>(string filename) where TObject : ISerializable, new()
+        public static TObject Deserialize<TObject>(string filename) where TObject : class, ISerializable, new()
         {
             //з бінарного формату десеріалізується назад в об'єкт
             try
             {
-                //if(!File.Exists(CreateAndGetPath(filename))) return null;
+                var filepath = CreateAndGetPath(filename);
+                if (!File.Exists(filepath)) return null;
+
                 BinaryFormatter formatter = new BinaryFormatter();
 
-                using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate))
                 {
                     return (TObject) formatter.Deserialize(fs);
                 }

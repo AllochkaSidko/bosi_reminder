@@ -14,7 +14,6 @@ namespace BoSi_Reminder
 
         private Reminder _newReminder;
         private RelayCommand _createCommand;
-        private RelayCommand _closeCommand;
         public List<string> HoursList { get; set; }
         public List<string> MinutesList { get; set; }
 
@@ -47,7 +46,7 @@ namespace BoSi_Reminder
 
         public RelayCommand CloseCommand
         {
-            get { return _closeCommand ?? (_closeCommand = new RelayCommand(Close)); }
+            get { return new RelayCommand(obj => OnRequestClose());}
         }
         public String Text
         {
@@ -97,13 +96,10 @@ namespace BoSi_Reminder
                 MessageBox.Show("You cannot set reminder on earlier date or time");
                 return;
             }
-            //to do: split in two trys, problem in log writer no exception message
             try
             {
                 var reminder = new Reminder(date, Text, StationManager.CurrentUser);
-                //додвання новостворенного нагадування до списку нагадувань користувача на сьогодні
-                if (date.Date == DateTime.Now.Date)
-                    TimeTracker.TodayReminds.Add(reminder);
+               
                 //звертаємось до бд, щоб додати нове нагадування
                 EntityWraper.AddReminder(reminder);
             }
@@ -114,28 +110,19 @@ namespace BoSi_Reminder
 
             LogWriter.LogWrite("Created reminder");
             //перехід назад на вікно Кабінету
-            OnRequestClose(false);
-            CabinetWindow cabinetWindow = new CabinetWindow();
-            cabinetWindow.ShowDialog();
+            OnRequestClose();
         }
 
-        private void Close(Object obj)
-        {
-            LogWriter.LogWrite("Close creator window");
-            OnRequestClose(false);
-            CabinetWindow cabinetWindow = new CabinetWindow();
-            cabinetWindow.ShowDialog();
-
-        }
-
-
-        protected virtual void OnRequestClose(bool isquitapp)
-        {
-            RequestClose?.Invoke(isquitapp);
-        }
+        
 
         internal event CloseHandler RequestClose;
-        public delegate void CloseHandler(bool isQuitApp);
+        public delegate void CloseHandler();
+
+        protected virtual void OnRequestClose()
+        {
+            RequestClose?.Invoke();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

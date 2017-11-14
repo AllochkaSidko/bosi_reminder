@@ -36,6 +36,7 @@ namespace BoSi_Reminder
         //при завантаженні вікна вводиться ім'я поточного користувача та сьогоднішню дату
         public CabinetViewModel()
         {
+            RemindTimer.Start();
             try
             {
                 //звертаємось до бази, щоб вивести нагадування поточного користувача
@@ -123,9 +124,11 @@ namespace BoSi_Reminder
         private void Create(Object obj)
         {
             LogWriter.LogWrite("Open create window");
-            OnRequestClose(false);
+
+            //OnRequestVisibilityChange(Visibility.Hidden);
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
+           // OnRequestVisibilityChange(Visibility.Visible);
         }
 
         //зміна дати в лейблі при зміні елементу ListBox
@@ -301,12 +304,21 @@ namespace BoSi_Reminder
             RequestClose?.Invoke(isquitapp);
         }
 
+        internal event VisibilityHandler RequestVisibilityChange;
+        internal delegate void VisibilityHandler(Visibility visibility);
+
+        internal virtual void OnRequestVisibilityChange(Visibility visibility)
+        {
+            RequestVisibilityChange?.Invoke(visibility);
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
 
     }
 }

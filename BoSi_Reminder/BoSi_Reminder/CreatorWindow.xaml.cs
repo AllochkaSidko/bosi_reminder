@@ -9,6 +9,8 @@ namespace BoSi_Reminder
     /// </summary>
     public partial class CreatorWindow : Window
     {
+        private CreatorViewModel CreatorViewModel { get; }
+
         public CreatorWindow()
         {
             InitializeComponent();
@@ -17,23 +19,6 @@ namespace BoSi_Reminder
             DataContext = CreatorViewModel;
         }
 
-        private CreatorViewModel CreatorViewModel { get; }
-
-        private void Close(bool isQuitApp)
-        {
-            if (!isQuitApp)
-                Close();
-            else
-            {
-                Environment.Exit(0);
-            }
-        }
-
-        
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-           
-
-        }
+       
     }
 }

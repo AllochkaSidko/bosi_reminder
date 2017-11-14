@@ -10,24 +10,23 @@ namespace BoSi_Reminder
 {
     public class TimeTracker
     {
-        //список нагадувань на сьогдні поточного користувача
-        public static List<Reminder> TodayReminds; 
-
+       
         public static void TimerReact()
         {
             try
             {
-                TodayReminds = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(d => d.ReactDate.Date == DateTime.Now.Date).ToList();
+                //список нагадувань, які мають спрацювати в поточний час
+                var reminder = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(d => DateTime.Now.CompareTo(d.ReactDate)>0).ToList();
+
+                //вивід цих нагадувань
+                foreach (var r in reminder)
+                    ShowReminder(r);
             }
             catch (Exception ex)
             {
                 LogWriter.LogWrite("Exception in TimerReact constructor while getting reminders", ex);
             }
-            //список нагадувань, які мають спрацювати в поточний час
-            var reminder = TodayReminds.Where(d => d.ReactDate.Hour == DateTime.Now.Hour && d.ReactDate.Minute == DateTime.Now.Minute).ToList();
-            //вивід цих нагадувань
-            foreach (var r in reminder)
-             ShowReminder(r);
+          
         }
 
         public static void ShowReminder(Reminder reminder)
@@ -37,7 +36,7 @@ namespace BoSi_Reminder
                 //вивід нагадування, якщо він раніше не був виведений
                 if (!reminder.Status&&!reminder.IsDone)
                 {
-                    MessageBox.Show(reminder.Text, reminder.ReactDate.ToString());
+                    MessageBox.Show(reminder.Text, reminder.ReactDate.ToString(), MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.Yes);
                     //зміна статусу
                     reminder.Status = true;
                     EntityWraper.Edit(reminder);
