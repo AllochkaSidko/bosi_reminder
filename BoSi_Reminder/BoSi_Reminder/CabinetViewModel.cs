@@ -128,7 +128,8 @@ namespace BoSi_Reminder
             //OnRequestVisibilityChange(Visibility.Hidden);
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
-           // OnRequestVisibilityChange(Visibility.Visible);
+            OnRequestUpdateList();
+            // OnRequestVisibilityChange(Visibility.Visible);
         }
 
         //зміна дати в лейблі при зміні елементу ListBox
@@ -146,7 +147,7 @@ namespace BoSi_Reminder
             try
             {
                 OnRequestFillDates();
-                TimeTracker.ShowPrevious();
+                TimeTracker.TimerReact();
             }
             catch (Exception ex)
             {
@@ -281,7 +282,7 @@ namespace BoSi_Reminder
         public delegate void UpdateListHandler();
 
         //метод для оновлення списку
-        protected virtual void OnRequestUpdateList()
+        internal virtual void OnRequestUpdateList()
         {
             UpdateList?.Invoke();
         }

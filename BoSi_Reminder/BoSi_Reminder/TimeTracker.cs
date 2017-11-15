@@ -16,7 +16,7 @@ namespace BoSi_Reminder
             try
             {
                 //список нагадувань, які мають спрацювати в поточний час
-                var reminder = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(d => DateTime.Now.CompareTo(d.ReactDate)>0).ToList();
+                var reminder = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(d => DateTime.Now.CompareTo(d.ReactDate)>0&&!d.Status && !d.IsDone).ToList();
 
                 //вивід цих нагадувань
                 foreach (var r in reminder)
@@ -33,16 +33,12 @@ namespace BoSi_Reminder
         {
             try
             {
-                //вивід нагадування, якщо він раніше не був виведений
-                if (!reminder.Status&&!reminder.IsDone)
-                {
-                    MessageBox.Show(reminder.Text, reminder.ReactDate.ToString(), MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.Yes);
-                    //зміна статусу
-                    reminder.Status = true;
-                    EntityWraper.Edit(reminder);
-                }
+                ShowMessageBoxAsync(reminder.Text, reminder.ReactDate.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
+                //зміна статусу
+                reminder.Status = true;
+                EntityWraper.Edit(reminder);
+   
                 LogWriter.LogWrite("Show Riminder:" + reminder.Text);
-
             }
             catch (Exception e)
             {
@@ -50,19 +46,17 @@ namespace BoSi_Reminder
             }
         }
 
-        public static void ShowPrevious()
+        private delegate void ShowMessageBoxDelegate(string strMessage, string strCaption, MessageBoxButton enmButton, MessageBoxImage enmImage);
+        // Method invoked on a separate thread that shows the message box.
+        private static void ShowMessageBox(string strMessage, string strCaption, MessageBoxButton enmButton, MessageBoxImage enmImage)
         {
-            //виведення нагадування, час спрацювання яких вже минув
-            try
-            {
-                foreach (var r in EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser))
-                    if (DateTime.Now.CompareTo(r.ReactDate) > 0)
-                        ShowReminder(r);
-            }
-            catch (Exception ex)
-            {
-                LogWriter.LogWrite("Exception in ShowPrevious method while getting reminders", ex);
-            }
+            MessageBox.Show(strMessage, strCaption, enmButton, enmImage);
+        }
+        // Shows a message box from a separate worker thread.
+        public static void ShowMessageBoxAsync(string strMessage, string strCaption, MessageBoxButton enmButton, MessageBoxImage enmImage)
+        {
+            ShowMessageBoxDelegate caller = new ShowMessageBoxDelegate(ShowMessageBox);
+            caller.BeginInvoke(strMessage, strCaption, enmButton, enmImage, null, null);
         }
     }
 }
