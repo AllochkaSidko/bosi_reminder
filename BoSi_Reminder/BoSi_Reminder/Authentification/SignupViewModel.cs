@@ -18,6 +18,7 @@ namespace BoSi_Reminder.Authentification
         private User _userCandidate;
         private RelayCommand _signUpCommand;
         private RelayCommand _closeCommand;
+        public RelayCommand _closeSignUpCommand;
       
 
         public SignupViewModel(User userCandidate)
@@ -30,6 +31,19 @@ namespace BoSi_Reminder.Authentification
             get { return _closeCommand ?? (_closeCommand = new RelayCommand(obj => OnRequestClose(true))); }
         }
 
+        public RelayCommand CloseSignUpCommand
+        {
+            get { return _closeSignUpCommand ?? (_closeSignUpCommand = new RelayCommand(obj=> CloseWin(obj))); }
+        }
+
+        public void CloseWin(Object obj)
+        {
+            OnRequestClose(false);
+            //вікриття вікна логіну
+            var loginWindow = new LoginWindow();
+            loginWindow.ShowDialog();
+
+        }
 
         //первірка чи всі поля заповнені
         public RelayCommand SignUpCommand
@@ -179,5 +193,7 @@ namespace BoSi_Reminder.Authentification
         {
             RequestLoader?.Invoke(isShow);
         }
+
+    
     }
 }

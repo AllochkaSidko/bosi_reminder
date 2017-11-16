@@ -109,6 +109,7 @@ namespace BoSi_Reminder
             }
 
             LogWriter.LogWrite("Created reminder");
+            OnRequestUpdateList();
             //перехід назад на вікно Кабінету
             OnRequestClose();
         }
@@ -128,6 +129,14 @@ namespace BoSi_Reminder
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        internal event UpdateListHandler UpdateList;
+        public delegate void UpdateListHandler();
+
+        //метод для оновлення списку
+        internal virtual void OnRequestUpdateList()
+        {
+            UpdateList?.Invoke();
         }
 
     }

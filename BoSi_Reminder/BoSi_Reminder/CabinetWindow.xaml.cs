@@ -28,7 +28,6 @@ namespace BoSi_Reminder
         }
 
         private CabinetViewModel CabinetViewModel { get; }
-      
 
         private void Close(bool isQuitApp)
         {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.3
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoSi_Reminder", "BoSi_Reminder\BoSi_Reminder.csproj", "{BF4F7BF6-619A-471F-BE9E-73F573EA449D}"
 EndProject
@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBAdapter", "DBAdapter\DBAd
 	ProjectSection(ProjectDependencies) = postProject
 		{AF7A31BA-A159-4705-9860-EA9810DD8AB3} = {AF7A31BA-A159-4705-9860-EA9810DD8AB3}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoSi_ReminderService", "BoSi_ReminderService\BoSi_ReminderService.csproj", "{A51FFAF4-8098-4445-B570-99C92AEA5E88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 		{F905117C-7348-4976-A600-A65804095342}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F905117C-7348-4976-A600-A65804095342}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F905117C-7348-4976-A600-A65804095342}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A51FFAF4-8098-4445-B570-99C92AEA5E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A51FFAF4-8098-4445-B570-99C92AEA5E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A51FFAF4-8098-4445-B570-99C92AEA5E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A51FFAF4-8098-4445-B570-99C92AEA5E88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

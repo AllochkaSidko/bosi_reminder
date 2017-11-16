@@ -124,12 +124,11 @@ namespace BoSi_Reminder
         private void Create(Object obj)
         {
             LogWriter.LogWrite("Open create window");
-
-            //OnRequestVisibilityChange(Visibility.Hidden);
+            OnRequestVisibilityChange(Visibility.Collapsed);
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
+            OnRequestVisibilityChange(Visibility.Visible);
             OnRequestUpdateList();
-            // OnRequestVisibilityChange(Visibility.Visible);
         }
 
         //зміна дати в лейблі при зміні елементу ListBox

@@ -35,6 +35,16 @@
             <Setter Property="FontSize" Value="15"/>
         </Style>
 
+        <Style TargetType="Button"
+               x:Key="Cancel">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="LimeGreen"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="LimeGreen"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="34"/>
             <Setter Property="FontWeight" Value="Medium"/>
@@ -76,7 +86,9 @@
             <PasswordBox Name="Password" Width="140pt" Margin="0,15,0,0" PasswordChanged="Password_OnPasswordChanged"/>
             
         </StackPanel>
-        <Button Grid.Column="1" Name="SignUpButton" Content="Sign Up" Width="80" Height="30" Margin="0,300,200,0" Command="{Binding SignUpCommand}"/>
+        
+        <Button Grid.Column="1" Name="SignUpButton" Content="Sign Up" Width="80" Height="30" Margin="-120,280,200,0" Command="{Binding SignUpCommand}"/>
+        <Button Grid.Column="1" Content="Cancel" Name="CancelButton" Margin="20,280,0,0" Height="30" Width="75" Style="{StaticResource Cancel}" Command="{Binding CloseSignUpCommand}"/>
 
     </Grid>
 </Window>
