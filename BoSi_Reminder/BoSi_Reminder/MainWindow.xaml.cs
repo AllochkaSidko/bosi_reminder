@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using BoSi_Reminder.Authentification;
 using DBAdapter;
+using Interface;
 using Interface.Models;
 using Tools;
 
@@ -31,7 +32,7 @@ namespace BoSi_Reminder
                 //в іншому випадку користувача десеріалізують
                 else
                 {
-                    var curUser = EntityWraper.GetUser(user.Id);
+                    var curUser = BoSiReminderService_Wrapper.GetUser(user.Id);
                     if (curUser == null)
                     {
                         LoginWindow loginWindow = new LoginWindow();
@@ -40,7 +41,7 @@ namespace BoSi_Reminder
                     else
                     {
                         curUser.PreviousLog = DateTime.Now;
-                        EntityWraper.EditUser(curUser);
+                        BoSiReminderService_Wrapper.EditUser(curUser);
 
                         //встановлюємо поточного користувача та відриваємо вікно Кабінету
                         StationManager.CurrentUser = curUser;

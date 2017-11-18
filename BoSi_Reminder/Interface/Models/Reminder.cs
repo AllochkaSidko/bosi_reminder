@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Data.Entity.ModelConfiguration;
+using System.Runtime.Serialization;
 
 namespace Interface.Models
 {
-
-    [Serializable]
+    [DataContract]
     public class Reminder
     {
+        [DataMember]
         public Guid Id { get; set; }
+        [DataMember]
         public DateTime ReactDate { get; set; }
+        [DataMember]
         public bool IsDone { get; set; }
+        [DataMember]
         public string Text { get; set; }
+        [DataMember]
         public bool Status { get; set; }
-
+        [DataMember]
         public Guid UserId { get; set; }
+        [DataMember]
         public User User { get; set; }
 
         public Reminder(DateTime reactDate, string text, User user)

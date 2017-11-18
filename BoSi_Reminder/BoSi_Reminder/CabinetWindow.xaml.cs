@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using DBAdapter;
+using Interface;
 using Tools;
 
 
@@ -44,7 +45,7 @@ namespace BoSi_Reminder
         {
             try
             {
-                foreach (var d in EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser))
+                foreach (var d in BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser))
                     Calendar.SelectedDates.Add(d.ReactDate);
             }
             catch (Exception ex)

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using DBAdapter;
+using Interface;
 using Interface.Models;
 using Tools;
 
@@ -127,7 +128,7 @@ namespace BoSi_Reminder.Authentification
                     return false;
                 }
 
-                if(EntityWraper.UserExist(Login))
+                if(BoSiReminderService_Wrapper.UserExist(Login))
                 {
                     MessageBox.Show("User with such login aleady exists");
                     return false;
@@ -143,7 +144,7 @@ namespace BoSi_Reminder.Authentification
             {
                 //створення нового користувача
                 newuser = new User(Login, Password, Name, Surname, Email);
-                EntityWraper.AddUser(newuser);
+                BoSiReminderService_Wrapper.AddUser(newuser);
             }
             catch(Exception ex)
             {

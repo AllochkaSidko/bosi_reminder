@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Json;
 
 namespace Tools
 {
@@ -24,16 +25,16 @@ namespace Tools
         //метод серіалізації
         public static void Serialize<TObject>(TObject obj) where TObject : ISerializable
         {
-            //відбувається серіалізація об'єкту у бінарний формат і записується у файл
+            //відбувається серіалізація об'єкту у  формат JSON і записується у файл
             //якщо файлу нема, то він попередньо створиться
             try
             {
-                BinaryFormatter formatter = new BinaryFormatter();
+                var jsonFormatter = new DataContractJsonSerializer(typeof(TObject));
                 var filename = CreateAndGetPath(obj.Filename);
 
                 using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
                 {
-                    formatter.Serialize(fs, obj);
+                    jsonFormatter.WriteObject(fs, obj);
                 }
             }
             catch (Exception e)
@@ -52,11 +53,11 @@ namespace Tools
                 var filepath = CreateAndGetPath(filename);
                 if (!File.Exists(filepath)) return null;
 
-                BinaryFormatter formatter = new BinaryFormatter();
-
+                var jsonFormatter = new DataContractJsonSerializer(typeof(TObject));
+                
                 using (FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate))
                 {
-                    return (TObject) formatter.Deserialize(fs);
+                    return (TObject) jsonFormatter.ReadObject(fs);
                 }
             }
             catch (Exception e)

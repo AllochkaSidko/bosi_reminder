@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using DBAdapter;
+using Interface;
 using Interface.Models;
 using Tools;
 
@@ -16,7 +17,7 @@ namespace BoSi_Reminder
             try
             {
                 //список нагадувань, які мають спрацювати в поточний час
-                var reminder = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(d => DateTime.Now.CompareTo(d.ReactDate)>0&&!d.Status && !d.IsDone).ToList();
+                var reminder = BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(d => DateTime.Now.CompareTo(d.ReactDate)>0&&!d.Status && !d.IsDone).ToList();
 
                 //вивід цих нагадувань
                 foreach (var r in reminder)
@@ -36,7 +37,7 @@ namespace BoSi_Reminder
                 ShowMessageBoxAsync(reminder.Text, reminder.ReactDate.ToString(), MessageBoxButton.OK, MessageBoxImage.Information);
                 //зміна статусу
                 reminder.Status = true;
-                EntityWraper.Edit(reminder);
+                BoSiReminderService_Wrapper.Edit(reminder);
    
                 LogWriter.LogWrite("Show Riminder:" + reminder.Text);
             }

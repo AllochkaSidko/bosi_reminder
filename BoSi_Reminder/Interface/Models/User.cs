@@ -1,23 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using Tools;
 
+
 namespace Interface.Models
 {
-    [Serializable]
-    public class User : ISerializable
+    [DataContract] 
+    public class User : Tools.ISerializable
     {
-        public static string FileName = "user";
+        public static string FileName = "user.json";
+        [DataMember]
         public string Name { get; set; }
+        [DataMember]
         public string Password { get; set; }
+        [DataMember]
         public Guid Id { get; set; }
+        [DataMember]
         public string Surname { get; set; }
+        [DataMember]
         public string Login { get; set; }
+        [DataMember]
         public string Email { get; set; }
+        [DataMember]
         public DateTime PreviousLog { get; set; }
+        [DataMember]
         public List<Reminder> Reminders { get; set; }
 
         public string Filename

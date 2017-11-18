@@ -7,6 +7,7 @@ using System.Windows;
 using System.Threading.Tasks;
 using DBAdapter;
 using Interface.Models;
+using Interface;
 using Tools;
 
 namespace BoSi_Reminder.Authentification
@@ -81,7 +82,7 @@ namespace BoSi_Reminder.Authentification
                 //перевірка чи є існує такий користувач
                 try
                 {
-                    currentUser = EntityWraper.GetUserByLogin(Login);
+                    currentUser = BoSiReminderService_Wrapper.GetUserByLogin(Login);
                 }
                 catch (Exception ex)
                 {
@@ -104,7 +105,7 @@ namespace BoSi_Reminder.Authentification
                 try
                 {
                     currentUser.PreviousLog = DateTime.Now;
-                    EntityWraper.EditUser(currentUser);
+                    BoSiReminderService_Wrapper.EditUser(currentUser);
                 }
                 catch (Exception ex)
                 {

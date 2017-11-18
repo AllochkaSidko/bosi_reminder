@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using BoSi_Reminder.Authentification;
 using DBAdapter;
+using Interface;
 using Interface.Models;
 using Tools;
 
@@ -40,7 +41,7 @@ namespace BoSi_Reminder
             try
             {
                 //звертаємось до бази, щоб вивести нагадування поточного користувача
-                UsersReminders = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser)?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
+                UsersReminders = BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser)?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
             }
             catch (Exception ex)
             {
@@ -124,10 +125,10 @@ namespace BoSi_Reminder
         private void Create(Object obj)
         {
             LogWriter.LogWrite("Open create window");
-            OnRequestVisibilityChange(Visibility.Collapsed);
+            //OnRequestVisibilityChange(Visibility.Collapsed);
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
-            OnRequestVisibilityChange(Visibility.Visible);
+            //OnRequestVisibilityChange(Visibility.Visible);
             OnRequestUpdateList();
         }
 
@@ -162,7 +163,7 @@ namespace BoSi_Reminder
             try
             {
                 //звертаємось о бд, щоб показати всі нагадування почного користувача
-                UsersReminders = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser);
+                UsersReminders = BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser);
             }
             catch (Exception ex)
             {
@@ -185,7 +186,7 @@ namespace BoSi_Reminder
                 {
                     UsersReminders.Remove(SelectedReminder);
                     //звертаємось до бд, щоб видалити обране нагадування
-                    EntityWraper.Delete(SelectedReminder);
+                    BoSiReminderService_Wrapper.Delete(SelectedReminder);
 
                     OnRequestUpdateList();
                   
@@ -215,7 +216,7 @@ namespace BoSi_Reminder
                     //присвоєння властивості isDone значення true
                     SelectedReminder.IsDone = true;
                     //звертаємос до бд, щоб змінити поле IDone в обраного нагадуання
-                    EntityWraper.Edit(SelectedReminder);
+                    BoSiReminderService_Wrapper.Edit(SelectedReminder);
 
                     //оновлення ListBox 
                     OnRequestUpdateList();
@@ -260,7 +261,7 @@ namespace BoSi_Reminder
             {
                 if (Date != null)
                 {
-                    UsersReminders = EntityWraper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(r => r.ReactDate.Date == Date.Value).ToList();
+                    UsersReminders = BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(r => r.ReactDate.Date == Date.Value).ToList();
                     OnRequestUpdateList();
                     DateBlockContent = Date.Value.ToString("dd/MM/yyyy");
                 }

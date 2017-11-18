@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using DBAdapter;
+using Interface;
 using Interface.Models;
 using Tools;
 
@@ -99,9 +100,9 @@ namespace BoSi_Reminder
             try
             {
                 var reminder = new Reminder(date, Text, StationManager.CurrentUser);
-               
+
                 //звертаємось до бд, щоб додати нове нагадування
-                EntityWraper.AddReminder(reminder);
+                BoSiReminderService_Wrapper.AddReminder(reminder);
             }
             catch(Exception e)
             {
