@@ -41,7 +41,7 @@ namespace BoSi_Reminder
             try
             {
                 //звертаємось до бази, щоб вивести нагадування поточного користувача
-                UsersReminders = BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser)?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
+                UpdateRemindersList();
             }
             catch (Exception ex)
             {
@@ -125,11 +125,20 @@ namespace BoSi_Reminder
         private void Create(Object obj)
         {
             LogWriter.LogWrite("Open create window");
+
             //OnRequestVisibilityChange(Visibility.Collapsed);
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
             //OnRequestVisibilityChange(Visibility.Visible);
+
+            UpdateRemindersList();
             OnRequestUpdateList();
+        }
+
+        private void UpdateRemindersList()
+        {
+            UsersReminders = BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser)
+                ?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
         }
 
         //зміна дати в лейблі при зміні елементу ListBox
