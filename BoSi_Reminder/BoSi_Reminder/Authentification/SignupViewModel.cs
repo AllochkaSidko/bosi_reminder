@@ -40,10 +40,7 @@ namespace BoSi_Reminder.Authentification
         public void CloseWin(Object obj)
         {
             OnRequestClose(false);
-            //вікриття вікна логіну
-            var loginWindow = new LoginWindow();
-            loginWindow.ShowDialog();
-
+            
         }
 
         //первірка чи всі поля заповнені
@@ -163,9 +160,6 @@ namespace BoSi_Reminder.Authentification
             {
                 LogWriter.LogWrite("Sign up request \n" + StationManager.CurrentUser.Login + " entered to the system.");
                 OnRequestClose(false);
-                //переходимо на вікно Кабінету
-                CabinetWindow cabinetWindow = new CabinetWindow();
-                cabinetWindow.ShowDialog();
             }
             return;
         }

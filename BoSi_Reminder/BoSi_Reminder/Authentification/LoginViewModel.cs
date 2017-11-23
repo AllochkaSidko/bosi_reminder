@@ -126,19 +126,22 @@ namespace BoSi_Reminder.Authentification
             {
                 //записуємо в лог дії користувача
                 LogWriter.LogWrite(StationManager.CurrentUser.Login + " entered to the system.");
-                //OnRequestClose(false);
-                //переходимо на вікно Кабінету
-                CabinetWindow cabinetWindow = new CabinetWindow();
-                cabinetWindow.ShowDialog();
+                OnRequestClose(false);
+                
             }
         }
 
         //вікриваємо вікно Sign Up
         private void SignUp(Object obj)
         {
-            OnRequestClose(false);
+            OnRequestVisibilityChange(Visibility.Hidden);
             SignupWindow signupWindow = new SignupWindow();
-            signupWindow.ShowDialog();  
+            signupWindow.ShowDialog();
+
+            if(StationManager.CurrentUser==null)
+               OnRequestVisibilityChange(Visibility.Visible);
+            else
+                OnRequestClose(false);
         }
 
 
@@ -164,6 +167,14 @@ namespace BoSi_Reminder.Authentification
         internal virtual void OnRequestLoader(bool isShow)
         {
             RequestLoader?.Invoke(isShow);
+        }
+
+        internal event VisibilityHandler RequestVisibilityChange;
+        internal delegate void VisibilityHandler(Visibility visibility);
+
+        internal virtual void OnRequestVisibilityChange(Visibility visibility)
+        {
+            RequestVisibilityChange?.Invoke(visibility);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace BoSi_Reminder.Authentification
             LoginViewModel = new LoginViewModel(new User());
             LoginViewModel.RequestClose += Close;
             LoginViewModel.RequestLoader += OnRequestLoader;
+            LoginViewModel.RequestVisibilityChange += (x) => Visibility = x;
             DataContext = LoginViewModel;
         }
 

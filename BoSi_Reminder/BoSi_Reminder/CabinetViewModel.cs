@@ -123,10 +123,10 @@ namespace BoSi_Reminder
         {
             LogWriter.LogWrite("Open create window");
 
-            //OnRequestVisibilityChange(Visibility.Collapsed);
+            OnRequestVisibilityChange(Visibility.Hidden);
             CreatorWindow creatorWindow = new CreatorWindow();
             creatorWindow.ShowDialog();
-            //OnRequestVisibilityChange(Visibility.Visible);
+            OnRequestVisibilityChange(Visibility.Visible);
 
             UpdateRemindersList();
         }
@@ -253,10 +253,9 @@ namespace BoSi_Reminder
             }
 
             StationManager.CurrentUser = null;
-            OnRequestClose(false);
+            OnRequestVisibilityChange(Visibility.Hidden);
             //вікриття вікна логіну
-            var loginWindow = new LoginWindow();
-            loginWindow.ShowDialog();
+            OnRequestOpenLogin();
         }
 
         //виводить нагадування за обраною на календарі датою та відображає цю дату в текстовому блоці
@@ -297,6 +296,15 @@ namespace BoSi_Reminder
         protected virtual void OnRequestClose(bool isquitapp)
         {
             RequestClose?.Invoke(isquitapp);
+        }
+
+        internal event OpenLoginHandler OpenLogin;
+        public delegate void OpenLoginHandler();
+
+        //метод для позначення дат на календарі, на які встановлено нагадування
+        protected virtual void OnRequestOpenLogin()
+        {
+            OpenLogin?.Invoke();
         }
 
         internal event VisibilityHandler RequestVisibilityChange;
