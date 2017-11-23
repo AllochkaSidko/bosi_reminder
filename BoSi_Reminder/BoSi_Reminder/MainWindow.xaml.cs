@@ -19,7 +19,7 @@ namespace BoSi_Reminder
         
         public MainWindow()
         {
-            try
+            /*try
             {
                 var user = SerializeManager.Deserialize<User>(User.FileName);
 
@@ -56,7 +56,7 @@ namespace BoSi_Reminder
                 LogWriter.LogWrite("Exception while Initializing main window", ex);
             }
            
-            Environment.Exit(0);
+            Environment.Exit(0);*/
 
         }
 

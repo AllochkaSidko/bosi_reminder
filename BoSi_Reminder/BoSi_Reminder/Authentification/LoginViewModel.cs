@@ -126,7 +126,7 @@ namespace BoSi_Reminder.Authentification
             {
                 //записуємо в лог дії користувача
                 LogWriter.LogWrite(StationManager.CurrentUser.Login + " entered to the system.");
-                OnRequestClose(false);
+                //OnRequestClose(false);
                 //переходимо на вікно Кабінету
                 CabinetWindow cabinetWindow = new CabinetWindow();
                 cabinetWindow.ShowDialog();

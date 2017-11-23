@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace BoSi_Reminder
         public string UsernameBlockText { get; set; }
         public DateTime? _date;
         //список для збереження всіх нагадувань в ListBox
-        private List<Reminder> _usersReminders;
+        private ObservableCollection<Reminder> _usersReminders;
         private string _dateBlockContent;
         //змінна для відслідковування чи увімкнений режим "Показати все"
         bool isDisplayAll = false;
@@ -41,7 +42,8 @@ namespace BoSi_Reminder
             try
             {
                 //звертаємось до бази, щоб вивести нагадування поточного користувача
-                UpdateRemindersList();
+                _usersReminders = new ObservableCollection<Reminder>(BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser)
+                               ?.Where(r => r.ReactDate.Date == DateTime.Today).ToList());
             }
             catch (Exception ex)
             {
@@ -71,14 +73,9 @@ namespace BoSi_Reminder
             }
         }
 
-        public List<Reminder> UsersReminders
+        public ObservableCollection<Reminder> UsersReminders
         {
             get => _usersReminders;
-            set
-            {
-                _usersReminders = value;
-                OnPropertyChanged();
-            }
         }
 
         public RelayCommand ListBoxSelectionChanged
@@ -132,13 +129,13 @@ namespace BoSi_Reminder
             //OnRequestVisibilityChange(Visibility.Visible);
 
             UpdateRemindersList();
-            OnRequestUpdateList();
         }
 
         private void UpdateRemindersList()
         {
-            UsersReminders = BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser)
-                ?.Where(r => r.ReactDate.Date == DateTime.Today).ToList();
+            _usersReminders = new ObservableCollection<Reminder>(BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser)
+                         .Where(r => r.ReactDate.Date == Date.Value).ToList());
+            OnPropertyChanged("UsersReminders");
         }
 
         //зміна дати в лейблі при зміні елементу ListBox
@@ -172,13 +169,13 @@ namespace BoSi_Reminder
             try
             {
                 //звертаємось о бд, щоб показати всі нагадування почного користувача
-                UsersReminders = BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser);
+                _usersReminders = new ObservableCollection<Reminder>(BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser));  
             }
             catch (Exception ex)
             {
                 LogWriter.LogWrite("Exception in DisplayAll method while getting reminders", ex);
             }
-            OnRequestUpdateList();
+            OnPropertyChanged("UsersReminders");
             DateBlockContent = "";
             LogWriter.LogWrite("Display all reminders");
         }
@@ -193,11 +190,11 @@ namespace BoSi_Reminder
                 //в іншому випадку виводимо повідомлення про помилку
                 if (SelectedReminder != null)
                 {
-                    UsersReminders.Remove(SelectedReminder);
                     //звертаємось до бд, щоб видалити обране нагадування
                     BoSiReminderService_Wrapper.Delete(SelectedReminder);
 
-                    OnRequestUpdateList();
+                    UsersReminders.Remove(SelectedReminder);
+                    OnPropertyChanged("UsersReminders");
                   
                     if (isDisplayAll)
                         DateBlockContent = "";
@@ -224,11 +221,10 @@ namespace BoSi_Reminder
                 {
                     //присвоєння властивості isDone значення true
                     SelectedReminder.IsDone = true;
+                    OnPropertyChanged("UsersReminders");
+
                     //звертаємос до бд, щоб змінити поле IDone в обраного нагадуання
                     BoSiReminderService_Wrapper.Edit(SelectedReminder);
-
-                    //оновлення ListBox 
-                    OnRequestUpdateList();
                 }
                 else
                 {
@@ -270,8 +266,7 @@ namespace BoSi_Reminder
             {
                 if (Date != null)
                 {
-                    UsersReminders = BoSiReminderService_Wrapper.GetAllRemindsCurrUser(StationManager.CurrentUser).Where(r => r.ReactDate.Date == Date.Value).ToList();
-                    OnRequestUpdateList();
+                    UpdateRemindersList();
                     DateBlockContent = Date.Value.ToString("dd/MM/yyyy");
                 }
 
@@ -285,17 +280,7 @@ namespace BoSi_Reminder
             LogWriter.LogWrite("Select remind item");
         }
 
-     
-
-        internal event UpdateListHandler UpdateList;
-        public delegate void UpdateListHandler();
-
-        //метод для оновлення списку
-        internal virtual void OnRequestUpdateList()
-        {
-            UpdateList?.Invoke();
-        }
-
+    
         internal event FillDatesHandler FillDates;
         public delegate void FillDatesHandler();
 

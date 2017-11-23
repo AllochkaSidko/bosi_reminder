@@ -21,7 +21,6 @@ namespace BoSi_Reminder
             CabinetViewModel = new CabinetViewModel();
 
             CabinetViewModel.RequestClose += Close;
-            CabinetViewModel.UpdateList += UpdateItemSource;
             CabinetViewModel.FillDates += Fill;
             CabinetViewModel.RequestVisibilityChange += (x) => Visibility = x;
 
@@ -52,12 +51,6 @@ namespace BoSi_Reminder
             {
                 LogWriter.LogWrite("Exception in Fill() method while getting reminders", ex);
             }
-        }
-
-        //оновлення елементів ListBox
-        private void UpdateItemSource()
-        {
-            ListBox.Items.Refresh();
         }
     }
 }

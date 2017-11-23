@@ -1,18 +1,18 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data.Entity.ModelConfiguration;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
 namespace Interface.Models
 {
     [DataContract]
-    public class Reminder
+    public class Reminder : INotifyPropertyChanged
     {
         [DataMember]
         public Guid Id { get; set; }
         [DataMember]
         public DateTime ReactDate { get; set; }
-        [DataMember]
-        public bool IsDone { get; set; }
         [DataMember]
         public string Text { get; set; }
         [DataMember]
@@ -21,6 +21,21 @@ namespace Interface.Models
         public Guid UserId { get; set; }
         [DataMember]
         public User User { get; set; }
+        
+        private bool _isDone;
+        [DataMember]
+        public bool IsDone
+        {
+            get { return _isDone; }
+            set
+            {
+                if (_isDone != value)
+                {
+                    _isDone = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public Reminder(DateTime reactDate, string text, User user)
         {
@@ -62,5 +77,13 @@ namespace Interface.Models
                     .IsRequired();
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
 }
