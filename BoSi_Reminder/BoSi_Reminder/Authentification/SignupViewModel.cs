@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using DBAdapter;
 using Interface;
 using Interface.Models;
 using Tools;
@@ -40,7 +36,6 @@ namespace BoSi_Reminder.Authentification
         public void CloseWin(Object obj)
         {
             OnRequestClose(false);
-            
         }
 
         //первірка чи всі поля заповнені

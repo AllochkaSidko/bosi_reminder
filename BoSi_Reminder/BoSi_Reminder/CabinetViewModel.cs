@@ -6,8 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using BoSi_Reminder.Authentification;
-using DBAdapter;
 using Interface;
 using Interface.Models;
 using Tools;
@@ -128,6 +126,7 @@ namespace BoSi_Reminder
             creatorWindow.ShowDialog();
             OnRequestVisibilityChange(Visibility.Visible);
 
+            OnRequestFillDates();
             UpdateRemindersList();
         }
 

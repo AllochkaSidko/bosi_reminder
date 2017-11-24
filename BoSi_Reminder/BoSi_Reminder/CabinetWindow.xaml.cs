@@ -57,8 +57,6 @@ namespace BoSi_Reminder
         }
 
         
-
-
         private void OpenLoginWindow()
         {
 

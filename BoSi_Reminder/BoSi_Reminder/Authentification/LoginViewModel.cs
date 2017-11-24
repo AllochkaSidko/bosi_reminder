@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Threading.Tasks;
-using DBAdapter;
 using Interface.Models;
 using Interface;
 using Tools;
@@ -117,7 +116,6 @@ namespace BoSi_Reminder.Authentification
                 //серіалізуємо поточного користувача
                 SerializeManager.Serialize<User>(StationManager.CurrentUser);
                 return true;
-                
             });
 
             OnRequestLoader(false);
@@ -126,8 +124,7 @@ namespace BoSi_Reminder.Authentification
             {
                 //записуємо в лог дії користувача
                 LogWriter.LogWrite(StationManager.CurrentUser.Login + " entered to the system.");
-                OnRequestClose(false);
-                
+                OnRequestClose(false); 
             }
         }
 
@@ -137,17 +134,11 @@ namespace BoSi_Reminder.Authentification
             OnRequestVisibilityChange(Visibility.Hidden);
             SignupWindow signupWindow = new SignupWindow();
             signupWindow.ShowDialog();
-
-            if(StationManager.CurrentUser==null)
-               OnRequestVisibilityChange(Visibility.Visible);
-            else
-                OnRequestClose(false);
+            OnRequestClose(false);
         }
-
 
         internal event CloseHandler RequestClose;
         public delegate void CloseHandler(bool isQuitApp);
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
