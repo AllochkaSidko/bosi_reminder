@@ -131,10 +131,10 @@ namespace BoSi_Reminder.Authentification
         //вікриваємо вікно Sign Up
         private void SignUp(Object obj)
         {
-            OnRequestVisibilityChange(Visibility.Hidden);
+            OnRequestVisibilityChange(false);
             SignupWindow signupWindow = new SignupWindow();
             signupWindow.ShowDialog();
-            OnRequestClose(false);
+            OnRequestVisibilityChange(true);
         }
 
         internal event CloseHandler RequestClose;
@@ -161,9 +161,9 @@ namespace BoSi_Reminder.Authentification
         }
 
         internal event VisibilityHandler RequestVisibilityChange;
-        internal delegate void VisibilityHandler(Visibility visibility);
+        internal delegate void VisibilityHandler(bool visibility);
 
-        internal virtual void OnRequestVisibilityChange(Visibility visibility)
+        internal virtual void OnRequestVisibilityChange(bool visibility)
         {
             RequestVisibilityChange?.Invoke(visibility);
         }

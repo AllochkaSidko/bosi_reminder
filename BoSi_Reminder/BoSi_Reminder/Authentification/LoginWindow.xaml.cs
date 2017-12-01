@@ -21,10 +21,25 @@ namespace BoSi_Reminder.Authentification
             LoginViewModel = new LoginViewModel(new User());
             LoginViewModel.RequestClose += Close;
             LoginViewModel.RequestLoader += OnRequestLoader;
-            LoginViewModel.RequestVisibilityChange += (x) => Visibility = x;
+            //LoginViewModel.RequestVisibilityChange += (x) => Visibility = x;
+            LoginViewModel.RequestVisibilityChange += Vis;
             DataContext = LoginViewModel;
         }
 
+
+        private void Vis(bool t)
+        {
+            if (!t)
+                this.Hide();
+            else
+            {
+                if (StationManager.CurrentUser != null)
+                    this.Close();
+                else
+                    this.ShowDialog();
+            }
+                
+        }
         //поява лоардера
         private void OnRequestLoader(bool isShow)
         {

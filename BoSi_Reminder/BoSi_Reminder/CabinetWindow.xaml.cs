@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using BoSi_Reminder.Authentification;
-using DBAdapter;
 using Interface;
 using Interface.Models;
 using Tools;
@@ -20,7 +19,6 @@ namespace BoSi_Reminder
         public CabinetWindow()
         {
             InitializeComponent();
-
             try
             {
                 var user = SerializeManager.Deserialize<User>(User.FileName);
@@ -52,7 +50,7 @@ namespace BoSi_Reminder
             }
             catch (Exception ex)
             {
-                LogWriter.LogWrite("Exception while Initializing main window", ex);
+                LogWriter.LogWrite("Exception while Initializing cabinet window", ex);
             }
         }
 
@@ -70,7 +68,7 @@ namespace BoSi_Reminder
         {
             if (StationManager.CurrentUser == null)
                 Environment.Exit(0);
-
+            Visibility = Visibility.Visible;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             CabinetViewModel = new CabinetViewModel();
             CabinetViewModel.RequestClose += Close;
