@@ -22,14 +22,14 @@ namespace BoSi_Reminder.Authentification
             LoginViewModel.RequestClose += Close;
             LoginViewModel.RequestLoader += OnRequestLoader;
             //LoginViewModel.RequestVisibilityChange += (x) => Visibility = x;
-            LoginViewModel.RequestVisibilityChange += Vis;
+            LoginViewModel.RequestVisibilityChange += VisibilityLogin;
             DataContext = LoginViewModel;
         }
 
 
-        private void Vis(bool t)
+        private void VisibilityLogin(bool v)
         {
-            if (!t)
+            if (!v)
                 this.Hide();
             else
             {
