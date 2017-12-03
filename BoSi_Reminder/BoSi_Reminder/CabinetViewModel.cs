@@ -24,14 +24,14 @@ namespace BoSi_Reminder
         private RelayCommand _selectedDatesChangedCommand;
         private RelayCommand _listBoxSelectionChanged;
 
-        private string UsernameBlockText { get; set; }
+        public string UsernameBlockText { get; set; }
         public DateTime? _date;
         //список для збереження всіх нагадувань в ListBox
         private ObservableCollection<Reminder> _usersReminders;
         private string _dateBlockContent;
         //змінна для відслідковування чи увімкнений режим "Показати все"
         bool isDisplayAll = false;
-        public Reminder SelectedReminder { get; private set; }
+        public Reminder SelectedReminder { get; set; }
 
         //при завантаженні вікна вводиться ім'я поточного користувача та сьогоднішню дату
         public CabinetViewModel()
@@ -55,7 +55,7 @@ namespace BoSi_Reminder
 
         public string DateBlockContent {
             get => _dateBlockContent;
-            private set
+            set
             {
                 _dateBlockContent = value;
                 OnPropertyChanged();
@@ -64,7 +64,7 @@ namespace BoSi_Reminder
         public DateTime? Date
         {
             get => _date;
-            private set
+            set
             {
                 _date = value;
                 OnPropertyChanged();
